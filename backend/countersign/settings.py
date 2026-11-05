@@ -57,7 +57,7 @@ class Settings(BaseSettings):
     # Demo workspaces and abuse limits.
     workspace_ttl_hours: int = 72
     rate_limit_runs_per_hour: int = 30
-    rate_limit_workspaces_per_hour: int = 20
+    rate_limit_workspaces_per_hour: int = 60
     token_ttl_hours: int = 12
 
     @field_validator("database_url")

@@ -4,7 +4,39 @@
     "web": {
       "root": "frontend/",
       "framework": "vite",
-      "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+      "rewrites": [
+        {
+          "source": "/(.*)",
+          "destination": "/index.html"
+        }
+      ],
+      "headers": [
+        {
+          "source": "/(.*)",
+          "headers": [
+            {
+              "key": "Content-Security-Policy",
+              "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "no-referrer"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "Permissions-Policy",
+              "value": "camera=(), microphone=(), geolocation=()"
+            }
+          ]
+        }
+      ]
     },
     "api": {
       "root": "backend/",
@@ -13,8 +45,23 @@
     }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": { "service": "api" } },
-    { "source": "/(.*)", "destination": { "service": "web" } }
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "api"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "web"
+      }
+    }
   ],
-  "crons": [{ "path": "/api/cron/sync", "schedule": "0 5 * * *" }]
+  "crons": [
+    {
+      "path": "/api/cron/sync",
+      "schedule": "0 5 * * *"
+    }
+  ]
 }

@@ -95,7 +95,7 @@ def _as_dict(span: ReadableSpan) -> dict[str, Any]:
     return {
         "trace_id": f"{ctx.trace_id:032x}" if ctx else "",
         "span_id": f"{ctx.span_id:016x}" if ctx else "",
-        "parent_id": f"{parent.span_id:016x}" if parent else None,
+        "parent_id": f"{parent.span_id:016x}" if parent and not parent.is_remote else None,
         "name": span.name,
         "kind": span.kind.name.lower(),
         "start_ns": span.start_time or 0,

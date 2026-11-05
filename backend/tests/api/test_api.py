@@ -86,6 +86,9 @@ def test_events_are_incremental_and_the_trace_follows_genai_conventions(api: Api
         and chat["attributes"]["countersign.usage.simulated"] is True
     )
     assert len({s["trace_id"] for s in trace["spans"]}) == 1
+    ids = {s["span_id"] for s in trace["spans"]}
+    assert all(s["parent_id"] is None or s["parent_id"] in ids for s in trace["spans"])  # no dangling parents
+    assert trace["spans"][0]["offset_us"] == 0 and all(s["duration_us"] >= 0 for s in trace["spans"])
 
 
 @pytest.mark.api_success
@@ -415,3 +418,15 @@ def test_no_published_report_is_a_404_problem(
     monkeypatch.setattr(app_module, "REPORT_FILE", tmp_path / "missing.json")
     resp = api.client.get("/api/evals/latest")
     assert resp.status_code == 404 and resp.json()["type"].endswith("/no_report")
+
+
+@pytest.mark.api_success
+def test_every_response_carries_the_security_headers(api: Api) -> None:
+    resp = api.client.get("/api/health/live")
+    assert resp.headers["X-Content-Type-Options"] == "nosniff"
+    assert resp.headers["X-Frame-Options"] == "DENY"
+    assert resp.headers["Content-Security-Policy"].startswith("default-src 'none'")
+    assert resp.headers["Cache-Control"] == "no-store"
+    assert (
+        "Content-Security-Policy" not in api.client.get("/api/docs").headers
+    )  # Swagger UI loads its own assets
