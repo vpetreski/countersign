@@ -42,7 +42,9 @@ class Settings(BaseSettings):
     max_input_tokens: int = 400_000
     max_wall_seconds: int = 600
     tool_timeout_seconds: float = 4.0
-    model_timeout_seconds: float = 90.0
+    # One non-streamed turn may use most of model_max_tokens (thinking included) at tens of tokens a second;
+    # the run's lease is sized to this timeout and renewed before each retry.
+    model_timeout_seconds: float = 300.0
     max_plan_revisions: int = 3
 
     # Data freshness service levels, in hours: the time since the last sync (a daily cron, plus six hours), and

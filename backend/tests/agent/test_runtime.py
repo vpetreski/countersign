@@ -29,9 +29,10 @@ from countersign.agent.state import (
 from countersign.audit import chain
 from countersign.domain.analysis import Operation
 from countersign.execution import tokens
-from countersign.models.base import ModelRequest
+from countersign.models.base import ModelError, ModelRequest, ModelResponse, Usage
+from countersign.models.offline import ReferencePolicy
 from countersign.policy.engine import UNDO_ORDER
-from countersign.store.schema import AuditRow, ExecutionRow, ResourceOverrideRow, RunEventRow
+from countersign.store.schema import AuditRow, ExecutionRow, ResourceOverrideRow, RunEventRow, RunRow
 from tests.agent.scripted import FailingModel, ScriptedModel, findings_in, tool
 from tests.conftest import FINAL, GROUND_TRUTH, WAITING, Harness, make_harness
 
@@ -350,6 +351,33 @@ def test_an_answer_after_the_wait_limit_is_refused_and_the_run_expires(harness: 
     assert row.status == "expired" and not events(harness, run_id, "answer")
 
 
+def test_polling_a_waiting_run_does_not_restart_its_wait(harness: Harness) -> None:
+    """FM-29: an advance while the run waits for a person changes nothing, so it must not restart the 24
+    hours; a dashboard that polls every few hours would otherwise keep a stale plan alive for ever."""
+    run_id = harness.start()
+    harness.drive(run_id, WAITING | FINAL)
+    for _ in range(4):
+        harness.clock.advance(hours=6)
+        harness.runtime.advance(harness.who["operator"], run_id)
+        assert harness.run(run_id).status == "awaiting_approval"
+    harness.clock.advance(hours=1)  # 25 hours after the plan was submitted
+    harness.runtime.advance(harness.who["operator"], run_id)
+    assert harness.run(run_id).status == "expired"
+
+
+def test_a_countersign_restarts_the_wait_for_the_next_one(harness: Harness) -> None:
+    """FM-29: the limit measures how long the run has waited for a person; a countersign is a person
+    acting, so the second approver gets a full 24 hours after the first."""
+    run_id = harness.start()
+    harness.drive(run_id, WAITING | FINAL)
+    harness.clock.advance(hours=20)
+    harness.approve_all(run_id, "approver")
+    harness.clock.advance(hours=20)  # 40 hours after the plan, 20 after the first countersign
+    harness.approve_all(run_id, "approver2")
+    row = harness.run(run_id)
+    assert row.status == "executing" and row.state["capability"] is not None
+
+
 def test_a_run_can_be_cancelled_until_verification_starts(harness: Harness) -> None:
     """FM-30: cancel is allowed exactly where the transition table allows it; verifying has nothing left."""
     run_id = harness.start()
@@ -372,6 +400,99 @@ def test_overloaded_model_is_retried_and_the_turn_succeeds(ingested: Any, clock:
     assert row.status == "awaiting_approval"
     retries = events(h, run_id, "model_retry")
     assert len(retries) == 1 and retries[0]["kind"] == "overloaded"
+
+
+class _LeaseThief:
+    """Fails its first call with a retryable error after another worker has taken over the run's lease."""
+
+    def __init__(self, h: Harness) -> None:
+        self.h, self.calls, self.inner, self.run_id = h, 0, ReferencePolicy(), ""
+
+    provider = "thief"
+    model = "thief"
+
+    def complete(self, request: ModelRequest) -> ModelResponse:
+        self.calls += 1
+        if self.calls == 1:
+            with self.h.db.session() as s:
+                row = s.get(RunRow, self.run_id)
+                assert row is not None
+                row.lease_owner = "another-worker"
+            raise ModelError("overloaded", "simulated overload", status=529)
+        return self.inner.complete(request)
+
+
+def test_a_retry_after_the_lease_was_taken_over_is_never_paid_for(ingested: Any, clock: Any) -> None:
+    """FM-13: before a model retry the tick renews its lease; when another worker holds it now, the tick stops
+    instead of paying for a second call whose result it could not save, and leaves that worker's lease."""
+    BREAKERS.clear()
+    h = make_harness(ingested, clock)
+    model = _LeaseThief(h)
+    h.runtime.model_factory = lambda _st, _s: model
+    model.run_id = run_id = h.start()
+    h.runtime.advance(h.who["operator"], run_id)  # created -> planning
+    with pytest.raises(RunConflictError, match="lease was taken over"):
+        h.runtime.advance(h.who["operator"], run_id)
+    row = h.run(run_id)
+    assert model.calls == 1 and row.lease_owner == "another-worker"
+    assert row.state["budgets"]["model_turns"] == 0
+    BREAKERS.clear()
+
+
+def test_a_live_model_gets_a_lease_longer_than_its_slowest_call(ingested: Any, clock: Any) -> None:
+    offline = make_harness(ingested, clock)
+    live = make_harness(ingested, clock, model_provider="claude", model_timeout_seconds=300)
+    assert offline.runtime._lease_seconds() == 120
+    assert live.runtime._lease_seconds() == 360
+
+
+class _CachedModel:
+    """The reference policy, reporting usage the way a cached Claude prompt does."""
+
+    provider = "offline"
+    model = "cached"
+
+    def __init__(self) -> None:
+        self.inner = ReferencePolicy()
+
+    def complete(self, request: ModelRequest) -> ModelResponse:
+        out = self.inner.complete(request)
+        usage = Usage(
+            input_tokens=10, output_tokens=5, cache_read_input_tokens=900, cache_creation_input_tokens=90
+        )
+        return out.model_copy(update={"usage": usage})
+
+
+def test_cached_prompt_tokens_count_against_the_input_budget(ingested: Any, clock: Any) -> None:
+    """FM-16: with prompt caching most of the context arrives as cache reads; the budget and the span count
+    every input token, not only the uncached tail."""
+    h = make_harness(ingested, clock, model_factory=lambda _st, _s: _CachedModel())
+    run_id = h.start()
+    h.runtime.advance(h.who["operator"], run_id)  # created -> planning
+    h.runtime.advance(h.who["operator"], run_id)  # one model turn
+    assert h.run(run_id).state["budgets"]["input_tokens"] == 1000
+    chat = next(e for e in events(h, run_id, "span") if e["name"].startswith("chat"))
+    assert chat["attributes"]["gen_ai.usage.input_tokens"] == 1000
+    assert chat["attributes"]["gen_ai.usage.cache_read.input_tokens"] == 900
+
+
+def test_the_tool_call_budget_holds_inside_a_single_turn(ingested: Any, clock: Any) -> None:
+    """FM-16: a model that asks for many tools in one turn gets only what the budget has left; the rest are
+    answered with an error and never run."""
+
+    def greedy(request: ModelRequest, res: dict[str, Any]) -> list[dict[str, Any]]:
+        return [tool("find_waste", f"t{i}", categories=["idle_vm"]) for i in range(6)]
+
+    h = make_harness(ingested, clock, model_factory=lambda _st, _s: ScriptedModel([greedy]), max_tool_calls=4)
+    run_id = h.start()
+    h.runtime.advance(h.who["operator"], run_id)  # created -> planning
+    h.runtime.advance(h.who["operator"], run_id)  # the greedy turn
+    row = h.run(run_id)
+    assert len(events(h, run_id, "tool_call")) == 4 and row.state["budgets"]["tool_calls"] == 4
+    last = row.state["messages"][-1]["content"]
+    refused = [b for b in last if b.get("is_error") and "budget exhausted" in b["content"]]
+    assert len(refused) == 2
+    assert h.drive(run_id, WAITING | FINAL).status == "budget_exhausted"
 
 
 def test_persistent_provider_outage_degrades_without_failing(ingested: Any, clock: Any) -> None:
@@ -407,6 +528,26 @@ def test_tool_timeout_is_retried_by_the_agent(ingested: Any, clock: Any) -> None
     assert len(failed) == 1 and failed[0]["error_kind"] == "timeout"
     assert any(c["ok"] and c["input"]["ref"] == failed[0]["input"]["ref"] for c in calls)
     assert any("timed out" in c for c in harness_plan_caveats(h, run_id))
+
+
+def test_a_saving_that_cannot_be_estimated_is_never_counted_as_zero(ingested: Any, clock: Any) -> None:
+    """FM-09: with the price lists down a resize's target size has no price and no billing history. The
+    action says its saving is unknown, the plan total says it is incomplete, and an unknown impact is routed
+    like a large one: two countersignatures."""
+    h = make_harness(ingested, clock)
+    run_id = h.start("Rightsize oversized VMs", faults=["pricing_unavailable"])
+    assert h.drive(run_id, WAITING | FINAL).status == "awaiting_approval"
+    plan = h.plan(run_id)
+    resizes = [a for a in plan["actions"] if a["operation"] == "resize_vm"]
+    assert resizes and all(a["est_monthly_savings"] is None for a in resizes)
+    assert plan["savings_complete"] is False and plan["approvals_required"] == 2
+    h.approve_all(run_id, "approver")
+    assert h.run(run_id).status == "awaiting_approval"
+    h.approve_all(run_id, "approver2")
+    row = h.drive(run_id, FINAL)
+    assert row.status == "completed"
+    assert "saving not estimable" in row.state["report"]
+    assert f"plus {len(resizes)} whose saving could not be estimated" in row.state["report"]
 
 
 def harness_plan_caveats(h: Harness, run_id: str) -> list[str]:
@@ -500,6 +641,7 @@ def test_a_resource_changed_before_the_last_countersign_is_left_out_of_the_token
             workspace_id=h.ws,
             plan_hash=plan["hash"],
             action_id=blocked["id"],
+            action_digest=tokens.action_digest(blocked),
             now=int(h.clock().timestamp()),
         )
     row = h.drive(first, FINAL)

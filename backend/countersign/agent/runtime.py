@@ -59,7 +59,7 @@ from countersign.store.schema import RunEventRow, RunRow
 from countersign.tools.catalog import AskOperatorIn, SubmitPlanIn, ToolContext, evaluate, registry
 
 REGISTRY = registry()
-LEASE_SECONDS = 120
+LEASE_SECONDS = 120  # offline; with Claude the lease also covers the longest call the settings allow
 HUMAN_WAIT_LIMIT = dt.timedelta(hours=24)
 CAPABILITY_TTL = dt.timedelta(hours=1)
 END_STATE = {
@@ -118,6 +118,7 @@ class Tick:
     status: RunStatus
     state: RunState
     lease: str
+    started_as: RunStatus = RunStatus.CREATED  # the status when the lease was taken
     events: list[tuple[str, dict[str, Any]]] = field(default_factory=list)
     audit: list[tuple[str, str, str, dict[str, Any]]] = field(default_factory=list)
     spans: list[dict[str, Any]] = field(default_factory=list)
@@ -339,7 +340,10 @@ class Runtime:
     def _expire_if_overdue(self, tick: Tick) -> bool:
         """A run that has waited more than 24 hours for a person expires, whoever touches it next: an advance,
         an answer or a countersign. A late answer or countersign is refused, never applied to a stale plan."""
-        if tick.status not in WAITING_FOR_HUMAN or self.clock() - self._updated_at(tick) <= HUMAN_WAIT_LIMIT:
+        if tick.status not in WAITING_FOR_HUMAN:
+            return False
+        since = tick.state.waiting_since or self._updated_at(tick)  # runs recorded before the wait clock
+        if self.clock() - _utc(since) <= HUMAN_WAIT_LIMIT:
             return False
         tick.state.report = "The run expired after waiting 24 hours for a human."
         tick.audit.append(("system", "run.expired", tick.row_id, {"at_status": tick.status}))
@@ -409,7 +413,7 @@ class Runtime:
             _usage_attributes(span, response)
         st.budgets.planning_ms += int((time.perf_counter() - started) * 1000)
         st.budgets.model_turns += 1
-        st.budgets.input_tokens += response.usage.input_tokens
+        st.budgets.input_tokens += _context_tokens(response)
         st.budgets.output_tokens += response.usage.output_tokens
         st.messages.append({"role": "assistant", "content": response.content})
         tick.event(
@@ -443,6 +447,7 @@ class Runtime:
             tick.move(RunStatus.FAILED, st.error)
 
     def _on_retry(self, tick: Tick, attempt: int, exc: ModelError, wait: float) -> None:
+        self._renew(tick, wait)
         tick.state.budgets.model_retries += 1
         tick.event(
             "model_retry",
@@ -483,6 +488,15 @@ class Runtime:
                             error=True,
                         )
                     )
+                continue
+            if st.budgets.tool_calls >= st.budgets.max_tool_calls:
+                results.append(
+                    _result(
+                        call_id,
+                        {"error": f"tool-call budget exhausted ({st.budgets.max_tool_calls}); not run"},
+                        error=True,
+                    )
+                )
                 continue
             st.budgets.tool_calls += 1
             with tracer.start_as_current_span(f"execute_tool {name}") as span:
@@ -693,7 +707,9 @@ class Runtime:
                 current_sku=r.sku,
                 target_sku=p.target_sku or f.target_sku,
                 monthly_cost=f.monthly_cost_usd,
-                est_monthly_savings=round(f.est_monthly_savings_usd or 0.0, 2),
+                est_monthly_savings=None
+                if f.est_monthly_savings_usd is None
+                else round(f.est_monthly_savings_usd, 2),
                 price_source=f.price_source,
                 risk=v.risk,
                 reversible=REVERSIBLE[p.operation],
@@ -713,7 +729,8 @@ class Runtime:
             caveats=args.caveats,
             actions=actions,
             not_proposed=args.not_proposed,
-            total_monthly_savings=round(sum(a.est_monthly_savings for a in actions), 2),
+            total_monthly_savings=round(sum(a.est_monthly_savings or 0.0 for a in actions), 2),
+            savings_complete=all(a.est_monthly_savings is not None for a in actions),
             risk=verdict.risk,
             approvals_required=verdict.approvals_required,
             revision=revision,
@@ -770,7 +787,9 @@ class Runtime:
                 {"plan_hash": plan_hash_, "decisions": decisions, "note": note},
             )
         )
-        rejected = {a for d in st.approvals for a, v in d.decisions.items() if v == "reject"}
+        current = [d for d in st.approvals if d.plan_hash == st.plan.hash]
+        st.waiting_since = None  # a person acted: if the run still waits, its 24 hours start again
+        rejected = {a for d in current for a, v in d.decisions.items() if v == "reject"}
         remaining = ids - rejected
         if not remaining:
             st.outcomes = [
@@ -781,7 +800,7 @@ class Runtime:
             tick.audit.append(("system", "run.rejected", tick.row_id, {"plan_hash": plan_hash_}))
             tick.move(RunStatus.REJECTED, "every action was rejected")
             return
-        approvers = sorted({d.approver for d in st.approvals})
+        approvers = sorted({d.approver for d in current})
         if len(approvers) < st.plan.approvals_required:
             tick.event(
                 "awaiting_more_approvals", {"have": len(approvers), "need": st.plan.approvals_required}
@@ -807,7 +826,11 @@ class Runtime:
             run_id=tick.row_id,
             workspace_id=tick.workspace_id,
             plan_hash=plan_hash_,
-            action_ids=executable,
+            actions={
+                a.id: tokens.action_digest(a.model_dump(mode="json"))
+                for a in st.plan.actions
+                if a.id in executable
+            },
             approvers=approvers,
             exp=exp,
         )
@@ -963,7 +986,7 @@ class Runtime:
                 action.operation is not Operation.RESIZE_VM or current.sku == action.target_sku
             )
             outcome.verified = ok
-            outcome.realized_monthly_savings = action.est_monthly_savings if ok else 0.0
+            outcome.realized_monthly_savings = (action.est_monthly_savings or 0.0) if ok else 0.0
             tick.event(
                 "verification",
                 {
@@ -1007,7 +1030,7 @@ class Runtime:
                 update(RunRow)
                 .execution_options(synchronize_session=False)
                 .where(RunRow.id == run_id, or_(RunRow.lease_until.is_(None), RunRow.lease_until < now))
-                .values(lease_owner=lease, lease_until=now + dt.timedelta(seconds=LEASE_SECONDS))
+                .values(lease_owner=lease, lease_until=now + dt.timedelta(seconds=self._lease_seconds()))
             ).rowcount  # type: ignore[attr-defined]
             if taken != 1:
                 raise RunConflictError("another request is advancing this run; retry in a moment")
@@ -1020,7 +1043,29 @@ class Runtime:
                 status=RunStatus(row.status),
                 state=RunState.model_validate(row.state),
                 lease=lease,
+                started_as=RunStatus(row.status),
             )
+
+    def _lease_seconds(self) -> float:
+        """Long enough for one model call: a live model's turn can take up to the model timeout, so a second
+        worker never takes over a lease while the first one's paid call is still running."""
+        if self.settings.model_mode == "offline":
+            return LEASE_SECONDS
+        return max(LEASE_SECONDS, self.settings.model_timeout_seconds + 60)
+
+    def _renew(self, tick: Tick, extra_s: float) -> None:
+        """Extend this tick's lease before another attempt (a model retry): if another worker has taken the
+        run, stop here rather than pay for a call whose result could not be saved."""
+        until = self.clock() + dt.timedelta(seconds=self._lease_seconds() + extra_s)
+        with self.db.session() as s:
+            renewed = s.execute(
+                update(RunRow)
+                .execution_options(synchronize_session=False)
+                .where(RunRow.id == tick.row_id, RunRow.lease_owner == tick.lease)
+                .values(lease_until=until)
+            ).rowcount  # type: ignore[attr-defined]
+        if renewed != 1:
+            raise RunConflictError("the run's lease was taken over during a model retry; this tick stops")
 
     def _release(self, tick: Tick) -> None:
         with self.db.session() as s:
@@ -1033,6 +1078,11 @@ class Runtime:
 
     def _save(self, tick: Tick) -> None:
         now = self.clock()
+        st = tick.state
+        if tick.status not in WAITING_FOR_HUMAN:
+            st.waiting_since = None
+        elif st.waiting_since is None or tick.status is not tick.started_as:
+            st.waiting_since = now  # a no-op advance while waiting never moves it
         with self.db.session() as s:
             saved = s.execute(
                 update(RunRow)
@@ -1105,13 +1155,24 @@ def _client_kind() -> Any:
     return SpanKind.CLIENT
 
 
+def _utc(at: dt.datetime) -> dt.datetime:
+    return at.replace(tzinfo=dt.UTC) if at.tzinfo is None else at
+
+
+def _context_tokens(response: ModelResponse) -> int:
+    """Every input token of a turn: with prompt caching the cached prefix is reported apart from
+    `input_tokens`, so a budget or a span that read only `input_tokens` would see just the uncached tail."""
+    u = response.usage
+    return u.input_tokens + u.cache_read_input_tokens + u.cache_creation_input_tokens
+
+
 def _usage_attributes(span: Any, response: ModelResponse) -> None:
     span.set_attributes(
         {
             "gen_ai.response.model": response.model,
             "gen_ai.response.id": response.id,
             "gen_ai.response.finish_reasons": [response.stop_reason],
-            "gen_ai.usage.input_tokens": response.usage.input_tokens,
+            "gen_ai.usage.input_tokens": _context_tokens(response),
             "gen_ai.usage.output_tokens": response.usage.output_tokens,
             "gen_ai.usage.cache_read.input_tokens": response.usage.cache_read_input_tokens,
             "gen_ai.usage.cache_write.input_tokens": response.usage.cache_creation_input_tokens,
@@ -1156,6 +1217,10 @@ def _money(x: float) -> str:
     return f"${x:,.2f}"
 
 
+def _saving(x: float | None) -> str:
+    return "saving not estimable" if x is None else f"{_money(x)}/mo"
+
+
 def _partial_report(st: RunState, headline: str) -> str:
     lines = [headline]
     if st.plan:
@@ -1189,6 +1254,7 @@ def _report(tick: Tick, *, cancelled: bool = False) -> str:
     rejected = [o for o in st.outcomes if o.status == "rejected"]
     skipped = [o for o in st.outcomes if o.status == "skipped"]
     realized = sum(o.realized_monthly_savings for o in done)
+    unpriced = sum(1 for o in done if actions[o.action_id].est_monthly_savings is None)
     parts = []
     if cancelled:
         parts.append(
@@ -1196,13 +1262,14 @@ def _report(tick: Tick, *, cancelled: bool = False) -> str:
         )
     else:
         parts.append(
-            f"Executed and verified {len(done)} of {len(st.plan.actions)} proposed action(s), saving an estimated {_money(realized)} per month."
+            f"Executed and verified {len(done)} of {len(st.plan.actions)} proposed action(s), saving an estimated {_money(realized)} per month"
+            + (f", plus {unpriced} whose saving could not be estimated." if unpriced else ".")
         )
     for o in done:
         a = actions[o.action_id]
         target = f" to {a.target_sku}" if a.target_sku and a.operation is Operation.RESIZE_VM else ""
         parts.append(
-            f"{a.id} {a.operation}{target} {a.ref}: verified, {_money(a.est_monthly_savings)}/mo [{', '.join(a.evidence_ids)}]."
+            f"{a.id} {a.operation}{target} {a.ref}: verified, {_saving(a.est_monthly_savings)} [{', '.join(a.evidence_ids)}]."
         )
     for o in failed:
         a = actions[o.action_id]

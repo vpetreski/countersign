@@ -74,7 +74,7 @@ The full picture, with the run's state machine: [docs/architecture.md](docs/arch
 | Data | Paginated `DescribeInstances` / `DescribeVolumes` / `DescribeAddresses`, CloudWatch `GetMetricData`, CloudTrail `DetachVolume`, Azure Resource Graph and Monitor, FOCUS 1.4 billing; AWS Price List snapshot with provenance; Azure Retail Prices API live with snapshot fallback; 9 planted data defects ingestion must catch |
 | Agent | A durable state machine (13 states), one unit of work per tick, a compare-and-set lease, budgets, retries with full jitter, a circuit breaker, five injectable faults |
 | Policy | `policy.yaml`: eight rules (production, protection tags, untrusted metadata, grounding, data sufficiency, unknown environment, plan size, known resource), risk by operation, 1 or 2 approvers, separation of duties |
-| Execution | HMAC capability tokens, a saga executor (compensation inside an action; the harder an effect is to undo, the later it runs), a sandbox cloud with idempotency keys and precondition checks |
+| Execution | HMAC capability tokens bound to each action's content, a saga executor (compensation inside an action, with its own idempotency keys; the harder an effect is to undo, the later it runs), a sandbox cloud with idempotency keys, guardrails and precondition checks |
 | Trust | Hash-chained audit log per workspace, OpenTelemetry GenAI spans (`invoke_agent`, `chat`, `execute_tool`), RFC 9457 errors, rate limits, CSP |
 | Models | `ChatModel` in Anthropic Messages semantics: the Claude adapter and the offline reference policy |
 | UI | React 19, TypeScript, Tailwind 4, TanStack Query: Agent, Estate, Data, Evals, Audit; a persona switcher makes separation of duties visible |
@@ -88,10 +88,10 @@ The full picture, with the run's state machine: [docs/architecture.md](docs/arch
 | Durable runs, effectively-once effects | Functions die mid-request; two tabs race; a cloud call can succeed while its caller crashes | [ADR 0003](docs/adr/0003-durable-runs-and-effectively-once-effects.md) |
 | Policy as code, evaluated three times | Rules must not depend on the model remembering them | [ADR 0004](docs/adr/0004-policy-as-code.md) |
 | Evaluate the evaluator first | An untested grader is indistinguishable from a good agent | [ADR 0005](docs/adr/0005-evaluate-the-evaluator.md) |
-| Every number in a plan is computed by code | The model chooses what to change; costs, savings, risk and steps come from the analyzer | `agent/runtime.py::_build_plan` |
+| Every structured figure is computed by code | The model chooses what to change; costs, savings, risk, steps and approvers come from the analyzer and the policy; the prose a model writes is graded for grounding offline | `agent/runtime.py::_build_plan` |
 | The change request lists what was left out, and why | An approver needs to see the exclusions next to the proposals | `tools/catalog.py::SubmitPlanIn` |
 | Untrusted metadata is withheld, not just flagged | An injection that never reaches the prompt cannot persuade anyone | `security/screening.py`, `tools/catalog.py` |
-| Approvals bind to a plan hash; tokens bind to actions | Approve-then-change and unapproved code paths both fail closed | `agent/state.py::plan_hash`, `execution/tokens.py` |
+| Approvals bind to a plan hash; tokens bind to each action's content | Approve-then-change, an edit under an approved id and unapproved code paths all fail closed | `agent/state.py::plan_hash`, `execution/tokens.py` |
 | Statistics at the level of cases | Trials of one case are correlated; the case is the independent unit | [docs/evaluation.md](docs/evaluation.md) |
 
 ## Assumptions
@@ -101,7 +101,9 @@ The full picture, with the run's state machine: [docs/architecture.md](docs/arch
   [backend/fixtures/README.md](backend/fixtures/README.md). Prices are real: the official AWS Price List file
   and the Azure Retail Prices API.
 - Monthly estimates use 730 hours. A stop, delete or release saves the resource's monthly cost; a resize saves
-  the price difference to the next size down. Stopped VMs keep paying for their disks, and snapshot storage
+  the price difference to the next size down; when a size has no price the saving is shown as not estimable,
+  never as $0, the plan total is marked as a lower bound, and the policy routes it like a large saving (two
+  approvers). Stopped VMs keep paying for their disks, and snapshot storage
   after a delete is not netted out; both make the estimate slightly high, and the plan says it is an estimate.
 - Idle means p95 daily CPU at most 5% and peak at most 20% over at least 14 days with 80% coverage; oversized
   means p95 at most 15% and peak at most 40%; a disk must be unattached for 7 days.
@@ -180,7 +182,7 @@ A few that matter most:
 |---|---|
 | Prompt injection in a tag | Screened at ingest; the model sees a flag, never the text; P-003 excludes the resource |
 | The agent proposes production | P-001 at submission, decision and sandbox; a model that insists runs out of revisions and nothing executes |
-| Approve one plan, run another | Approvals bind to the plan hash; the capability token names exact actions; the sandbox verifies it |
+| Approve one plan, run another | Approvals bind to the plan hash; the capability token binds each action's content; the sandbox verifies it and refuses production whatever the token says |
 | Crash after a side effect | Idempotency keys per step; the next tick replays instead of repeating |
 | Two workers, one run | Compare-and-set lease; tested with real threads on PostgreSQL |
 | A resource changes after approval | Precondition checks; only that action fails; `completed_with_failures` |

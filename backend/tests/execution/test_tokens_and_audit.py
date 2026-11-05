@@ -16,12 +16,17 @@ SECRET = "s" * 40
 NOW = 1_800_000_000
 
 
+ACTION_1 = {"id": "act-01", "ref": "i-1", "operation": "stop_vm", "steps": ["stop"]}
+ACTION_2 = {"id": "act-02", "ref": "vol-2", "operation": "delete_disk", "steps": ["snapshot", "delete"]}
+DIGESTS = {"act-01": tokens.action_digest(ACTION_1), "act-02": tokens.action_digest(ACTION_2)}
+
+
 def mint(**over: object) -> str:
     args = {
         "run_id": "run_1",
         "workspace_id": "ws_1",
         "plan_hash": "a" * 64,
-        "action_ids": ["act-01", "act-02"],
+        "actions": DIGESTS,
         "approvers": ["ws_1:approver"],
         "exp": NOW + 60,
     }
@@ -35,6 +40,7 @@ def check(token: str | None, **over: object) -> tokens.CapabilityClaims:
         "workspace_id": "ws_1",
         "plan_hash": "a" * 64,
         "action_id": "act-01",
+        "action_digest": DIGESTS["act-01"],
         "now": NOW,
     }
     args.update(over)
@@ -44,6 +50,25 @@ def check(token: str | None, **over: object) -> tokens.CapabilityClaims:
 def test_a_valid_token_names_exactly_what_was_approved() -> None:
     claims = check(mint())
     assert claims.action_ids == ["act-01", "act-02"] and claims.approvers == ["ws_1:approver"]
+    assert claims.action_digests == DIGESTS
+
+
+def test_an_action_whose_content_changed_after_approval_is_refused_under_its_old_id() -> None:
+    """FM-14: the token binds each id to a digest of the action's content, not just the id."""
+    retargeted = {**ACTION_1, "ref": "i-0c4f9e2a7b1d30004"}  # the same id, a production replica
+    with pytest.raises(tokens.CapabilityError, match="changed after approval"):
+        check(mint(), action_digest=tokens.action_digest(retargeted))
+    assert tokens.action_digest({**ACTION_1}) == DIGESTS["act-01"]  # canonical: key order does not matter
+    assert tokens.action_digest(dict(reversed(list(ACTION_1.items())))) == DIGESTS["act-01"]
+
+
+def test_an_expired_token_still_authorises_finishing_or_undoing_what_it_named() -> None:
+    late = NOW + 3600
+    with pytest.raises(tokens.CapabilityError, match="expired"):
+        check(mint(), now=late)
+    assert check(mint(), now=late, allow_expired=True).action_ids == ["act-01", "act-02"]
+    with pytest.raises(tokens.CapabilityError, match="was not approved"):
+        check(mint(), now=late, allow_expired=True, action_id="act-03")
 
 
 @pytest.mark.parametrize(
@@ -78,7 +103,7 @@ def test_another_secret_cannot_mint_valid_tokens() -> None:
         run_id="run_1",
         workspace_id="ws_1",
         plan_hash="a" * 64,
-        action_ids=["act-01"],
+        actions={"act-01": DIGESTS["act-01"]},
         approvers=[],
         exp=NOW + 60,
     )
