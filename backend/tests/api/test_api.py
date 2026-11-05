@@ -205,6 +205,10 @@ def test_query_and_answer_validation(api: Api) -> None:
     assert api.client.get("/api/runs?limit=0", headers=api.auth(t["viewer"])).status_code == 422
     assert api.client.get("/api/runs/x/events?after=-1", headers=api.auth(t["viewer"])).status_code == 422
     run = start(api, t)
+    events = f"/api/runs/{run['id']}/events?after="
+    assert api.client.get(events + str(2**31 - 1), headers=api.auth(t["viewer"])).json() == {"events": []}
+    for too_big in (2**31, 140261119261041691197440):  # past the column; the second is the fuzzer's input
+        assert api.client.get(events + str(too_big), headers=api.auth(t["viewer"])).status_code == 422
     assert (
         api.client.post(
             f"/api/runs/{run['id']}/input", json={"answer": ""}, headers=api.auth(t["operator"])

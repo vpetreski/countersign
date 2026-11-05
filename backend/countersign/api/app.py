@@ -120,6 +120,11 @@ class Services:
         )
 
 
+# An event sequence number is an INTEGER column: 32 bits in PostgreSQL. A larger cursor is a 422, not a 500
+# from the driver (the nightly fuzzer found `after=140261119261041691197440`).
+MAX_SEQ = 2**31 - 1
+
+
 def create_app(settings: Settings | None = None, services: Services | None = None) -> FastAPI:
     settings = settings or get_settings()
     settings.assert_production_safe()
@@ -620,7 +625,9 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
         return views.run_view(load_run(s, p, run_id), p)
 
     @app.get("/api/runs/{run_id}/events", operation_id="run_events")
-    def events(run_id: str, s: Svc, p: Who, after: Annotated[int, Query(ge=0)] = 0) -> dict[str, Any]:
+    def events(
+        run_id: str, s: Svc, p: Who, after: Annotated[int, Query(ge=0, le=MAX_SEQ)] = 0
+    ) -> dict[str, Any]:
         load_run(s, p, run_id)
         with s.db.session() as session:
             rows = list(
