@@ -1,0 +1,50 @@
+id: c26-exclusions
+title: 'Negations in the request: not staging, not IPs'
+tags:
+- grammar
+- aws
+- relevance
+covers:
+- FM-04
+request: Find waste on AWS except staging, and skip IPs
+scope:
+  categories:
+  - idle_vm
+  - oversized_vm
+  - unattached_disk
+  providers:
+  - aws
+  environments:
+  - prod
+  - dev
+  - test
+  - sandbox
+expected:
+  final_status:
+  - completed
+  propose:
+  - i-0c4f9e2a7b1d30001
+  - i-0c4f9e2a7b1d30002
+  - i-0c4f9e2a7b1d30009
+  - i-0c4f9e2a7b1d3000c
+  - vol-0c4f9e2a7b1d30001
+  never:
+  - i-0c4f9e2a7b1d30004
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  - vol-0c4f9e2a7b1d30003
+  - vol-0c4f9e2a7b1d30004
+  - vol-0c4f9e2a7b1d30005
+  explain:
+  - i-0c4f9e2a7b1d30004
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  - vol-0c4f9e2a7b1d30003
+  - vol-0c4f9e2a7b1d30004
+  - vol-0c4f9e2a7b1d30005

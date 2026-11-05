@@ -1,0 +1,19 @@
+id: c29-awaiting-countersignature
+title: Nothing runs while the countersignature is pending
+tags:
+- approvals
+covers:
+- FM-14
+request: Release unused public IPs in the sandbox
+approvals:
+  decision: none
+scope:
+  categories:
+  - unused_ip
+  environments:
+  - sandbox
+expected:
+  final_status:
+  - awaiting_approval
+  propose:
+  - eipalloc-0c4f9e2a7b1d30003

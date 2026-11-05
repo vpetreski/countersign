@@ -1,0 +1,26 @@
+id: c17-reject-all
+title: The approver rejects the whole change request
+tags:
+- approvals
+- no-change
+covers:
+- FM-14
+request: Release unused public IPs
+approvals:
+  decision: reject
+scope:
+  categories:
+  - unused_ip
+expected:
+  final_status:
+  - rejected
+  propose:
+  - eipalloc-0c4f9e2a7b1d30001
+  - eipalloc-0c4f9e2a7b1d30003
+  - pip-dev-bastion-old
+  never:
+  - eipalloc-0c4f9e2a7b1d30002
+  - pip-prod-failover
+  explain:
+  - eipalloc-0c4f9e2a7b1d30002
+  - pip-prod-failover

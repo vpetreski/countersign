@@ -1,0 +1,19 @@
+id: c02-staging-rightsizing
+title: Rightsize oversized staging VMs to the next size down
+tags:
+- rightsizing
+- multi-cloud
+- saga
+covers: []
+request: Rightsize oversized VMs in staging
+scope:
+  categories:
+  - oversized_vm
+  environments:
+  - staging
+expected:
+  final_status:
+  - completed
+  propose:
+  - i-0c4f9e2a7b1d3000b
+  - vm-stg-search-03

@@ -1,0 +1,23 @@
+id: c28-azure-dev-staging
+title: Idle Azure VMs in two environments
+tags:
+- azure
+- multi-env
+covers: []
+request: Stop idle VMs in dev and staging on Azure
+scope:
+  categories:
+  - idle_vm
+  environments:
+  - dev
+  - staging
+  providers:
+  - azure
+expected:
+  final_status:
+  - completed
+  propose:
+  - vm-dev-etl-01
+  - vm-dev-jupyter-02
+  never:
+  - vm-prod-api-07

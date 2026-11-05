@@ -1,0 +1,33 @@
+id: c10-min-savings
+title: Only changes worth more than $100 a month
+tags:
+- threshold
+- multi-cloud
+covers: []
+request: Stop idle VMs saving more than $100 a month each
+scope:
+  categories:
+  - idle_vm
+  min_savings: 100
+expected:
+  final_status:
+  - completed
+  propose:
+  - i-0c4f9e2a7b1d30001
+  - i-0c4f9e2a7b1d30003
+  - vm-dev-etl-01
+  - vm-dev-jupyter-02
+  never:
+  - i-0c4f9e2a7b1d30004
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  - vm-prod-api-07
+  explain:
+  - i-0c4f9e2a7b1d30004
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - vm-prod-api-07

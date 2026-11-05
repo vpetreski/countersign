@@ -1,0 +1,39 @@
+id: c15-state-drift
+title: A resource changes between approval and execution
+tags:
+- fault
+- precondition
+- partial-failure
+covers:
+- FM-11
+request: Stop idle development VMs on AWS
+faults:
+- state_drift
+scope:
+  categories:
+  - idle_vm
+  environments:
+  - dev
+  providers:
+  - aws
+expected:
+  final_status:
+  - completed_with_failures
+  propose:
+  - i-0c4f9e2a7b1d30001
+  - i-0c4f9e2a7b1d30002
+  - i-0c4f9e2a7b1d3000c
+  never:
+  - i-0c4f9e2a7b1d30004
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  explain:
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  execution_failures: 1
