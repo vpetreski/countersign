@@ -4,6 +4,7 @@ Failure-mode ids (FM-xx) refer to docs/failure-modes.md."""
 
 from __future__ import annotations
 
+import dataclasses
 from typing import Any
 
 import pytest
@@ -19,8 +20,9 @@ from countersign.agent.runtime import (
 )
 from countersign.agent.state import InvalidTransitionError, RunStatus, check_transition
 from countersign.audit import chain
+from countersign.execution import tokens
 from countersign.models.base import ModelRequest
-from countersign.store.schema import ExecutionRow, ResourceOverrideRow, RunEventRow
+from countersign.store.schema import AuditRow, ExecutionRow, ResourceOverrideRow, RunEventRow
 from tests.agent.scripted import FailingModel, ScriptedModel, findings_in, tool
 from tests.conftest import FINAL, GROUND_TRUTH, WAITING, Harness, make_harness
 
@@ -380,6 +382,123 @@ def test_state_drift_fails_only_the_drifted_action(ingested: Any, clock: Any) ->
     assert row.status == "completed_with_failures"
     assert statuses.count("failed") == 1 and statuses.count("succeeded") == len(statuses) - 1
     assert "not applied" in row.state["report"]
+
+
+def executions_of(h: Harness, run_id: str) -> list[ExecutionRow]:
+    with h.db.session() as s:
+        return list(s.scalars(select(ExecutionRow).where(ExecutionRow.run_id == run_id)))
+
+
+def audit_actions(h: Harness) -> list[str]:
+    with h.db.session() as s:
+        return [a.action for a in s.scalars(select(AuditRow).where(AuditRow.workspace_id == h.ws))]
+
+
+def test_a_resource_changed_before_the_last_countersign_is_left_out_of_the_token(harness: Harness) -> None:
+    """FM-28: the policy runs again when the last countersign arrives, against the estate as it is then. A
+    second run in the same workspace stops one of the plan's VMs first; that action is left out of the token
+    with the rule that blocked it and never reaches the sandbox, the others run, and nothing about the check
+    fires a fault or spends a budget."""
+    h = harness
+    first = h.start()
+    h.drive(first, WAITING | FINAL)
+    plan = h.plan(first)
+    h.approve_all(first, "approver")  # one of the two countersigns the plan needs
+    second = h.start("stop idle dev vms")
+    h.drive(second, WAITING | FINAL)
+    plan2 = h.plan(second)
+    target = next(a for a in plan2["actions"] if a["ref"] in {x["ref"] for x in plan["actions"]})
+    only = {a["id"]: "approve" if a["id"] == target["id"] else "reject" for a in plan2["actions"]}
+    h.runtime.decide(h.who["approver"], second, plan2["hash"], only, None)
+    assert h.drive(second, FINAL).status == "completed"  # the VM is stopped in this workspace
+    blocked = next(a for a in plan["actions"] if a["ref"] == target["ref"])
+    before = h.run(first).state
+    h.approve_all(first, "approver2")
+    row = h.run(first)
+    assert row.status == "executing"
+    assert row.state["budgets"] == before["budgets"] and row.state["faults_fired"] == before["faults_fired"]
+    stages = [e["stage"] for e in events(h, first, "policy_evaluated")]
+    assert stages == ["submission", "decision"]
+    decision = events(h, first, "policy_evaluated")[-1]
+    assert not decision["allowed"] and decision["violations"][0]["ref"] == blocked["ref"]
+    assert "P-008" in decision["violations"][0]["rules"]
+    minted = events(h, first, "capability_minted")[0]["actions"]
+    assert blocked["id"] not in minted and len(minted) == len(plan["actions"]) - 1
+    with pytest.raises(tokens.CapabilityError, match="was not approved"):
+        tokens.verify(
+            h.settings.capability_secret.get_secret_value(),
+            row.state["capability"],
+            run_id=first,
+            workspace_id=h.ws,
+            plan_hash=plan["hash"],
+            action_id=blocked["id"],
+            now=int(h.clock().timestamp()),
+        )
+    row = h.drive(first, FINAL)
+    assert row.status == "completed_with_failures"
+    outcomes = {o["action_id"]: o for o in row.state["outcomes"]}
+    assert outcomes[blocked["id"]]["status"] == "skipped"
+    assert outcomes[blocked["id"]]["detail"].startswith(
+        "blocked by policy at decision: P-008 known-resource (vm/stopped"
+    )
+    assert all(
+        o["status"] == "succeeded" and o["verified"] for k, o in outcomes.items() if k != blocked["id"]
+    )
+    assert blocked["resource_id"] not in {e.resource_id for e in executions_of(h, first)}
+    assert f"{blocked['id']} stop_vm {blocked['ref']}: not applied (blocked by policy" in row.state["report"]
+    assert "plan.rechecked" in audit_actions(h)
+    with h.db.session() as s:
+        assert chain.verify(s, h.ws).valid
+
+
+def test_when_the_policy_refuses_every_approved_action_at_decision_the_run_fails(harness: Harness) -> None:
+    """FM-28: another run applied the same change request first, so at the last countersign every action is
+    blocked: no token is minted, nothing reaches the sandbox, and the run fails saying why."""
+    h = harness
+    first = h.start(faults=["state_drift"])  # armed, and must stay unfired: nothing executes
+    h.drive(first, WAITING | FINAL)
+    second = h.start()
+    h.drive(second, WAITING | FINAL)
+    assert {a["ref"] for a in h.plan(first)["actions"]} == {a["ref"] for a in h.plan(second)["actions"]}
+    h.approve_all(second)
+    assert h.drive(second, FINAL).status == "completed"
+    h.approve_all(first)
+    row = h.run(first)
+    assert row.status == "failed"
+    assert row.state["error"] == "the policy refused every approved action at decision"
+    assert row.state["capability"] is None and not events(h, first, "capability_minted")
+    outcomes = row.state["outcomes"]
+    assert {o["status"] for o in outcomes} == {"skipped"}
+    assert all(o["detail"].startswith("blocked by policy at decision: P-008") for o in outcomes)
+    assert row.state["report"].startswith("Nothing was executed: the policy refused every approved action")
+    assert executions_of(h, first) == [] and row.state["faults_fired"] == {}
+    with h.db.session() as s:
+        assert chain.verify(s, h.ws).valid
+
+
+def test_a_recheck_that_needs_more_approvals_waits_for_them(harness: Harness) -> None:
+    """FM-28: when the check at decision routes the remaining actions to more approvers than the plan said
+    (here the two-approver threshold was lowered after the plan was submitted), no token is minted until that
+    many distinct approvers have countersigned."""
+    h = harness
+    run_id = h.start("stop idle dev vms")
+    h.drive(run_id, WAITING | FINAL)
+    plan = h.plan(run_id)
+    assert plan["approvals_required"] == 1
+    h.runtime.policy = dataclasses.replace(
+        h.runtime.policy, two_approvers_at=plan["total_monthly_savings"] / 2
+    )
+    h.approve_all(run_id, "approver")
+    assert h.run(run_id).status == "awaiting_approval"
+    assert events(h, run_id, "awaiting_more_approvals")[-1] == {
+        "type": "awaiting_more_approvals",
+        "have": 1,
+        "need": 2,
+    }
+    assert not events(h, run_id, "capability_minted") and count(h, ExecutionRow) == 0
+    h.approve_all(run_id, "approver2")
+    assert h.run(run_id).status == "executing"
+    assert len(events(h, run_id, "capability_minted")[0]["approvers"]) == 2
 
 
 def test_every_disallowed_transition_raises() -> None:

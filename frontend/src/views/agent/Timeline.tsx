@@ -359,6 +359,7 @@ function renderItem(item: TimelineItem, ctx: Ctx): ReactNode {
     }
     case "policy_evaluated": {
       const allowed = p.allowed === true;
+      const atDecision = str(p.stage) === "decision";
       const violations = arr<{ ref: string; rules: string[] }>(p.violations);
       return (
         <Row
@@ -366,9 +367,12 @@ function renderItem(item: TimelineItem, ctx: Ctx): ReactNode {
           at={at}
           tone={allowed ? "accent" : "danger"}
           icon={allowed ? <ShieldCheck className="size-3.5" /> : <ShieldAlert className="size-3.5" />}
+          testId="event-policy"
           title={
             <span className="flex flex-wrap items-center gap-2">
-              <span className="font-medium">Policy evaluated</span>
+              <span className="font-medium">
+                {atDecision ? "Policy re-checked at decision" : "Policy evaluated"}
+              </span>
               <Badge tone={allowed ? "accent" : "danger"}>{allowed ? "allowed" : "denied"}</Badge>
               {str(p.risk) && <Badge tone={riskTone(str(p.risk))}>risk {str(p.risk)}</Badge>}
               {num(p.approvals_required) > 0 && <Badge>{num(p.approvals_required)} approvals required</Badge>}
@@ -380,6 +384,7 @@ function renderItem(item: TimelineItem, ctx: Ctx): ReactNode {
               {violations.map((v) => (
                 <li key={v.ref}>
                   <Mono>{v.ref}</Mono> violates {v.rules.join(", ")}
+                  {atDecision && "; left out of the capability token"}
                 </li>
               ))}
             </ul>
