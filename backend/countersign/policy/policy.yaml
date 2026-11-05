@@ -1,0 +1,45 @@
+# Countersign change policy, version 1. Evaluated by countersign/policy/engine.py before a change request
+# reaches a human, again when an approver decides, and a third time at the sandbox boundary (via the
+# capability token, which only names actions that passed). The model cannot change this file.
+version: 1
+max_actions_per_plan: 25
+rules:
+  - id: P-001
+    name: no-production
+    description: No change may target a production resource; production findings are reported only.
+  - id: P-002
+    name: protected-tags
+    description: Resources tagged lifecycle=keep|do-not-delete|retain|protected or compliance=legal-hold|regulatory-hold|litigation-hold are excluded.
+  - id: P-003
+    name: untrusted-metadata
+    description: Resources whose metadata tried to instruct the agent are excluded until a human reviews them.
+  - id: P-004
+    name: grounded
+    description: Every action must match an eligible finding for the same resource and operation, and cite evidence this run retrieved about that resource.
+  - id: P-005
+    name: data-sufficiency
+    description: Not enough metric history or coverage, inside the grace period, or conflicting sources means no change.
+  - id: P-006
+    name: known-environment
+    description: A resource without an environment tag could be production; it cannot be changed.
+  - id: P-007
+    name: plan-size
+    description: At most max_actions_per_plan actions per change request, one per resource.
+  - id: P-008
+    name: known-resource
+    description: The resource must exist in the estate and be in the state the operation expects.
+risk:
+  # Base risk by operation; one level up outside development and sandbox environments.
+  operations:
+    stop_vm: low
+    resize_vm: medium
+    delete_disk: high      # recoverable only from the snapshot taken first
+    release_ip: high       # the address itself cannot be recovered
+  raise_one_level_in: [staging, test]
+approvals:
+  low: 1
+  medium: 1
+  high: 2
+  # Any plan whose estimated impact reaches this many USD per month needs two approvers whatever its risk.
+  two_approvers_at_monthly_usd: 1000
+  separation_of_duties: true   # the requester can never approve their own change request
