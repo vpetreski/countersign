@@ -16,6 +16,7 @@ from countersign.data.quality import CheckResult, run_checks
 from countersign.data.sources import aws, azure, focus
 from countersign.data.sources.batch import SourceBatch
 from countersign.domain.resources import Environment, Kind
+from countersign.security.screening import looks_like_injection
 from countersign.settings import Settings
 from countersign.store.db import Database
 from countersign.store.schema import (
@@ -50,7 +51,8 @@ def load_batches(settings: Settings) -> list[SourceBatch]:
 
 def inherit_tags(batch: SourceBatch) -> None:
     """Attached disks often carry no tags of their own; allocate them to their VM's environment and owner
-    (the usual FinOps allocation rule) and mark the inheritance so it is visible, never silent."""
+    (the usual FinOps allocation rule) and mark the inheritance so it is visible, never silent. Inherited text
+    is screened again: an injection in the VM's Owner or Team tag flags the disk that now carries it."""
     vms = {r.ref: r for r in batch.resources if r.kind is Kind.VM}
     for i, r in enumerate(batch.resources):
         vm = vms.get(r.attached_to or "")
@@ -64,7 +66,10 @@ def inherit_tags(batch: SourceBatch) -> None:
         if not r.owner and vm.owner:
             update["owner"] = vm.owner
         if update:
-            update["flags"] = tuple(sorted({*r.flags, "inherited_tags"}))
+            flags = {*r.flags, "inherited_tags"}
+            if any(looks_like_injection(str(update[k])) for k in ("team", "owner") if k in update):
+                flags.add("suspicious_content")
+            update["flags"] = tuple(sorted(flags))
             batch.resources[i] = r.model_copy(update=update)
 
 

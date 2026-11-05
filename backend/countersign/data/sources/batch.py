@@ -7,6 +7,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from countersign.domain.resources import CostLine, CpuPoint, DataWarning, QuarantinedRecord, Resource
+from countersign.security.screening import redact
 
 
 @dataclass
@@ -26,12 +27,22 @@ class SourceBatch:
         return data
 
     def quarantine(self, source_ref: str, reason: str, raw: object) -> None:
+        """Keep a refused record for people to inspect. Its text is masked before it is stored: a record is
+        refused before its tags are screened, and a reason can quote one of its values. Mask, then truncate, so
+        a secret on the cut is never stored in part."""
         self.quarantined.append(
-            QuarantinedRecord(source=self.source, source_ref=source_ref, reason=reason, raw=str(raw)[:2000])
+            QuarantinedRecord(
+                source=self.source,
+                source_ref=source_ref,
+                reason=redact(reason)[0],
+                raw=redact(str(raw))[0][:2000],
+            )
         )
 
     def warn(self, source_ref: str, rule: str, detail: str) -> None:
-        self.warnings.append(DataWarning(source=self.source, source_ref=source_ref, rule=rule, detail=detail))
+        self.warnings.append(
+            DataWarning(source=self.source, source_ref=source_ref, rule=rule, detail=redact(detail)[0])
+        )
 
     @property
     def checksum(self) -> str:

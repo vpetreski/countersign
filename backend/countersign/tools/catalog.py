@@ -79,6 +79,11 @@ def _tags(r: Resource) -> dict[str, str]:
     return {"withheld": WITHHELD} if "suspicious_content" in r.flags else dict(r.tags)
 
 
+def _tag_text(r: Resource, value: str | None) -> str | None:
+    """A field taken from a tag (team, owner): withheld from a flagged resource like its name and tags."""
+    return WITHHELD if value is not None and "suspicious_content" in r.flags else value
+
+
 # ---------------------------------------------------------------- inputs
 
 
@@ -223,8 +228,8 @@ def find_waste(ctx: ToolContext, args: FindWasteIn) -> dict[str, Any]:
                 "provider": f.provider,
                 "kind": f.kind,
                 "environment": f.environment,
-                "team": f.team,
-                "owner": f.owner,
+                "team": _tag_text(r, f.team),
+                "owner": _tag_text(r, f.owner),
                 "category": f.category,
                 "recommended_operation": f.operation,
                 "eligible": f.eligible,
@@ -278,8 +283,8 @@ def get_resource(ctx: ToolContext, args: RefIn) -> dict[str, Any]:
         "account": r.account,
         "region": r.region,
         "environment": r.environment,
-        "team": r.team,
-        "owner": r.owner,
+        "team": _tag_text(r, r.team),
+        "owner": _tag_text(r, r.owner),
         "state": r.state,
         "native_state": r.native_state,
         "sku": r.sku,

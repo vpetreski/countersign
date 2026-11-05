@@ -1,4 +1,5 @@
-"""The HTTP API (FastAPI). Errors are RFC 9457 problem+json; mutating routes accept an Idempotency-Key."""
+"""The HTTP API (FastAPI). Errors are RFC 9457 problem+json; POST /api/runs and POST /api/runs/{run_id}/decision
+accept an Idempotency-Key."""
 
 import datetime as dt
 import hashlib
@@ -11,7 +12,7 @@ from typing import Annotated, Any, Literal
 
 from fastapi import Depends, FastAPI, Header, Query, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import delete, func, select
 from sqlalchemy.exc import IntegrityError
@@ -68,7 +69,21 @@ def _problem(
         "instance": instance,
         **(extra or {}),
     }
-    return JSONResponse(body, status_code=status, media_type="application/problem+json")
+    return _secure(JSONResponse(body, status_code=status, media_type="application/problem+json"), instance)
+
+
+def _secure[R: Response](response: R, path: str) -> R:
+    """The security headers. The middleware sets them on every response, and every problem sets them itself:
+    the handler for unexpected errors (500) runs in Starlette's outermost middleware, outside ours."""
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    response.headers["X-Frame-Options"] = "DENY"
+    if path != "/api/docs":  # the interactive docs page loads its own scripts
+        response.headers.setdefault(
+            "Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'; base-uri 'none'"
+        )
+    response.headers.setdefault("Cache-Control", "no-store")
+    return response
 
 
 # ---------------------------------------------------------------- request bodies
@@ -215,16 +230,7 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
 
     @app.middleware("http")
     async def _headers(request: Request, call_next: Callable[[Request], Any]) -> Any:
-        response = await call_next(request)
-        response.headers["X-Content-Type-Options"] = "nosniff"
-        response.headers["Referrer-Policy"] = "no-referrer"
-        response.headers["X-Frame-Options"] = "DENY"
-        if request.url.path != "/api/docs":  # the interactive docs page loads its own scripts
-            response.headers.setdefault(
-                "Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'; base-uri 'none'"
-            )
-        response.headers.setdefault("Cache-Control", "no-store")
-        return response
+        return _secure(await call_next(request), request.url.path)
 
     # ------------------------------------------------------------ guards
 
@@ -300,6 +306,9 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
         return JSONResponse(payload, status_code=status)
 
     def client_ip(request: Request) -> str:
+        # Trusts the first X-Forwarded-For address. That is safe only because Vercel overwrites the header with
+        # the connecting client's address (its request-headers docs: it does not forward external IPs, to prevent
+        # spoofing). Behind a proxy that passes the header through, a client could pick its own rate-limit bucket.
         forwarded = request.headers.get("x-forwarded-for", "")
         return forwarded.split(",")[0].strip() or (request.client.host if request.client else "unknown")
 
