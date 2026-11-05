@@ -115,11 +115,12 @@ stateDiagram-v2
 
 The model sees seven read tools: `get_estate_summary`, `find_waste`, `get_resource`, `get_utilization`,
 `get_cost_history`, `quote_price`, `check_policy`, and two control tools the runtime handles itself:
-`submit_change_plan` and `ask_operator`. Every read tool returns an evidence id; an action must cite evidence
-this run retrieved about its own resource (P-004). Only `ref`, `operation`, `target_sku`, `rationale` and
-`evidence_ids` come from the model; every structured figure in a plan (costs, savings, risk, steps) is computed
-by code from the analyzer's finding, and a saving with no price is `null` ("not estimable"), never $0. A change request also lists what the agent reviewed and left out, with reasons, so
-an approver sees the exclusions next to the proposals.
+`submit_change_plan` and `ask_operator`. Every lookup returns an evidence id (`check_policy`, the dry run, returns
+a verdict); an action must cite evidence this run retrieved about its own resource (P-004). Only `ref`,
+`operation`, `target_sku`, `rationale` and `evidence_ids` come from the model; every structured figure in a plan
+(costs, savings, risk, steps) is computed by code from the analyzer's finding, and a saving with no price is
+`null` ("not estimable"), never $0. A change request also lists what the agent reviewed and left out, with
+reasons, so an approver sees the exclusions next to the proposals.
 
 `ChatModel` speaks the Anthropic Messages format (text and `tool_use` blocks, `stop_reason`, usage). Two
 implementations:

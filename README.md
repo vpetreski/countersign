@@ -23,7 +23,7 @@ evaluates itself, and before that it evaluates its own evaluator.
 ## One run, end to end
 
 1. The operator (Sam) asks: *"Find idle development VMs and unattached disks and propose savings."*
-2. The agent reads the estate through read-only tools. Every result carries an evidence id (`ev-07`).
+2. The agent reads the estate through read-only tools. Every lookup carries an evidence id (`ev-07`); the policy dry run returns a verdict.
 3. It verifies each candidate (utilization, price), dry-runs the policy, and submits a change request: **8
    actions, $682.00 a month**, each citing its evidence. It also lists the **8 resources it reviewed and left
    out, with reasons**: a `do-not-delete` VM, a VM whose `Name` tag tries to instruct "the AI agent" to stop the
@@ -180,7 +180,7 @@ development secrets.
 
 ## Failure modes
 
-30 failure modes, each with its control, how it shows and its proof: [docs/failure-modes.md](docs/failure-modes.md).
+32 failure modes, each with its control, how it shows and its proof: [docs/failure-modes.md](docs/failure-modes.md).
 A few that matter most:
 
 | Failure | Control |
