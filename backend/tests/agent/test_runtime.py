@@ -366,6 +366,7 @@ def test_throttling_is_retried_and_every_effect_happens_once(ingested: Any, cloc
     steps = [s for o in row.state["outcomes"] for s in o["steps"]]
     assert steps and all(s["attempts"] == 2 for s in steps)
     assert count(h, ExecutionRow) == len(steps)
+    assert all(s["api"] and (s["api"].startswith("ec2:") or s["api"].startswith("Microsoft.")) for s in steps)
 
 
 def test_state_drift_fails_only_the_drifted_action(ingested: Any, clock: Any) -> None:

@@ -122,6 +122,7 @@ class Executor:
                         attempts=attempt,
                         detail=effect.detail,
                         at=self._clock(),
+                        api=str(effect.result.get("api") or "") or None,
                     )
                 )
                 done.append(step)
@@ -181,6 +182,7 @@ class Executor:
                     attempts=1,
                     detail=effect.detail,
                     at=self._clock(),
+                    api=str(effect.result.get("api") or "") or None,
                 )
             )
             compensated = True

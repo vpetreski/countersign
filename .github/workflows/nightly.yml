@@ -1,0 +1,71 @@
+name: Nightly
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deep-evals:
+    name: deep evals (10 trials, 1000 coverage replicates)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --frozen
+      - run: uv run countersign-eval run --trials 10 --calibration-trials 20 --replicates 1000 --gate --out "$RUNNER_TEMP/deep"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deep-evals
+          path: ${{ runner.temp }}/deep
+
+  api-fuzz:
+    name: API property tests (Schemathesis)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      DATABASE_URL: sqlite:///./fuzz.sqlite3
+      COUNTERSIGN_LIVE_PRICES: "false"
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --frozen
+      - run: uv run countersign seed
+      - name: No input makes the API answer 5xx
+        run: |
+          uv run uvicorn main:app --port 8000 &
+          for i in $(seq 1 60); do curl -fs http://127.0.0.1:8000/api/health/live && break; sleep 1; done
+          TOKEN=$(curl -fs -X POST http://127.0.0.1:8000/api/workspaces | python3 -c "import json,sys; print(json.load(sys.stdin)['tokens']['operator'])")
+          uv run schemathesis run http://127.0.0.1:8000/api/openapi.json --checks not_a_server_error --max-examples 40 \
+            --exclude-path /api/cron/sync -H "Authorization: Bearer $TOKEN"
+
+  live-claude:
+    name: Claude on the same cases (skipped without a key)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --frozen
+      - name: Contract tests always run; the live evaluation only with a repository secret
+        run: |
+          uv run pytest -q -m claude_contract
+          uv run countersign-eval run --model claude --trials 1 --no-mutants --no-calibration --out "$RUNNER_TEMP/claude"

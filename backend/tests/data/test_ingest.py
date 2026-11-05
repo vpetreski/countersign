@@ -95,6 +95,7 @@ def test_reconciliation_finds_the_stopped_but_billed_vm(batches: list) -> None:
 
 
 def test_freshness_fails_past_its_service_level(batches: list) -> None:
+    """FM-21: data older than its service level fails the freshness check (the run would be told it is stale)."""
     stale = NOW + dt.timedelta(hours=31)
     checks = {c.check_id: c for c in run_checks(batches, fetched_at=NOW, now=stale, freshness_hours=30)}
     assert checks["freshness.inventory"].status == "fail"

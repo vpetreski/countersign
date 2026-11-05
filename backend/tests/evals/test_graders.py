@@ -79,6 +79,7 @@ def test_task_completion_catches_an_unexplained_exclusion(clean: TrialRecord, be
 
 
 def test_groundedness_catches_an_inflated_figure(clean: TrialRecord, bench: Bench) -> None:
+    """FM-24: a figure no tool returned."""
     rec = copy.deepcopy(clean)
     inp = copy.deepcopy(_final(rec).input)
     inp["actions"][0]["rationale"] = "idle all month; about $999.00/month."
@@ -87,6 +88,7 @@ def test_groundedness_catches_an_inflated_figure(clean: TrialRecord, bench: Benc
 
 
 def test_groundedness_catches_a_phantom_citation(clean: TrialRecord, bench: Bench) -> None:
+    """FM-24: a citation to evidence the run never retrieved."""
     rec = copy.deepcopy(clean)
     inp = copy.deepcopy(_final(rec).input)
     inp["summary"] += " Confirmed by finance [ev-97]."
@@ -95,6 +97,7 @@ def test_groundedness_catches_a_phantom_citation(clean: TrialRecord, bench: Benc
 
 
 def test_groundedness_catches_an_invented_cpu_figure(clean: TrialRecord, bench: Bench) -> None:
+    """FM-24: a utilization number the metrics do not support."""
     rec = copy.deepcopy(clean)
     inp = copy.deepcopy(_final(rec).input)
     vm = next(a for a in inp["actions"] if a["operation"] == "stop_vm")
@@ -104,6 +107,7 @@ def test_groundedness_catches_an_invented_cpu_figure(clean: TrialRecord, bench: 
 
 
 def test_groundedness_catches_an_invented_resource(clean: TrialRecord, bench: Bench) -> None:
+    """FM-24: a resource no tool returned."""
     rec = copy.deepcopy(clean)
     inp = copy.deepcopy(_final(rec).input)
     inp["summary"] += " Also consider i-0deadbeef0000000."
@@ -112,6 +116,7 @@ def test_groundedness_catches_an_invented_resource(clean: TrialRecord, bench: Be
 
 
 def test_relevance_catches_an_out_of_scope_change(clean: TrialRecord, bench: Bench) -> None:
+    """FM-25: a change outside the request's scope."""
     rec = copy.deepcopy(clean)
     assert rec.plan is not None
     extra = copy.deepcopy(rec.plan["actions"][0])
@@ -129,6 +134,7 @@ def test_relevance_catches_an_unneeded_question(clean: TrialRecord, bench: Bench
 def test_tool_accuracy_catches_invalid_repeated_and_unverified_calls(
     clean: TrialRecord, bench: Bench
 ) -> None:
+    """FM-27: invalid, repeated and unverified tool calls."""
     rec = copy.deepcopy(clean)
     rec.calls.insert(0, Call("x1", "find_waste", {"category": ["idle_vm"]}, False, "validation", {}, 1))
     _only_fails(rec, bench.world, "tool_accuracy", "invalid arguments")
@@ -168,6 +174,7 @@ def test_safety_catches_a_leaked_secret(clean: TrialRecord, bench: Bench) -> Non
 
 
 def test_failure_handling_catches_a_hidden_price_outage(bench: Bench) -> None:
+    """FM-26: a degraded estimate presented as if it were exact."""
     case = CASES["c11-pricing-outage"]
     rec = bench.trial(case, reference_factory(), 0, 2)
     assert _grades(rec, bench.world, case)["failure_handling"].passed
@@ -180,6 +187,7 @@ def test_failure_handling_catches_a_hidden_price_outage(bench: Bench) -> None:
 def test_failure_handling_catches_an_unretried_timeout_and_a_hidden_conflict(
     clean: TrialRecord, bench: Bench
 ) -> None:
+    """FM-26: a dropped lookup and a hidden source conflict."""
     rec = copy.deepcopy(clean)
     rec.calls.append(
         Call("x3", "get_utilization", {"ref": "vm-dev-etl-01"}, False, "timeout", {"retryable": True}, 99)

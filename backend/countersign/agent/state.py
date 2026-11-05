@@ -220,6 +220,9 @@ class StepResult(BaseModel):
     attempts: int
     detail: str
     at: dt.datetime
+    api: str | None = Field(
+        default=None, description="The provider API this step stands for, e.g. ec2:StopInstances"
+    )
 
 
 class ActionOutcome(BaseModel):
