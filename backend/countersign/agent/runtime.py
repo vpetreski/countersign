@@ -897,6 +897,7 @@ class Runtime:
                 raise RunNotFoundError(f"no run {run_id} in this workspace")
             taken = s.execute(
                 update(RunRow)
+                .execution_options(synchronize_session=False)
                 .where(RunRow.id == run_id, or_(RunRow.lease_until.is_(None), RunRow.lease_until < now))
                 .values(lease_owner=lease, lease_until=now + dt.timedelta(seconds=LEASE_SECONDS))
             ).rowcount  # type: ignore[attr-defined]
@@ -917,6 +918,7 @@ class Runtime:
         with self.db.session() as s:
             s.execute(
                 update(RunRow)
+                .execution_options(synchronize_session=False)
                 .where(RunRow.id == tick.row_id, RunRow.lease_owner == tick.lease)
                 .values(lease_owner=None, lease_until=None)
             )
@@ -926,6 +928,7 @@ class Runtime:
         with self.db.session() as s:
             saved = s.execute(
                 update(RunRow)
+                .execution_options(synchronize_session=False)
                 .where(RunRow.id == tick.row_id, RunRow.lease_owner == tick.lease)
                 .values(
                     status=tick.status,

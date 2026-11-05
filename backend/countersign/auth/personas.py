@@ -52,8 +52,9 @@ def issue(settings: Settings, workspace_id: str, persona: Persona, now: dt.datet
     return jwt.encode(claims, settings.jwt_secret.get_secret_value(), algorithm="HS256")
 
 
-def principal(settings: Settings, token: str) -> Principal:
-    """Fail closed: any missing claim, wrong audience, issuer, algorithm or signature is a 401."""
+def principal(settings: Settings, token: str, now: dt.datetime) -> Principal:
+    """Fail closed: any missing claim, wrong audience, issuer, algorithm, signature or time window is a 401.
+    Time claims are checked against the service clock (not the library's), so tests and the server agree."""
     try:
         claims = jwt.decode(
             token,
@@ -61,8 +62,18 @@ def principal(settings: Settings, token: str) -> Principal:
             algorithms=["HS256"],
             audience=AUDIENCE,
             issuer=ISSUER,
-            options={"require": ["exp", "iat", "sub", "aud", "iss"]},
+            options={
+                "require": ["exp", "iat", "nbf", "sub", "aud", "iss"],
+                "verify_exp": False,
+                "verify_nbf": False,
+                "verify_iat": False,
+            },
         )
+        stamp = int(now.timestamp())
+        if int(claims["exp"]) <= stamp:
+            raise AuthError("token expired")
+        if int(claims["nbf"]) > stamp + 30:
+            raise AuthError("token not valid yet")
         persona = BY_KEY[str(claims["persona"])]
         if claims["role"] != persona.role.value or claims["sub"] != f"{claims['ws']}:{persona.key}":
             raise AuthError("token claims are inconsistent")

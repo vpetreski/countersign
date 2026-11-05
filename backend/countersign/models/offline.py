@@ -53,7 +53,10 @@ _ENV_PATTERNS = {
     "sandbox": r"\bsandbox(?:es)?\b|\bplayground\b",
 }
 _PROVIDERS = {"aws": r"\baws\b|\bamazon\b|\bec2\b", "azure": r"\bazure\b|\bmicrosoft\b"}
-_NEG = r"(?:not|except|excluding|exclude|without|but not|never|don'?t (?:touch|include)|do not (?:touch|include)|leave|skip|avoid)\s+(?:the\s+|any\s+|in\s+)?"
+_NEG = (
+    r"(?:not|except|excluding|exclude|without|but not|never|don'?t (?:touch|include)|do not (?:touch|include)"
+    r"|leave|skip|avoid)\s+(?:(?:the|any|in|on|for)\s+)*"
+)
 _REF = re.compile(
     r"\b(i-[0-9a-f]{8,17}|vol-[0-9a-f]{8,17}|eipalloc-[0-9a-f]{8,17}|(?:vm|disk|pip)-[a-z0-9][a-z0-9-]{2,60})\b"
 )
@@ -61,7 +64,27 @@ _MONEY = re.compile(
     r"(?:over|above|more than|at least|greater than|minimum(?: of)?|>=?)\s*\$?\s*(\d+(?:[.,]\d+)?)\s*(k)?\b",
     re.I,
 )
-_TEAM = re.compile(r"\bteam[:\s]+([a-z0-9][a-z0-9-]+)|\b([a-z0-9][a-z0-9-]+)\s+team\b", re.I)
+_TEAM_AFTER = re.compile(r"\bteams?[:\s]+([a-z0-9][a-z0-9-]+)", re.I)
+_TEAM_BEFORE = re.compile(r"\b([a-z0-9][a-z0-9-]+)\s+team\b", re.I)
+_NOT_TEAMS = frozenset(
+    {
+        "the",
+        "a",
+        "an",
+        "my",
+        "our",
+        "each",
+        "every",
+        "of",
+        "for",
+        "by",
+        "from",
+        "that",
+        "this",
+        "any",
+        "whole",
+    }
+)
 
 
 @dataclass
@@ -125,9 +148,8 @@ def understand(text: str) -> Scope:
     providers = [p for p, pat in _PROVIDERS.items() if re.search(pat, low) and p not in excluded_providers]
     if excluded_providers and not providers:
         providers = [p for p in _PROVIDERS if p not in excluded_providers]
-    teams = sorted(
-        {(m.group(1) or m.group(2)).lower() for m in _TEAM.finditer(text)}
-        - {"the", "a", "my", "our", "each", "every"}
+    teams = sorted({m.group(1).lower() for m in _TEAM_AFTER.finditer(text)} - _NOT_TEAMS) or sorted(
+        {m.group(1).lower() for m in _TEAM_BEFORE.finditer(text)} - _NOT_TEAMS
     )
     money = _MONEY.search(text)
     min_savings = 0.0
