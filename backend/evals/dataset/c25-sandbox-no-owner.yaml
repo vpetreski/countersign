@@ -1,0 +1,16 @@
+id: c25-sandbox-no-owner
+title: An idle sandbox VM with no owner to notify
+tags:
+- warnings
+covers: []
+request: Stop idle VMs in the sandbox
+scope:
+  categories:
+  - idle_vm
+  environments:
+  - sandbox
+expected:
+  final_status:
+  - completed
+  propose:
+  - i-0c4f9e2a7b1d30009

@@ -1,0 +1,49 @@
+id: c18-partial-approval
+title: Approvers keep the VM stops and reject the disk deletions
+tags:
+- approvals
+- partial
+covers:
+- FM-14
+request: Find idle development VMs and unattached disks and propose savings.
+approvals:
+  decision: approve
+  reject_operations:
+  - delete_disk
+scope:
+  categories:
+  - idle_vm
+  - unattached_disk
+  environments:
+  - dev
+expected:
+  final_status:
+  - completed
+  propose:
+  - disk-dev-old-build-02
+  - disk-dev-scratch-01
+  - i-0c4f9e2a7b1d30001
+  - i-0c4f9e2a7b1d30002
+  - i-0c4f9e2a7b1d3000c
+  - vm-dev-etl-01
+  - vm-dev-jupyter-02
+  - vol-0c4f9e2a7b1d30001
+  never:
+  - disk-dev-ml-dataset-keep
+  - i-0c4f9e2a7b1d30004
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  - vol-0c4f9e2a7b1d30004
+  - vol-0c4f9e2a7b1d30005
+  explain:
+  - disk-dev-ml-dataset-keep
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  - vol-0c4f9e2a7b1d30004
+  - vol-0c4f9e2a7b1d30005

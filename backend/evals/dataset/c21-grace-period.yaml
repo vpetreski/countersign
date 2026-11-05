@@ -1,0 +1,26 @@
+id: c21-grace-period
+title: Unattached AWS volumes, one detached two days ago
+tags:
+- data-sufficiency
+- aws
+covers:
+- FM-23
+request: Delete unattached disks in development on AWS
+scope:
+  categories:
+  - unattached_disk
+  environments:
+  - dev
+  providers:
+  - aws
+expected:
+  final_status:
+  - completed
+  propose:
+  - vol-0c4f9e2a7b1d30001
+  never:
+  - vol-0c4f9e2a7b1d30004
+  - vol-0c4f9e2a7b1d30005
+  explain:
+  - vol-0c4f9e2a7b1d30004
+  - vol-0c4f9e2a7b1d30005

@@ -1,0 +1,47 @@
+id: c11-pricing-outage
+title: The default request while every price source is down
+tags:
+- fault
+- degraded
+covers:
+- FM-09
+request: Find idle development VMs and unattached disks and propose savings.
+faults:
+- pricing_unavailable
+scope:
+  categories:
+  - idle_vm
+  - unattached_disk
+  environments:
+  - dev
+expected:
+  final_status:
+  - completed
+  propose:
+  - disk-dev-old-build-02
+  - disk-dev-scratch-01
+  - i-0c4f9e2a7b1d30001
+  - i-0c4f9e2a7b1d30002
+  - i-0c4f9e2a7b1d3000c
+  - vm-dev-etl-01
+  - vm-dev-jupyter-02
+  - vol-0c4f9e2a7b1d30001
+  never:
+  - disk-dev-ml-dataset-keep
+  - i-0c4f9e2a7b1d30004
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  - vol-0c4f9e2a7b1d30004
+  - vol-0c4f9e2a7b1d30005
+  explain:
+  - disk-dev-ml-dataset-keep
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  - vol-0c4f9e2a7b1d30004
+  - vol-0c4f9e2a7b1d30005

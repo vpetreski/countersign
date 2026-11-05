@@ -160,16 +160,23 @@ class Runtime:
     # ------------------------------------------------------------------ commands
 
     def create(
-        self, principal: Principal, request: str, faults: list[str], *, model_name: str | None = None
+        self,
+        principal: Principal,
+        request: str,
+        faults: list[str],
+        *,
+        model_name: str | None = None,
+        seed: int | None = None,
     ) -> str:
         if principal.role is not Role.OPERATOR:
             raise RunForbiddenError("only an operator can start a run")
         text, kinds = redact(request.strip())
         now = self.clock()
         s = self.settings
-        seed = random.Random(f"{principal.workspace_id}:{now.isoformat()}:{secrets.token_hex(4)}").randrange(
-            2**31
-        )
+        if seed is None:
+            seed = random.Random(
+                f"{principal.workspace_id}:{now.isoformat()}:{secrets.token_hex(4)}"
+            ).randrange(2**31)
         state = RunState(
             messages=[{"role": "user", "content": [{"type": "text", "text": text}]}],
             budgets=Budgets(
@@ -585,6 +592,7 @@ class Runtime:
                 )
                 tick.move(RunStatus.FAILED, st.error)
             return
+        st.not_proposed = list(args.not_proposed)
         if not args.actions:
             st.report = args.summary
             results.append(
@@ -673,17 +681,19 @@ class Runtime:
             for n, (_irrev, _i, p, r, f, v) in enumerate(staged, start=1)
         ]
         dumped = [a.model_dump(mode="json") for a in actions]
+        left_out = [n.model_dump(mode="json") for n in args.not_proposed]
         assert verdict.risk is not None
         return ChangePlan(
             summary=args.summary,
             caveats=args.caveats,
             actions=actions,
+            not_proposed=args.not_proposed,
             total_monthly_savings=round(sum(a.est_monthly_savings for a in actions), 2),
             risk=verdict.risk,
             approvals_required=verdict.approvals_required,
             revision=revision,
             policy_version=verdict.policy_version,
-            hash=plan_hash(args.summary, args.caveats, dumped, verdict.policy_version),
+            hash=plan_hash(args.summary, args.caveats, dumped, verdict.policy_version, left_out),
         )
 
     # ------------------------------------------------------------------ approval
@@ -897,6 +907,7 @@ class Runtime:
                 raise RunNotFoundError(f"no run {run_id} in this workspace")
             taken = s.execute(
                 update(RunRow)
+                .execution_options(synchronize_session=False)
                 .where(RunRow.id == run_id, or_(RunRow.lease_until.is_(None), RunRow.lease_until < now))
                 .values(lease_owner=lease, lease_until=now + dt.timedelta(seconds=LEASE_SECONDS))
             ).rowcount  # type: ignore[attr-defined]
@@ -917,6 +928,7 @@ class Runtime:
         with self.db.session() as s:
             s.execute(
                 update(RunRow)
+                .execution_options(synchronize_session=False)
                 .where(RunRow.id == tick.row_id, RunRow.lease_owner == tick.lease)
                 .values(lease_owner=None, lease_until=None)
             )
@@ -926,6 +938,7 @@ class Runtime:
         with self.db.session() as s:
             saved = s.execute(
                 update(RunRow)
+                .execution_options(synchronize_session=False)
                 .where(RunRow.id == tick.row_id, RunRow.lease_owner == tick.lease)
                 .values(
                     status=tick.status,

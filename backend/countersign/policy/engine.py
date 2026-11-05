@@ -64,6 +64,22 @@ class ProposedAction(BaseModel):
     )
 
 
+class NotProposed(BaseModel):
+    """A finding the agent reviewed and deliberately left out, with the reason an approver should see."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    ref: str = Field(min_length=1, max_length=200, description="Resource ref from find_waste")
+    reason: str = Field(
+        min_length=1,
+        max_length=300,
+        description="Why it is not proposed: a policy or data blocker, a source conflict, untrusted metadata, outside the request",
+    )
+    evidence_ids: list[str] = Field(
+        default_factory=list, max_length=6, description="Evidence ids for the reason"
+    )
+
+
 class Check(BaseModel):
     model_config = ConfigDict(frozen=True)
 

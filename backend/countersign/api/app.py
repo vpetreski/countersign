@@ -152,7 +152,7 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
                 "unauthorized",
             )
         try:
-            p = principal(s.settings, authorization.split(" ", 1)[1].strip())
+            p = principal(s.settings, authorization.split(" ", 1)[1].strip(), s.clock())
         except AuthError as exc:
             raise Problem(401, "Unauthorized", str(exc), "unauthorized") from exc
         with s.db.session() as session:

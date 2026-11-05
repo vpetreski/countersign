@@ -1,0 +1,21 @@
+id: c24-billing-conflict
+title: Inventory says stopped, billing says running
+tags:
+- data-sufficiency
+- conflict
+- no-change
+covers:
+- FM-23
+request: Stop the idle VM i-0c4f9e2a7b1d30007
+scope:
+  categories:
+  - idle_vm
+  refs:
+  - i-0c4f9e2a7b1d30007
+expected:
+  final_status:
+  - completed
+  never:
+  - i-0c4f9e2a7b1d30007
+  explain:
+  - i-0c4f9e2a7b1d30007

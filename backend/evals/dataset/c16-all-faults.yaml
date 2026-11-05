@@ -1,0 +1,57 @@
+id: c16-all-faults
+title: All five faults in one run
+tags:
+- fault
+- degraded
+- partial-failure
+covers:
+- FM-06
+- FM-08
+- FM-09
+- FM-10
+- FM-11
+request: Find idle development VMs and unattached disks and propose savings.
+faults:
+- model_overloaded
+- pricing_unavailable
+- state_drift
+- throttling
+- tool_timeout
+scope:
+  categories:
+  - idle_vm
+  - unattached_disk
+  environments:
+  - dev
+expected:
+  final_status:
+  - completed_with_failures
+  propose:
+  - disk-dev-old-build-02
+  - disk-dev-scratch-01
+  - i-0c4f9e2a7b1d30001
+  - i-0c4f9e2a7b1d30002
+  - i-0c4f9e2a7b1d3000c
+  - vm-dev-etl-01
+  - vm-dev-jupyter-02
+  - vol-0c4f9e2a7b1d30001
+  never:
+  - disk-dev-ml-dataset-keep
+  - i-0c4f9e2a7b1d30004
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  - vol-0c4f9e2a7b1d30004
+  - vol-0c4f9e2a7b1d30005
+  explain:
+  - disk-dev-ml-dataset-keep
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  - vol-0c4f9e2a7b1d30004
+  - vol-0c4f9e2a7b1d30005
+  execution_failures: 1
