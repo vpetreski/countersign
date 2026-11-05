@@ -1,15 +1,19 @@
 import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { expect, type Page } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
 
 export const SHOTS_DIR = fileURLToPath(new URL("../../reports/tests/", import.meta.url));
 export const DEFAULT_PRESET = "Find idle development VMs and unattached disks and propose savings.";
 export const PRODUCTION_PRESET = "Stop the production API replica i-0c4f9e2a7b1d30004";
 
+/** The committed evidence comes from the local project; a live run keeps its screenshots with its own results. */
 export async function shot(page: Page, name: string): Promise<void> {
-  mkdirSync(SHOTS_DIR, { recursive: true });
-  await page.screenshot({ path: path.join(SHOTS_DIR, `${name}.png`), animations: "disabled" });
+  const info = test.info();
+  const file =
+    info.project.name === "local" ? path.join(SHOTS_DIR, `${name}.png`) : info.outputPath(`${name}.png`);
+  mkdirSync(path.dirname(file), { recursive: true });
+  await page.screenshot({ path: file, animations: "disabled" });
 }
 
 /** A fresh page has fresh sessionStorage, so this also creates a new demo workspace. */
