@@ -55,14 +55,24 @@ def markdown(r: dict[str, Any]) -> str:
     lines += [
         "",
         "Intervals are over cases, the independent unit: a cluster bootstrap of per-case means (Wilson over cases "
-        "where the bootstrap is degenerate at 0 or 1), and a Wilson interval on the share of cases that pass every trial.",
+        "where the bootstrap interval has zero width), and a Wilson interval on the share of cases that pass every "
+        "trial. For a deterministic policy on hand-picked cases these Wilson intervals (the all-pass one, and the "
+        "mean's where the bootstrap collapses) are illustrative: the cases are not a random sample of anything, so "
+        "they have no sampling interpretation.",
         "",
         "pass^k (all six criteria jointly, k trials in a row): "
         + ", ".join(f"k={k}: {_pct(v)}" for k, v in r["pass_hat_k"].items()),
         "",
-        f"Minimum detectable effect: {r['mde']['discordant_flips']} one-directional case flips "
-        f"({_pct(r['mde']['share_of_cases'] or 0)} of the dataset) for an exact two-sided McNemar test at alpha "
-        f"{r['mde']['alpha']}.",
+    ]
+    msd = r["min_significant_discordance"]
+    power = msd["power"]
+    lines += [
+        f"Minimum significant discordance: {msd['discordant_cases']} cases flipping one way and none the other "
+        f"({_pct(msd['share_of_cases'] or 0)} of the dataset) is the fewest an exact two-sided McNemar test at alpha "
+        f"{msd['alpha']} can call significant; it is not a minimum detectable effect. Power, computed exactly by "
+        f"enumeration: for two agents passing each case with probability {power['pass_probabilities'][0]:g} and "
+        f"{power['pass_probabilities'][1]:g}, independently, the test reaches p < {power['alpha']} on "
+        f"{power['n_cases']} cases with probability {_pct(power['power'])}.",
         "",
     ]
     m = r.get("mutation")

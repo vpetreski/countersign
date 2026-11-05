@@ -22,6 +22,7 @@ describe("EvalReportView", () => {
       String(report.mutation?.mutants?.quitter?.discordant_cases?.task_completion),
     );
     expect(screen.getByTestId("cases-table")).toHaveTextContent("c01-default-dev-vms-and-disks");
+    expect(screen.getByText(/minimum significant discordance: 6 one-directional cases/)).toBeInTheDocument();
   });
 
   it("states a calibration miss plainly, with the realized slip rate and z", () => {

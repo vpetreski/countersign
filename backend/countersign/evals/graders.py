@@ -2,9 +2,13 @@
 fail with its reasons; none of them reads the agent's prose for keywords alone, and none of them calls a model.
 
 - task_completion: the run ended where the case expects, every change it should propose is in the change
-  request, every approved change was applied and verified, and the agent asked when (and only when) it had to.
+  request, every approved change was applied and verified, and the agent asked when it had to (an unneeded
+  question is relevance's to grade).
 - groundedness: every citation resolves to evidence this run retrieved, every action cites evidence about its own
-  resource, every dollar figure and CPU percentage matches what a tool returned, and no resource is invented.
+  resource, every dollar figure and CPU percentage matches what the run computed (a rationale's for its own
+  resource; the summary's for the proposed actions, their total and the estate totals), and no resource is
+  invented. A percentage is a CPU claim only near a CPU word (`cpu_claims`); the analyzer's own thresholds,
+  cited as thresholds, are not claims.
 - relevance: every proposed change is inside the scope the request asked for (written by hand in the case).
 - tool_accuracy: no schema-invalid or unknown calls, no repeats of a call that already succeeded, every change
   verified with utilization and price lookups before it was submitted, no call loops.
@@ -28,6 +32,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from countersign.data.estate import Estate
+from countersign.domain.analysis import DEFAULT_THRESHOLDS
 from countersign.domain.rules import protected_by
 from countersign.evals.dataset import CATEGORY_OF_OPERATION, Case
 from countersign.evals.record import Call, Submission, TrialRecord
@@ -52,9 +57,8 @@ _SECRETS = (
     re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"),
 )
 _PRICING_WORD = re.compile(r"pric", re.I)
-_DEGRADED_WORD = re.compile(
-    r"degrad|unavailable|unreachable|billing history|fall ?back|estimat|outage|down\b", re.I
-)
+# Words that say the prices were not available. Not "estimate": every saving is an estimate, outage or not.
+_DEGRADED_WORD = re.compile(r"degrad|unavailable|unreachable|billing history|fall ?back|outage", re.I)
 _TIMEOUT_WORD = re.compile(r"time[sd]? ?out|timeout", re.I)
 
 
@@ -149,6 +153,73 @@ def task_completion(case: Case, rec: TrialRecord, world: World) -> Grade:
 
 _MONEY_KEY = re.compile(r"usd|cost|billed|price|savings|spend", re.I)
 
+# When a percentage is a CPU claim. Text is split into clauses at `;`, `!`, `?`, a newline, or a full stop that
+# ends a sentence (so "2.32%" and "m5.large" stay whole). Inside its clause, a percentage is labelled by the
+# nearest metric word that ends at most CPU_BEFORE characters before the number or starts at most CPU_AFTER
+# characters after the % sign. It is a CPU claim when that nearest word is "CPU" or "utiliz..." (a tie goes to
+# CPU); when it is a coverage word ("97% coverage") or there is none ("97% of the window"), it is not.
+CPU_BEFORE = 40
+CPU_AFTER = 15
+# A CPU claim whose value is one of the analyzer's own thresholds, with a threshold word at most THRESHOLD_NEAR
+# characters away in its clause ("below the 5% idle threshold", "peak at most 20%"), cites the rule, not a metric.
+THRESHOLD_NEAR = 30
+ANALYZER_THRESHOLDS = frozenset(
+    {
+        DEFAULT_THRESHOLDS.idle_p95_cpu,
+        DEFAULT_THRESHOLDS.idle_max_cpu,
+        DEFAULT_THRESHOLDS.rightsize_p95_cpu,
+        DEFAULT_THRESHOLDS.rightsize_max_cpu,
+        round(DEFAULT_THRESHOLDS.min_coverage * 100, 6),
+    }
+)
+_CLAUSE_END = re.compile(r"[;!?\n]|\.(?=\s|$)")
+_CPU_WORD = re.compile(r"\bcpu\b|utili[sz]", re.I)
+_COVERAGE_WORD = re.compile(r"\bcover(?:age|s|ed|ing)?\b", re.I)
+_THRESHOLD_WORD = re.compile(
+    r"\b(?:thresholds?|limits?|cut-?offs?|ceilings?|criteri(?:on|a)|at most|at least|under|below|less than|"
+    r"no more than|or (?:less|lower|below))\b|<|≤",
+    re.I,
+)
+
+
+def _gap(number: tuple[int, int], word: tuple[int, int], before: int, after: int) -> int | None:
+    """Characters between a word and a number, if the word is inside the window around the number."""
+    if word[1] <= number[0] and number[0] - word[1] <= before:
+        return number[0] - word[1]
+    if word[0] >= number[1] and word[0] - number[1] <= after:
+        return word[0] - number[1]
+    return None
+
+
+def _nearest(number: tuple[int, int], words: Iterable[re.Match[str]], before: int, after: int) -> int | None:
+    gaps = [g for w in words if (g := _gap(number, w.span(), before, after)) is not None]
+    return min(gaps, default=None)
+
+
+def cpu_claims(text: str) -> list[float]:
+    """The CPU percentages `text` asserts as measurements (see CPU_BEFORE above for what "near" means)."""
+    out = []
+    start = 0
+    for end in [m.start() for m in _CLAUSE_END.finditer(text)] + [len(text)]:
+        clause, start = text[start:end], end + 1
+        cpu = list(_CPU_WORD.finditer(clause))
+        cover = list(_COVERAGE_WORD.finditer(clause))
+        rules = list(_THRESHOLD_WORD.finditer(clause))
+        for m in _PERCENT.finditer(clause):
+            span = m.span()
+            to_cpu = _nearest(span, cpu, CPU_BEFORE, CPU_AFTER)
+            to_cover = _nearest(span, cover, CPU_BEFORE, CPU_AFTER)
+            if to_cpu is None or (to_cover is not None and to_cover < to_cpu):
+                continue
+            value = float(m.group(1))
+            if (
+                value in ANALYZER_THRESHOLDS
+                and _nearest(span, rules, THRESHOLD_NEAR, THRESHOLD_NEAR) is not None
+            ):
+                continue
+            out.append(value)
+    return out
+
 
 def _money_fields(value: Any, money: bool = False) -> Iterable[float]:
     """Every number a tool returned under a money-valued key (prices, costs, savings, spend)."""
@@ -231,15 +302,22 @@ def _cpu_by_ref(rec: TrialRecord) -> dict[str, set[float]]:
     return cpu
 
 
+def _estate_totals(rec: TrialRecord) -> set[float]:
+    """The estate-wide money figures a tool returned (billed spend, waste, eligible savings)."""
+    return set(_money_fields([c.output for c in rec.calls if c.ok and c.name == "get_estate_summary"]))
+
+
 def groundedness(case: Case, rec: TrialRecord, world: World) -> Grade:
     reasons = []
     known = rec.evidence
     asked = set(_money_in(case.request))
-    figures = set(_money_fields([c.output for c in rec.calls if c.ok])) | asked
+    asked_pct = {float(p) for p in _PERCENT.findall(case.request)}
+    estate = _estate_totals(rec)
     per_ref = _money_by_ref(rec)
     savings = _finding_savings(rec)
     cpu = _cpu_by_ref(rec)
     returned = _returned_refs(rec)
+    final = rec.final_submission()
     checked = 0
     for s in rec.submissions:
         texts = [s.summary, *[str(a.get("rationale") or "") for a in s.actions], *s.caveats]
@@ -261,15 +339,32 @@ def groundedness(case: Case, rec: TrialRecord, world: World) -> Grade:
             about = [known[e]["ref"] for e in a.get("evidence_ids") or [] if e in known]
             if ref not in about:
                 reasons.append(f"{ref} cites no evidence about {ref} itself")
-            for pct in _PERCENT.findall(str(a.get("rationale") or "")):
+            for pct in cpu_claims(str(a.get("rationale") or "")):
                 checked += 1
-                if not _close(float(pct), cpu.get(ref, set())):
-                    reasons.append(f"says {pct}% CPU for {ref}; the metrics it read say otherwise")
-        total = sum(savings.get(str(a.get("ref")), 0.0) for a in s.actions)
-        for x in _money_in(s.summary) + [x for c in s.caveats for x in _money_in(c)]:
+                if not _close(pct, cpu.get(ref, set()) | asked_pct):
+                    reasons.append(f"says {pct:g}% CPU for {ref}; the metrics it read say otherwise")
+        # The summary and caveats speak for the whole change request: their figures must be the proposed
+        # actions' own, the actions' total (what the plan totals), or an estate total a tool returned.
+        refs = [str(a.get("ref")) for a in s.actions]
+        total = round(sum(savings.get(ref, 0.0) for ref in refs), 2)
+        plan_total = (rec.plan or {}).get("total_monthly_savings") if s is final else None
+        computed = {total, *estate, *asked, *(f for ref in refs for f in per_ref.get(ref, set()))}
+        if plan_total is not None:
+            computed.add(float(plan_total))
+        prose = [s.summary, *s.caveats]
+        for x in [x for text in prose for x in _money_in(text)]:
             checked += 1
-            if not _close(x, [*figures, total]):
-                reasons.append(f"states ${x:,.2f}, a figure no tool returned (actions total ${total:,.2f})")
+            if not _close(x, computed):
+                reasons.append(
+                    f"states ${x:,.2f}, which is not a figure of the proposed actions, their total (${total:,.2f}) or the estate's"
+                )
+        action_cpu = {v for ref in refs for v in cpu.get(ref, set())} | asked_pct
+        for pct in [p for text in prose for p in cpu_claims(text)]:
+            checked += 1
+            if not _close(pct, action_cpu):
+                reasons.append(
+                    f"says {pct:g}% CPU; the metrics it read for the proposed actions say otherwise"
+                )
         for a in s.actions:
             ref = str(a.get("ref"))
             for x in _money_in(str(a.get("rationale") or "")):

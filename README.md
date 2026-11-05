@@ -118,8 +118,8 @@ including what is faked and what is not tested: [docs/testing.md](docs/testing.m
 
 | Layer | Count | What it proves |
 |---|---|---|
-| Unit (`-m unit`) | 105 | Pure rules: statistics against known values, policy (with a Hypothesis property: no combination of actions lets a production, protected, flagged, unknown-environment or ungrounded resource through, each injected into resources whose findings stay eligible), tokens, retries, the grammar, the production secrets guard |
-| Integration (`-m integration`) | 127 | The runtime end to end on the real fixture estate: the critical workflow, every fault, crash-and-replay, leases, budgets, expiry, cancellation, the order of effects, compensation, tenant isolation, the analyzer against every planted scenario, migrations, the documents against the code |
+| Unit (`-m unit`) | 127 | Pure rules: statistics against known values (and the McNemar power, enumerated exactly), when a percentage counts as a CPU claim, policy (with a Hypothesis property: no combination of actions lets a production, protected, flagged, unknown-environment or ungrounded resource through, each injected into resources whose findings stay eligible), tokens, retries, the grammar, the production secrets guard |
+| Integration (`-m integration`) | 143 | The runtime end to end on the real fixture estate: the critical workflow, every fault, crash-and-replay, leases, budgets, expiry, cancellation, the order of effects, compensation, tenant isolation, the analyzer against every planted scenario, migrations, the documents against the code |
 | API (four `api_*` markers) | 36 | Success, validation, authorization and failure paths over HTTP, problem+json shapes, idempotency keys bound to their caller, rate limits, security headers (on a 500 too) |
 | Data validation (`-m data_validation`) | 14 | Every planted defect is caught: quarantine with reasons (secrets masked), deduplication, normalization; freshness of the data and of the sync |
 | Claude contract (`-m claude_contract`) | 63 | The adapter against a mock of the Messages API with sockets refused: request shape, strict schemas, every stop reason, error mapping, key hygiene |
@@ -128,7 +128,7 @@ including what is faked and what is not tested: [docs/testing.md](docs/testing.m
 | End to end (Playwright) | 6 | The critical workflow in a browser, the production refusal, a pricing outage, RBAC, the evals page, the audit chain; also run against the live deployment |
 | Evaluation | 30 cases | See below |
 
-347 backend tests, 93% line and branch coverage of the `countersign` package, no warnings. Summary and screenshots:
+385 backend tests, 93% line and branch coverage of the `countersign` package, no warnings. Summary and screenshots:
 [reports/tests/summary.md](reports/tests/summary.md).
 
 ## Evaluation
@@ -146,11 +146,15 @@ policy events, approvals, executions, spans), none calling a model.
 | Safety | 30/30 | `reckless`: proposes blocked resources, skips the dry run | 20 |
 | Failure handling | 30/30 | `denier`: hides caveats and conflicts, never retries | 14 |
 
-Mutation score 6/6 with zero grader false positives on the reference. 30/30 is reported with its Wilson
-interval, [88.6%, 100%], because perfect on 30 cases is not proof of perfection; the minimum detectable effect is
-6 one-directional case flips (exact McNemar). A seeded simulator with a known slip rate calibrates the intervals:
-over 300 replicates the 95% interval covered the truth 97.7% of the time. The published single draw narrowly
-missed (its slip rate came out 14% against 20%, z = -2.1); that is a 1-in-20 event, reported, not re-seeded.
+Mutation score 6/6 with zero grader false positives on the reference, and an honest paraphrase of a change
+request passes all six graders. 30/30 comes with a Wilson interval, [88.6%, 100%], as an illustration that 30
+hand-picked cases cannot show perfection; for a deterministic policy on cases picked by hand it has no sampling
+interpretation. The minimum significant discordance is 6 one-directional case flips (exact McNemar): fewer can
+never be significant. Power is the sharper limit: for two agents with per-case pass probabilities 0.8 and 0.6 on
+30 independent cases, the test reaches p < 0.05 about 28% of the time (computed exactly). A seeded simulator
+with a known slip rate calibrates the intervals: over 300 replicates the 95% interval covered the truth 97.7% of
+the time, so it missed in 2.3%. The published single draw missed (its slip rate came out 14% against 20%,
+z = -2.1): an uncommon draw of the kind a 95% interval allows, reported, not re-seeded.
 Method, grammar and limits: [docs/evaluation.md](docs/evaluation.md). Report: [reports/evals/latest.md](reports/evals/latest.md).
 
 ![The Evals view: criteria with intervals, the mutation matrix and calibration](reports/tests/evals.png)
