@@ -33,6 +33,8 @@ class Settings(BaseSettings):
     model_provider: Literal["auto", "offline", "claude"] = "auto"
     claude_model: str = "claude-opus-5-5"
     claude_effort: Literal["low", "medium", "high", "xhigh", "max"] = "high"
+    # Adaptive thinking counts against max_tokens, so a turn needs room to think and then call tools.
+    model_max_tokens: int = Field(default=16_000, ge=1024, le=128_000)
 
     # Agent budgets (per run).
     max_model_turns: int = 16

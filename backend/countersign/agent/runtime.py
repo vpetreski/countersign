@@ -347,7 +347,7 @@ class Runtime:
             system=SYSTEM_PROMPT,
             messages=st.messages,
             tools=REGISTRY.definitions(),
-            max_tokens=4096,
+            max_tokens=self.settings.model_max_tokens,
             metadata={"run_id": tick.row_id, "seed": str(st.seed)},
         )
         started = time.perf_counter()
@@ -357,7 +357,7 @@ class Runtime:
                     "gen_ai.operation.name": "chat",
                     "gen_ai.provider.name": provider_name(model.provider),
                     "gen_ai.request.model": model.model,
-                    "gen_ai.request.max_tokens": 4096,
+                    "gen_ai.request.max_tokens": self.settings.model_max_tokens,
                     "gen_ai.conversation.id": tick.row_id,
                 }
             )
