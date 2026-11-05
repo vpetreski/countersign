@@ -6,7 +6,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field, SecretStr, field_validator
+from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     )
 
     env: Literal["development", "test", "production"] = "development"
+    # Set by Vercel on its deployments. A production deployment is production whatever COUNTERSIGN_ENV says, so
+    # a missing or mistyped variable cannot switch the secrets guard off where it matters most.
+    vercel_env: str | None = Field(default=None, validation_alias="VERCEL_ENV")
     database_url: str = Field(
         default=f"sqlite:///{BACKEND_ROOT / 'countersign.sqlite3'}", validation_alias="DATABASE_URL"
     )
@@ -71,6 +74,12 @@ class Settings(BaseSettings):
             url = "postgresql+psycopg://" + url.removeprefix("postgresql://")
         return url
 
+    @model_validator(mode="after")
+    def _vercel_production_is_production(self) -> Settings:
+        if self.vercel_env == "production":
+            self.env = "production"
+        return self
+
     @property
     def model_mode(self) -> Literal["offline", "claude"]:
         if self.model_provider == "claude" or (self.model_provider == "auto" and self.anthropic_api_key):
@@ -78,6 +87,8 @@ class Settings(BaseSettings):
         return "offline"
 
     def assert_production_safe(self) -> None:
+        """Refuse development or short secrets in production: COUNTERSIGN_ENV=production, or any Vercel
+        production deployment (VERCEL_ENV=production) whatever COUNTERSIGN_ENV says."""
         if self.env != "production":
             return
         weak = [

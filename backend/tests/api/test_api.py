@@ -431,6 +431,24 @@ def test_unexpected_errors_are_problems_without_internals(api: Api, monkeypatch:
 
 
 @pytest.mark.api_failure
+def test_a_500_carries_the_security_headers(api: Api, monkeypatch: pytest.MonkeyPatch) -> None:
+    """The handler for unexpected errors runs outside the header middleware; the problem sets them itself."""
+    t = api.workspace()
+
+    def boom(*_a: Any, **_k: Any) -> None:
+        raise RuntimeError("boom")
+
+    monkeypatch.setattr(api.services.runtime, "create", boom)
+    resp = api.client.post("/api/runs", json=REQUEST, headers=api.auth(t["operator"]))
+    assert resp.status_code == 500 and resp.headers["content-type"] == "application/problem+json"
+    assert resp.headers["X-Content-Type-Options"] == "nosniff"
+    assert resp.headers["X-Frame-Options"] == "DENY"
+    assert resp.headers["Referrer-Policy"] == "no-referrer"
+    assert resp.headers["Content-Security-Policy"].startswith("default-src 'none'")
+    assert resp.headers["Cache-Control"] == "no-store"
+
+
+@pytest.mark.api_failure
 def test_no_published_report_is_a_404_problem(
     api: Api, monkeypatch: pytest.MonkeyPatch, tmp_path: Any
 ) -> None:

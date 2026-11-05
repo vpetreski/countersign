@@ -54,7 +54,8 @@ def issue(settings: Settings, workspace_id: str, persona: Persona, now: dt.datet
 
 def principal(settings: Settings, token: str, now: dt.datetime) -> Principal:
     """Fail closed: any missing claim, wrong audience, issuer, algorithm, signature or time window is a 401.
-    Time claims are checked against the service clock (not the library's), so tests and the server agree."""
+    `exp` and `nbf` are checked against the service clock (not the library's), so tests and the server agree;
+    `iat` is required but not checked."""
     try:
         claims = jwt.decode(
             token,

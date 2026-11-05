@@ -19,11 +19,13 @@ from countersign.domain.resources import Environment, Kind, State
 from countersign.security.screening import REDACTED, contains_secret
 from countersign.settings import Settings
 from countersign.store.db import Database
-from countersign.store.schema import CostLineRow, ResourceRow, SourceSnapshot
-from tests.conftest import GROUND_TRUTH, NOW, make_settings
+from countersign.store.schema import CostLineRow, QuarantineRow, ResourceRow, SourceSnapshot
+from tests.conftest import GROUND_TRUTH, NOW, Clock, make_api, make_settings
 
 pytestmark = pytest.mark.data_validation
 DEFECTS = GROUND_TRUTH["planted_defects"]
+AWS_EXAMPLE_KEY = "AKIA" + "IOSFODNN7EXAMPLE"  # AWS's documented example key pair, split so no scanner trips
+AWS_EXAMPLE_SECRET = "wJalrXUtnFEMI/K7MDENG/bPxRfiCY" + "EXAMPLEKEY"
 
 
 @pytest.fixture(scope="module")
@@ -76,6 +78,35 @@ def test_injection_is_flagged_and_secrets_never_stored(batches: list) -> None:
     assert "secret_redacted" in secret_vm.flags
     assert any(REDACTED in v for v in secret_vm.tags.values())
     assert not any(contains_secret(v) for r in resources.values() for v in r.tags.values())
+
+
+def test_a_secret_in_a_quarantined_record_is_never_stored_or_shown(fixtures_copy: Path) -> None:
+    """FM-03 for refused records: a record is quarantined before its tags are screened, so its raw text and its
+    reason are masked before they are stored; the Data view, open to every persona, shows the mask."""
+    page = fixtures_copy / "sources/aws/444455556666/ec2_describe_instances.page2.json"
+    body = json.loads(page.read_text())
+    broken = body["Reservations"][12]["Instances"][0]
+    assert broken["InstanceId"] == DEFECTS["aws_invalid_launch_time"]
+    broken["LaunchTime"] = AWS_EXAMPLE_KEY  # the reason quotes the bad value
+    broken["Tags"].append({"Key": "Notes", "Value": f"aws_secret_access_key={AWS_EXAMPLE_SECRET}"})
+    page.write_text(json.dumps(body))
+
+    api = make_api(Clock(NOW), fixtures_dir=fixtures_copy)
+    try:
+        with api.services.db.session() as s:
+            rows = list(s.scalars(select(QuarantineRow)))
+        planted = next(r for r in rows if DEFECTS["aws_invalid_launch_time"] in r.raw)
+        assert REDACTED in planted.raw and REDACTED in planted.reason
+        stored = " ".join(f"{r.reason} {r.raw}" for r in rows)
+        assert AWS_EXAMPLE_KEY not in stored and AWS_EXAMPLE_SECRET not in stored
+        assert not contains_secret(stored)
+        viewer = api.workspace()["viewer"]
+        resp = api.client.get("/api/sources", headers=api.auth(viewer))
+        assert resp.status_code == 200 and len(resp.json()["quarantine"]) == 3
+        assert AWS_EXAMPLE_KEY not in resp.text and AWS_EXAMPLE_SECRET not in resp.text
+    finally:
+        ESTATE.clear()
+        api.services.db.engine.dispose()
 
 
 def test_attached_disks_inherit_their_vm_allocation(batches: list) -> None:
