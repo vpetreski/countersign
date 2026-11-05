@@ -13,7 +13,6 @@ from __future__ import annotations
 import csv
 import datetime as dt
 import hashlib
-import io
 import json
 from pathlib import Path
 
@@ -64,8 +63,15 @@ def main() -> None:
                         rows.append(_row("public_ip", "in-use", rec, url))
                     elif offer == "AmazonVPC" and usage.endswith("PublicIPv4:IdleAddress"):
                         rows.append(_row("public_ip", "idle", rec, url))
-            files.append({"offer": offer, "url": url, "publication_date": published, "sha256": digest.hexdigest(),
-                          "preamble": [p.strip() for p in preamble]})
+            files.append(
+                {
+                    "offer": offer,
+                    "url": url,
+                    "publication_date": published,
+                    "sha256": digest.hexdigest(),
+                    "preamble": [p.strip() for p in preamble],
+                }
+            )
     snapshot = {
         "source": "AWS Price List Bulk API",
         "region": REGION,
@@ -77,7 +83,7 @@ def main() -> None:
     print(f"{len(rows)} rows -> {OUT}")
 
 
-def _lines(resp: httpx.Response, digest: "hashlib._Hash"):
+def _lines(resp: httpx.Response, digest: hashlib._Hash):
     buffer = ""
     for chunk in resp.iter_bytes():
         digest.update(chunk)

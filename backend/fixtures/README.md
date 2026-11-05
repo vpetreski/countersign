@@ -17,6 +17,7 @@ changed fixture is always visible.
 | Source | Files | Shape |
 |---|---|---|
 | AWS inventory (2 accounts) | `sources/aws/<account>/ec2_describe_instances.page{1,2}.json`, `ec2_describe_volumes.page{1,2}.json`, `ec2_describe_addresses.json` | boto3 `DescribeInstances` / `DescribeVolumes` / `DescribeAddresses` responses, paginated with `NextToken` |
+| AWS detach history | `sources/aws/<account>/cloudtrail_lookup_events.detach_volume.json` | CloudTrail `LookupEvents` for `DetachVolume` (DescribeVolumes has no detach time), newest first, last 90 days |
 | AWS metrics | `sources/aws/<account>/cloudwatch_get_metric_data.{request,response}.json` | `GetMetricData`, daily `Average` and `Maximum` of `AWS/EC2 CPUUtilization`, timestamps descending (CloudWatch's default) |
 | Azure inventory (2 subscriptions) | `sources/azure/resource_graph.{virtual_machines,disks,public_ip_addresses}.json` | Azure Resource Graph rows (ARM resource with `properties`) |
 | Azure metrics | `sources/azure/monitor.percentage_cpu.json` | Azure Monitor metrics responses, `Percentage CPU`, `P1D`; days without data carry only `timeStamp` |

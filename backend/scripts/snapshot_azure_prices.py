@@ -42,7 +42,7 @@ def query(client: httpx.Client, flt: str) -> list[dict]:
     url: str | None = API
     params: dict[str, str] | None = {"api-version": API_VERSION, "$filter": flt}
     while url:
-        for attempt in range(5):
+        for _attempt in range(5):
             resp = client.get(url, params=params)
             if resp.status_code == 429:
                 time.sleep(int(resp.headers.get("retry-after", "10")))

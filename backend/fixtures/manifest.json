@@ -4,6 +4,11 @@
  "as_of": "2026-11-01T00:00:00Z",
  "files": [
   {
+   "path": "sources/aws/111122223333/cloudtrail_lookup_events.detach_volume.json",
+   "sha256": "7e45a70b58ceb5c69d7399543e3cc0f5efadd1e3cd248f984830f0d8263d691f",
+   "bytes": 881
+  },
+  {
    "path": "sources/aws/111122223333/cloudwatch_get_metric_data.request.json",
    "sha256": "b8a378cfbccf762de68ef2c7f5c8aa269c15aca8ca485dc9fcf22dcc6eb3eb6e",
    "bytes": 10462
@@ -37,6 +42,11 @@
    "path": "sources/aws/111122223333/ec2_describe_volumes.page2.json",
    "sha256": "a53bdcabc263420b88ac5b0e6733a42987ccda42e20485431ca81d129c7d184a",
    "bytes": 5117
+  },
+  {
+   "path": "sources/aws/444455556666/cloudtrail_lookup_events.detach_volume.json",
+   "sha256": "9086a6e73157c1c68406f5cfec39defb8d4cc31efc55aa30f0387d84adc6979c",
+   "bytes": 3467
   },
   {
    "path": "sources/aws/444455556666/cloudwatch_get_metric_data.request.json",

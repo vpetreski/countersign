@@ -1,0 +1,19 @@
+{
+ "Events": [
+  {
+   "EventId": "5df61251-92a5-ad82-2db0-23e6b3dc3c78",
+   "EventName": "DetachVolume",
+   "ReadOnly": "false",
+   "EventTime": "2026-07-04T10:53:00+00:00",
+   "EventSource": "ec2.amazonaws.com",
+   "Username": "terraform-ci",
+   "Resources": [
+    {
+     "ResourceType": "AWS::EC2::Volume",
+     "ResourceName": "vol-0c4f9e2a7b1d30003"
+    }
+   ],
+   "CloudTrailEvent": "{\"eventVersion\":\"1.10\",\"userIdentity\":{\"type\":\"AssumedRole\",\"principalId\":\"AROAEXAMPLEROLE:terraform-ci\"},\"eventTime\":\"2026-07-04T10:53:00+00:00\",\"eventSource\":\"ec2.amazonaws.com\",\"eventName\":\"DetachVolume\",\"awsRegion\":\"us-east-1\",\"requestParameters\":{\"volumeId\":\"vol-0c4f9e2a7b1d30003\",\"force\":false},\"eventID\":\"5df61251-92a5-ad82-2db0-23e6b3dc3c78\",\"readOnly\":false,\"eventType\":\"AwsApiCall\",\"recipientAccountId\":\"111122223333\"}"
+  }
+ ]
+}

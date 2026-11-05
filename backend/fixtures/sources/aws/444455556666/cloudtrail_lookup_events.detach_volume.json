@@ -1,0 +1,64 @@
+{
+ "Events": [
+  {
+   "EventId": "851148f8-eed6-f66b-b087-fbe4c5b86a9d",
+   "EventName": "DetachVolume",
+   "ReadOnly": "false",
+   "EventTime": "2026-10-30T10:08:00+00:00",
+   "EventSource": "ec2.amazonaws.com",
+   "Username": "terraform-ci",
+   "Resources": [
+    {
+     "ResourceType": "AWS::EC2::Volume",
+     "ResourceName": "vol-0c4f9e2a7b1d30005"
+    }
+   ],
+   "CloudTrailEvent": "{\"eventVersion\":\"1.10\",\"userIdentity\":{\"type\":\"AssumedRole\",\"principalId\":\"AROAEXAMPLEROLE:terraform-ci\"},\"eventTime\":\"2026-10-30T10:08:00+00:00\",\"eventSource\":\"ec2.amazonaws.com\",\"eventName\":\"DetachVolume\",\"awsRegion\":\"us-east-1\",\"requestParameters\":{\"volumeId\":\"vol-0c4f9e2a7b1d30005\",\"force\":false},\"eventID\":\"851148f8-eed6-f66b-b087-fbe4c5b86a9d\",\"readOnly\":false,\"eventType\":\"AwsApiCall\",\"recipientAccountId\":\"444455556666\"}"
+  },
+  {
+   "EventId": "b3e98fb3-e549-0080-5692-8dc8517ebd6d",
+   "EventName": "DetachVolume",
+   "ReadOnly": "false",
+   "EventTime": "2026-09-17T10:35:00+00:00",
+   "EventSource": "ec2.amazonaws.com",
+   "Username": "terraform-ci",
+   "Resources": [
+    {
+     "ResourceType": "AWS::EC2::Volume",
+     "ResourceName": "vol-0c4f9e2a7b1d30002"
+    }
+   ],
+   "CloudTrailEvent": "{\"eventVersion\":\"1.10\",\"userIdentity\":{\"type\":\"AssumedRole\",\"principalId\":\"AROAEXAMPLEROLE:terraform-ci\"},\"eventTime\":\"2026-09-17T10:35:00+00:00\",\"eventSource\":\"ec2.amazonaws.com\",\"eventName\":\"DetachVolume\",\"awsRegion\":\"us-east-1\",\"requestParameters\":{\"volumeId\":\"vol-0c4f9e2a7b1d30002\",\"force\":false},\"eventID\":\"b3e98fb3-e549-0080-5692-8dc8517ebd6d\",\"readOnly\":false,\"eventType\":\"AwsApiCall\",\"recipientAccountId\":\"444455556666\"}"
+  },
+  {
+   "EventId": "fb2a08f5-7f7b-ef89-bf87-72b555d34564",
+   "EventName": "DetachVolume",
+   "ReadOnly": "false",
+   "EventTime": "2026-09-02T10:09:00+00:00",
+   "EventSource": "ec2.amazonaws.com",
+   "Username": "terraform-ci",
+   "Resources": [
+    {
+     "ResourceType": "AWS::EC2::Volume",
+     "ResourceName": "vol-0c4f9e2a7b1d30001"
+    }
+   ],
+   "CloudTrailEvent": "{\"eventVersion\":\"1.10\",\"userIdentity\":{\"type\":\"AssumedRole\",\"principalId\":\"AROAEXAMPLEROLE:terraform-ci\"},\"eventTime\":\"2026-09-02T10:09:00+00:00\",\"eventSource\":\"ec2.amazonaws.com\",\"eventName\":\"DetachVolume\",\"awsRegion\":\"us-east-1\",\"requestParameters\":{\"volumeId\":\"vol-0c4f9e2a7b1d30001\",\"force\":false},\"eventID\":\"fb2a08f5-7f7b-ef89-bf87-72b555d34564\",\"readOnly\":false,\"eventType\":\"AwsApiCall\",\"recipientAccountId\":\"444455556666\"}"
+  },
+  {
+   "EventId": "1b932615-2ea9-4235-bf98-5f6a2f059494",
+   "EventName": "DetachVolume",
+   "ReadOnly": "false",
+   "EventTime": "2026-08-03T10:31:00+00:00",
+   "EventSource": "ec2.amazonaws.com",
+   "Username": "terraform-ci",
+   "Resources": [
+    {
+     "ResourceType": "AWS::EC2::Volume",
+     "ResourceName": "vol-0c4f9e2a7b1d30004"
+    }
+   ],
+   "CloudTrailEvent": "{\"eventVersion\":\"1.10\",\"userIdentity\":{\"type\":\"AssumedRole\",\"principalId\":\"AROAEXAMPLEROLE:terraform-ci\"},\"eventTime\":\"2026-08-03T10:31:00+00:00\",\"eventSource\":\"ec2.amazonaws.com\",\"eventName\":\"DetachVolume\",\"awsRegion\":\"us-east-1\",\"requestParameters\":{\"volumeId\":\"vol-0c4f9e2a7b1d30004\",\"force\":false},\"eventID\":\"1b932615-2ea9-4235-bf98-5f6a2f059494\",\"readOnly\":false,\"eventType\":\"AwsApiCall\",\"recipientAccountId\":\"444455556666\"}"
+  }
+ ]
+}
