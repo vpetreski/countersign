@@ -2,18 +2,36 @@
 
 from __future__ import annotations
 
+import copy
+import datetime as dt
 from typing import Any
 
 import pytest
 
 from countersign.agent.state import PlanAction
 from countersign.data.estate import ESTATE
-from countersign.domain.resources import State
-from countersign.execution.sandbox import PreconditionFailedError, SandboxCloud
+from countersign.domain.resources import Environment, Resource, State
+from countersign.execution import tokens
+from countersign.execution.sandbox import (
+    GuardrailError,
+    PreconditionFailedError,
+    SandboxCloud,
+    guardrail,
+    idempotency_key,
+)
 from countersign.execution.tokens import CapabilityError
-from tests.conftest import FINAL, WAITING, Harness
+from countersign.store.schema import RunRow
+from tests.conftest import FINAL, GROUND_TRUTH, WAITING, Harness
+
+SCEN = GROUND_TRUTH["scenarios"]
+DEFAULT = "Find idle development VMs and unattached disks and propose savings."
 
 pytestmark = pytest.mark.integration
+
+
+def current(h: Harness, ref: str) -> Resource:
+    with h.db.session() as s:
+        return ESTATE.view(s, h.ws).by_ref[ref]
 
 
 def approved(h: Harness, request: str) -> tuple[str, list[PlanAction], str]:
@@ -50,6 +68,103 @@ def test_resize_failure_is_compensated_by_starting_the_vm_again(
     ]
     vm = harness.runtime.sandbox.current(harness.ws, actions[0])
     assert vm.state is State.RUNNING and vm.sku == actions[0].current_sku
+    plan_hash = harness.run(run_id).state["plan"]["hash"]
+    undo = idempotency_key(run_id, plan_hash, actions[0].id, "start", undo=True)
+    assert (
+        first["steps"][2]["idempotency_key"]
+        == undo
+        != idempotency_key(run_id, plan_hash, actions[0].id, "start")
+    )
+
+
+def test_an_action_edited_after_approval_never_reaches_the_sandbox(harness: Harness) -> None:
+    """FM-14: the stored plan is edited after the countersigns, a production VM swapped in under the same
+    action id; the token binds each id to a digest of the action's content, so the sandbox refuses it."""
+    run_id, _, _ = approved(harness, DEFAULT)
+    prod = current(harness, SCEN["idle-prod-vm"][0])
+    with harness.db.session() as s:
+        row = s.get(RunRow, run_id)
+        assert row is not None
+        state = copy.deepcopy(row.state)
+        state["plan"]["actions"][0] |= {"resource_id": prod.id, "ref": prod.ref, "name": prod.name}
+        row.state = state
+    row = harness.drive(run_id, FINAL)
+    first = row.state["outcomes"][0]
+    assert row.status == "completed_with_failures" and first["status"] == "failed"
+    assert "changed after approval" in first["detail"]
+    assert current(harness, prod.ref).state is State.RUNNING
+    assert all(o["status"] == "succeeded" for o in row.state["outcomes"][1:])
+
+
+def test_the_sandbox_guardrails_hold_whatever_the_token_says(harness: Harness) -> None:
+    """FM-31: a capability minted for a production, protected or flagged resource (a bug above the sandbox)
+    still cannot change it, because the guardrail reads the resource as it is now."""
+    run_id, actions, _ = approved(harness, DEFAULT)
+    stop = next(a for a in actions if a.operation == "stop_vm")
+    plan_hash = harness.run(run_id).state["plan"]["hash"]
+    secret = harness.settings.capability_secret.get_secret_value()
+    cases = [
+        (SCEN["idle-prod-vm"][0], "production"),
+        (SCEN["protected-vm"][0], "protected by"),
+        (SCEN["injection-vm"][0], "awaits a human review"),
+    ]
+    for ref, why in cases:
+        r = current(harness, ref)
+        target = stop.model_copy(update={"resource_id": r.id, "ref": r.ref})
+        token = tokens.mint(
+            secret,
+            run_id=run_id,
+            workspace_id=harness.ws,
+            plan_hash=plan_hash,
+            actions={target.id: tokens.action_digest(target.model_dump(mode="json"))},
+            approvers=["a", "b"],
+            exp=int((harness.clock() + dt.timedelta(minutes=10)).timestamp()),
+        )
+        with pytest.raises(GuardrailError, match=why):
+            harness.runtime.sandbox.apply(
+                token=token,
+                run_id=run_id,
+                workspace_id=harness.ws,
+                plan_hash=plan_hash,
+                action=target,
+                step="stop",
+            )
+        assert current(harness, ref).state is r.state
+
+
+def test_the_guardrail_refuses_each_unchangeable_kind_of_resource(harness: Harness) -> None:
+    dev = current(harness, SCEN["idle-dev-vm"][0])
+    guardrail(dev)  # a plain development VM passes
+    for change, why in [
+        ({"environment": Environment.PROD}, "production"),
+        ({"environment": Environment.UNKNOWN}, "no environment tag"),
+        ({"tags": {**dev.tags, "compliance": "legal-hold"}}, "protected by"),
+        ({"flags": (*dev.flags, "suspicious_content")}, "awaits a human review"),
+    ]:
+        with pytest.raises(GuardrailError, match=why):
+            guardrail(dev.model_copy(update=change))
+
+
+def test_an_expired_capability_finishes_and_undoes_but_starts_nothing_new(harness: Harness) -> None:
+    """FM-32: past its hour the token still replays and undoes what it named; a new effect needs a new run."""
+    run_id, actions, token = approved(harness, "Rightsize oversized VMs")
+    resize = next(a for a in actions if a.operation == "resize_vm")
+    plan_hash = harness.run(run_id).state["plan"]["hash"]
+    sandbox = harness.runtime.sandbox
+    base: dict[str, Any] = {
+        "token": token,
+        "run_id": run_id,
+        "workspace_id": harness.ws,
+        "plan_hash": plan_hash,
+        "action": resize,
+    }
+    assert not sandbox.apply(step="stop", **base).replayed
+    harness.clock.advance(hours=2)  # past the capability's one-hour lifetime
+    assert sandbox.apply(step="stop", **base).replayed
+    with pytest.raises(CapabilityError, match="no longer authorise new effects"):
+        sandbox.apply(step="resize", **base)
+    undo = sandbox.apply(step="start", compensation=True, **base)
+    assert not undo.replayed and current(harness, resize.ref).state is State.RUNNING
 
 
 def test_the_sandbox_refuses_calls_without_a_valid_capability(harness: Harness) -> None:

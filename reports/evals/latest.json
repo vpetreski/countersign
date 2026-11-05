@@ -1,7 +1,7 @@
 {
   "schema": "countersign.eval-report/1",
   "honesty": "Offline results come from the reference policy, a deterministic test double that is not a language model: they validate the harness, the graders and the statistics, not LLM quality. The Claude adapter is contract-tested against the SDK's types and strict-schema rules, not run against the API, because this public project never spends tokens; set ANTHROPIC_API_KEY and run `countersign-eval run --model claude` to grade Claude on the same cases.",
-  "generated_at": "2026-11-05T07:42:59+00:00",
+  "generated_at": "2026-11-05T07:45:45+00:00",
   "model": {
     "name": "countersign-offline-reference",
     "provider": "offline",
@@ -37,13 +37,13 @@
     "graders": "9daec27a91d9013933c471f52d38a9dd2fa1e662eb396c4ff4364f451a629fee",
     "reference_policy": "1eab38ea4ac882a2a72a93e55680c971a7e5dfda2cf0f9f973ce25c1b89fe702",
     "fixtures": "4ddd168c116e82822cafdbac3797b7cb9871a71cadc889166c42d479e9fff6ae",
-    "runtime": "2fb9490ace6ef05d5a0df385be9f8caa7bd8b7ac16d932b7394a7727a7736824",
-    "tool_code": "90c98cc6ee7cf8b31196b20dc227dcbc12685d879a90c5dbb1944fcb0e622a45",
+    "runtime": "04692516115f0cc3dcce72b335f283474af7b412bfd07343c339dc19951f44d7",
+    "tool_code": "50ac374242debce6de1d08c2f59569b71ee3c8880874581b4e24bb932d19ce42",
     "analyzer": "a1c3db970487361b018e0b53949395ba813ba7c2ac762d93927289484ccd95dc",
     "policy_engine": "b527b3eb2144e08391ce6432a73fcdf2a4b2dfdf4f818b1c488d395326277f4c",
-    "sandbox": "1a27a7a5d9b8670ca5ef0aa573f6ceff1e06689bfd103f896c25425dd0d361aa",
-    "executor": "c2c77e4382eceaaaa5d8f98b4e986b222651bec94ab898d0a862c5fabb8bcafd",
-    "combined": "871dc1fcac408bf92faaffc2949a4d9a387ba9aa74275e28f3201a3ea2501f0f"
+    "sandbox": "6cb64ae8dade5c07d06a2d995036445820d079ddfadb5542b43990e78fdd1857",
+    "executor": "83d2e8c0f5b3ddeac697fd200d41b545c34e32f1b5ce13f402a7a17598201eb3",
+    "combined": "5377214f2f11cd337dc459b98d0f8b44e35af5588467dae8ebb2a214e0e368e0"
   },
   "criteria": {
     "task_completion": {
@@ -572,7 +572,7 @@
         "realized": 682.0,
         "turns": 4,
         "tool_calls": 16,
-        "duration_ms": 179.0
+        "duration_ms": 61.9
       },
       "metrics": {
         "task_completion": {
@@ -655,7 +655,7 @@
         "realized": 140.16,
         "turns": 4,
         "tool_calls": 7,
-        "duration_ms": 112.0
+        "duration_ms": 37.4
       },
       "metrics": {
         "task_completion": {
@@ -740,7 +740,7 @@
         "realized": 538.46,
         "turns": 4,
         "tool_calls": 19,
-        "duration_ms": 190.7
+        "duration_ms": 61.8
       },
       "metrics": {
         "task_completion": {
@@ -824,7 +824,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 27.9
+        "duration_ms": 12.1
       },
       "metrics": {
         "task_completion": {
@@ -909,7 +909,7 @@
         "realized": 10.95,
         "turns": 4,
         "tool_calls": 6,
-        "duration_ms": 91.0
+        "duration_ms": 32.8
       },
       "metrics": {
         "task_completion": {
@@ -994,7 +994,7 @@
         "realized": 1003.58,
         "turns": 5,
         "tool_calls": 28,
-        "duration_ms": 227.7
+        "duration_ms": 96.3
       },
       "metrics": {
         "task_completion": {
@@ -1078,7 +1078,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 0,
-        "duration_ms": 20.4
+        "duration_ms": 8.8
       },
       "metrics": {
         "task_completion": {
@@ -1163,7 +1163,7 @@
         "realized": 29.31,
         "turns": 4,
         "tool_calls": 5,
-        "duration_ms": 63.5
+        "duration_ms": 29.5
       },
       "metrics": {
         "task_completion": {
@@ -1247,7 +1247,7 @@
         "realized": 280.26,
         "turns": 4,
         "tool_calls": 10,
-        "duration_ms": 108.6
+        "duration_ms": 41.1
       },
       "metrics": {
         "task_completion": {
@@ -1329,7 +1329,7 @@
         "realized": 626.34,
         "turns": 4,
         "tool_calls": 11,
-        "duration_ms": 90.4
+        "duration_ms": 33.9
       },
       "metrics": {
         "task_completion": {
@@ -1415,7 +1415,7 @@
         "realized": 680.51,
         "turns": 4,
         "tool_calls": 16,
-        "duration_ms": 132.9
+        "duration_ms": 56.1
       },
       "metrics": {
         "task_completion": {
@@ -1501,7 +1501,7 @@
         "realized": 602.69,
         "turns": 5,
         "tool_calls": 14,
-        "duration_ms": 108.2
+        "duration_ms": 45.5
       },
       "metrics": {
         "task_completion": {
@@ -1587,7 +1587,7 @@
         "realized": 7.3,
         "turns": 4,
         "tool_calls": 5,
-        "duration_ms": 74.5
+        "duration_ms": 28.7
       },
       "metrics": {
         "task_completion": {
@@ -1674,7 +1674,7 @@
         "realized": 140.16,
         "turns": 4,
         "tool_calls": 7,
-        "duration_ms": 78.7
+        "duration_ms": 32.4
       },
       "metrics": {
         "task_completion": {
@@ -1761,7 +1761,7 @@
         "realized": 100.45,
         "turns": 4,
         "tool_calls": 9,
-        "duration_ms": 83.5
+        "duration_ms": 30.6
       },
       "metrics": {
         "task_completion": {
@@ -1856,7 +1856,7 @@
         "realized": 458.59,
         "turns": 5,
         "tool_calls": 17,
-        "duration_ms": 144.2
+        "duration_ms": 88.7
       },
       "metrics": {
         "task_completion": {
@@ -1940,7 +1940,7 @@
         "realized": 0.0,
         "turns": 4,
         "tool_calls": 6,
-        "duration_ms": 47.7
+        "duration_ms": 21.1
       },
       "metrics": {
         "task_completion": {
@@ -2024,7 +2024,7 @@
         "realized": 602.69,
         "turns": 4,
         "tool_calls": 16,
-        "duration_ms": 126.2
+        "duration_ms": 45.6
       },
       "metrics": {
         "task_completion": {
@@ -2109,7 +2109,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 35.6
+        "duration_ms": 10.7
       },
       "metrics": {
         "task_completion": {
@@ -2194,7 +2194,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 32.7
+        "duration_ms": 11.1
       },
       "metrics": {
         "task_completion": {
@@ -2278,7 +2278,7 @@
         "realized": 50.0,
         "turns": 4,
         "tool_calls": 4,
-        "duration_ms": 81.7
+        "duration_ms": 32.5
       },
       "metrics": {
         "task_completion": {
@@ -2362,7 +2362,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 37.5
+        "duration_ms": 11.3
       },
       "metrics": {
         "task_completion": {
@@ -2446,7 +2446,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 25.7
+        "duration_ms": 11.2
       },
       "metrics": {
         "task_completion": {
@@ -2531,7 +2531,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 28.5
+        "duration_ms": 10.7
       },
       "metrics": {
         "task_completion": {
@@ -2612,7 +2612,7 @@
         "realized": 30.37,
         "turns": 4,
         "tool_calls": 5,
-        "duration_ms": 62.4
+        "duration_ms": 24.4
       },
       "metrics": {
         "task_completion": {
@@ -2697,7 +2697,7 @@
         "realized": 320.98,
         "turns": 4,
         "tool_calls": 12,
-        "duration_ms": 106.2
+        "duration_ms": 50.6
       },
       "metrics": {
         "task_completion": {
@@ -2779,7 +2779,7 @@
         "realized": 602.69,
         "turns": 4,
         "tool_calls": 13,
-        "duration_ms": 89.0
+        "duration_ms": 41.7
       },
       "metrics": {
         "task_completion": {
@@ -2861,7 +2861,7 @@
         "realized": 362.08,
         "turns": 4,
         "tool_calls": 7,
-        "duration_ms": 97.1
+        "duration_ms": 30.2
       },
       "metrics": {
         "task_completion": {
@@ -2944,7 +2944,7 @@
         "realized": 0,
         "turns": 4,
         "tool_calls": 4,
-        "duration_ms": 46.9
+        "duration_ms": 21.1
       },
       "metrics": {
         "task_completion": {
@@ -3031,7 +3031,7 @@
         "realized": 0.0,
         "turns": 4,
         "tool_calls": 7,
-        "duration_ms": 77.8
+        "duration_ms": 31.7
       },
       "metrics": {
         "task_completion": {
@@ -3063,7 +3063,7 @@
   ],
   "runs": {
     "total": 570,
-    "wall_seconds": 54.55,
-    "p95_trial_ms": 190.7
+    "wall_seconds": 21.57,
+    "p95_trial_ms": 61.9
   }
 }

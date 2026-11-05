@@ -67,6 +67,7 @@ def run_view(row: RunRow, principal: Principal, *, detail: bool = True) -> dict[
             "caveats": plan.caveats,
             "not_proposed": [n.model_dump() for n in plan.not_proposed],
             "total_monthly_savings": plan.total_monthly_savings,
+            "savings_complete": plan.savings_complete,
             "risk": plan.risk,
             "approvals_required": plan.approvals_required,
             "approvals_received": len(approvers),
