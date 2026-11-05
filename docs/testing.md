@@ -11,8 +11,8 @@ Counts below are for `main`; exact results with their commit are in
 
 | Layer | Selector | Tests | Where | What it proves |
 |---|---|---|---|---|
-| Unit | `-m unit` | 99 | `tests/data/test_normalize.py`, `test_pricing.py`, `tests/policy/`, `tests/security/`, `tests/execution/test_tokens_and_audit.py`, `tests/agent/test_resilience_and_tools.py`, `tests/models/test_reference_policy.py`, `tests/evals/test_stats.py` | Pure rules: the 730-hour month and nearest-rank percentiles, price lookup and fallback, policy verdicts and risk routing (and a property test that injects each blocking condition into resources whose findings stay eligible), injection screening and secret masking, token signatures and the hash chain, jittered backoff and the circuit breaker, the reference policy's request grammar, the statistics against known values |
-| Integration | `-m integration` | 126 | `tests/agent/test_runtime.py`, `test_tools.py`, `tests/domain/`, `tests/execution/test_executor.py`, `tests/evals/`, `tests/test_cli.py` | The runtime end to end on the real fixture estate: the critical workflow, every injectable fault, crash and replay, leases, budgets, expiry (late answers and countersigns refused), cancellation up to verification, the order of effects, compensation, tenant isolation; the schema migration; the analyzer against every planted scenario; the dataset against the analyzer; the graders, mutants and runner; the documents against the code |
+| Unit | `-m unit` | 119 | `tests/data/test_normalize.py`, `test_pricing.py`, `tests/policy/`, `tests/security/`, `tests/execution/test_tokens_and_audit.py`, `tests/agent/test_resilience_and_tools.py`, `tests/models/test_reference_policy.py`, `tests/evals/test_stats.py`, `test_claims.py` | Pure rules: the 730-hour month and nearest-rank percentiles, price lookup and fallback, policy verdicts and risk routing (and a property test that injects each blocking condition into resources whose findings stay eligible), injection screening and secret masking, token signatures and the hash chain, jittered backoff and the circuit breaker, the reference policy's request grammar, the statistics against known values (and the McNemar test's power by exact enumeration), when the groundedness grader reads a percentage as a CPU claim |
+| Integration | `-m integration` | 131 | `tests/agent/test_runtime.py`, `test_tools.py`, `tests/domain/`, `tests/execution/test_executor.py`, `tests/evals/`, `tests/test_cli.py` | The runtime end to end on the real fixture estate: the critical workflow, every injectable fault, crash and replay, leases, budgets, expiry (late answers and countersigns refused), cancellation up to verification, the order of effects, compensation, tenant isolation; the schema migration; the analyzer against every planted scenario; the dataset against the analyzer; the graders, mutants and runner; the documents against the code |
 | API | `-m "api_success or api_validation or api_authz or api_failure"` | 35 (7 + 13 + 8 + 7) | `tests/api/test_api.py` | Success paths, malformed input, authentication, roles, separation of duties and tenant isolation, conflicts and dependency failures over HTTP; RFC 9457 problem+json shapes, idempotency keys (bound to their caller), rate limits, the security headers |
 | Data validation | `-m data_validation` | 13 | `tests/data/test_ingest.py` | Every planted data defect is caught: schema violations quarantined with reasons, duplicates removed and counted, tags normalized, the stopped-but-billed VM reconciled, utilization and billing older than their service levels, a sync that stopped (judged when the checks are read) |
 | Claude contract | `-m claude_contract` | 63 | `tests/models/test_claude_contract.py`, `test_claude_runtime.py` | The Claude adapter against the Messages API wire format with sockets refused: the request body, strict tool schemas, every stop reason, error and `retry-after` mapping, one HTTP call per turn, the key never in logs, `repr` or errors; and one run driven through the runtime to `awaiting_approval` |
@@ -23,7 +23,7 @@ Counts below are for `main`; exact results with their commit are in
 | Live contracts | `scripts/check_live_prices.py` (nightly) | 18 prices + the deployment | `.github/workflows/nightly.yml` | Every Azure price the snapshot covers comes back from the public Retail Prices API through the real fetcher, trusted and within 25% of the snapshot; the deployed app is ready, keyless and running the latest deployable commit |
 | Fuzzing | Schemathesis (nightly) | about 3,200 cases | `.github/workflows/nightly.yml` | No input the OpenAPI document allows makes the API answer 5xx (an operator's token, the cron route excluded); OpenAPI links let its stateful phase follow created runs and findings into every operation on them |
 
-The backend's 338 tests (the six pytest layers) cover 93% of the `countersign` package, lines and branches
+The backend's 363 tests (the six pytest layers) cover 93% of the `countersign` package, lines and branches
 together; CI's floor is 90%. Coverage is a floor, not the goal: the tests that matter are the ones below.
 
 ## The tests that carry the most weight
@@ -44,12 +44,15 @@ together; CI's floor is 90%. Coverage is a floor, not the goal: the tests that m
   environment, protected, flagged or ungrounded.
 - **Ground truth for the analyzer.** `tests/domain/test_analysis_ground_truth.py` checks every planted scenario,
   including `test_no_finding_outside_the_planted_scenarios`: the analyzer finds nothing that was not planted.
-- **The evaluator is tested before it is trusted.** Fifteen grader tests plant defects (an inflated figure, a
-  phantom citation, an out-of-scope change, a hidden price outage, an uncountersigned effect...) and assert the
-  right grader fails for the right reason; the sixteenth checks that the clean reference record passes all six. The runner
-  tests assert each mutant is caught by the grader built for it and that reruns reproduce every outcome. The
+- **The evaluator is tested before it is trusted.** Eighteen grader tests plant defects (an inflated figure, a
+  phantom citation, a summary figure that belongs to a resource left out, an out-of-scope change, a hidden price
+  outage, a generic "prices are estimates" caveat in its place, an uncountersigned effect...) and assert the
+  right grader fails for the right reason; two more check the other direction: the clean reference record, and
+  an honest paraphrase of it (its own words, the thresholds and coverage cited, figures rounded within
+  tolerance), pass all six. The runner tests assert each mutant is caught by the grader built for it, that
+  reruns reproduce every outcome and that the fingerprint covers the code every trial runs through. The
   statistics are tested against known values and closed forms (Wilson, the unbiased pass^k estimator, the
-  exact McNemar test).
+  exact McNemar test and its power, enumerated two ways).
 - **The documents are tested.** `test_every_documented_failure_mode_names_a_proof_that_exists` parses
   [failure-modes.md](failure-modes.md): every id must name tests and cases that exist and appear in the tests,
   the dataset or the browser tests. `test_the_published_openapi_document_is_current` compares

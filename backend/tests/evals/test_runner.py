@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 from countersign.evals import cli, dataset, report
-from countersign.evals.fingerprint import fingerprint
+from countersign.evals.fingerprint import PACKAGE, RUN_SOURCES, fingerprint
 from countersign.evals.graders import CRITERIA
 from countersign.evals.mutants import MUTANTS
 from countersign.evals.runner import (
@@ -125,3 +125,14 @@ def test_the_published_report_describes_this_exact_code() -> None:
         "stale report: run `uv run countersign-eval run --publish`"
     )
     assert r["n_cases"] == len(dataset.load()) and r["mutation"]["killed"] == len(MUTANTS)
+
+
+def test_the_fingerprint_covers_the_code_every_trial_runs_through() -> None:
+    """The published-report check is only as strong as the fingerprint: it must hash the runtime, the tools,
+    the analyzer, the policy engine, the sandbox and the executor, not only the definition of the measurement."""
+    fp = fingerprint()
+    assert {"runtime", "tool_code", "analyzer", "policy_engine", "sandbox", "executor"} <= set(RUN_SOURCES)
+    for name, paths in RUN_SOURCES.items():
+        assert len(fp[name]) == 64
+        assert all((PACKAGE / path).is_file() for path in paths), name
+    assert len(set(fp.values())) == len(fp)  # every component hashes something different

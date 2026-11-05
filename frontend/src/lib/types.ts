@@ -454,7 +454,20 @@ export interface EvalReport {
   fingerprint?: { combined?: string; [key: string]: unknown };
   criteria?: Record<string, EvalCriterion>;
   pass_hat_k?: Record<string, number>;
-  mde?: { discordant_flips?: number; alpha?: number; n_cases?: number; test?: string; note?: string };
+  min_significant_discordance?: {
+    discordant_cases?: number;
+    alpha?: number;
+    n_cases?: number;
+    test?: string;
+    note?: string;
+    power?: {
+      pass_probabilities?: number[];
+      n_cases?: number;
+      alpha?: number;
+      power?: number;
+      method?: string;
+    };
+  };
   baseline?: { regressions?: unknown[]; improvements?: unknown[] };
   mutation?: {
     score?: number;

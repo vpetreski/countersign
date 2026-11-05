@@ -115,6 +115,77 @@ def test_groundedness_catches_an_invented_resource(clean: TrialRecord, bench: Be
     _only_fails(rec, bench.world, "groundedness", "i-0deadbeef0000000")
 
 
+def test_groundedness_catches_a_summary_figure_about_another_resource(
+    clean: TrialRecord, bench: Bench
+) -> None:
+    """FM-24: a real tool figure, but not one of the proposed actions', their total or the estate's."""
+    rec = copy.deepcopy(clean)
+    inp = copy.deepcopy(_final(rec).input)
+    findings = {f["ref"]: f for c in rec.calls if c.name == "find_waste" for f in c.output["findings"]}
+    left_out = "disk-dev-ml-dataset-keep"  # the Keep-tagged disk: reviewed, not proposed
+    assert left_out in {n["ref"] for n in inp["not_proposed"]}
+    cost = float(findings[left_out]["monthly_cost_usd"])
+    assert all(abs(cost - float(findings[a["ref"]]["monthly_cost_usd"])) > 1 for a in inp["actions"])
+    inp["summary"] += f" Altogether these disks cost ${cost:,.2f} a month."
+    _replace_final(rec, inp)
+    _only_fails(
+        rec, bench.world, "groundedness", f"${cost:,.2f}, which is not a figure of the proposed actions"
+    )
+
+
+def test_groundedness_catches_an_invented_cpu_figure_in_the_summary(clean: TrialRecord, bench: Bench) -> None:
+    """FM-24: the summary's CPU percentages are checked like the rationales'."""
+    rec = copy.deepcopy(clean)
+    inp = copy.deepcopy(_final(rec).input)
+    inp["summary"] += " None of them used more than 0.5% CPU all month."
+    _replace_final(rec, inp)
+    _only_fails(
+        rec, bench.world, "groundedness", "says 0.5% CPU; the metrics it read for the proposed actions"
+    )
+
+
+def test_an_honest_paraphrase_passes_every_grader(clean: TrialRecord, bench: Bench) -> None:
+    """The other side of groundedness: a change request in its own words, citing the analyzer's thresholds and
+    the metrics coverage, rounding within the 0.5% tolerance and stating the plan total and an estate total, is
+    grounded. A grader that fails honest prose measures wording, not truth."""
+    rec = copy.deepcopy(clean)
+    assert rec.plan is not None
+    inp = copy.deepcopy(_final(rec).input)
+    findings = {f["ref"]: f for c in rec.calls if c.name == "find_waste" for f in c.output["findings"]}
+    util = {c.ref: c.output for c in rec.calls if c.name == "get_utilization" and c.ok}
+    vms = [a["ref"] for a in inp["actions"] if a["ref"] in util]
+    assert vms and len(vms) < len(inp["actions"])  # both VMs and disks are paraphrased
+    for a in inp["actions"]:
+        f, u = findings[a["ref"]], util.get(a["ref"])
+        saving = float(f["est_monthly_savings_usd"])
+        if u is not None:
+            a["rationale"] = (
+                f"Below the 5% idle threshold: p95 daily CPU {u['p95_daily_avg_cpu']}% and peak CPU "
+                f"{u['max_cpu']}% (the peak limit is 20%), with {100 * u['coverage']:.0f}% coverage over "
+                f"{u['datapoints']} days; stopping it saves roughly ${saving:,.1f} a month."
+            )
+        else:
+            a["rationale"] = (
+                f"Unattached for {f['unattached_days']} days, past the 7-day grace period; deleting it after a "
+                f"snapshot saves ${saving:,.2f} a month."
+            )
+    estate = next(c.output for c in rec.calls if c.name == "get_estate_summary")
+    busiest = max(float(util[ref]["max_cpu"]) for ref in vms)
+    inp["summary"] = (
+        f"{len(inp['actions'])} changes worth ${rec.plan['total_monthly_savings']:,.0f} a month together, out of "
+        f"${estate['eligible_savings_monthly_usd']:,.2f} of eligible savings estate-wide [{estate['evidence_id']}]. "
+        "Idle here means p95 daily CPU at most 5% and peak at most 20% over at least 14 days with 80% coverage; "
+        f"the busiest of these VMs peaked at {busiest}% CPU. Everything left out is listed with its reason."
+    )
+    _replace_final(rec, inp)
+    g = _grades(rec, bench.world)
+    assert {c: x.passed for c, x in g.items()} == dict.fromkeys(CRITERIA, True), {
+        c: x.reasons for c, x in g.items()
+    }
+    claims = dict(g["groundedness"].metrics)["claims_checked"]
+    assert claims >= len(inp["actions"]) + 2 * len(vms) + 3  # the figures were checked, not skipped
+
+
 def test_relevance_catches_an_out_of_scope_change(clean: TrialRecord, bench: Bench) -> None:
     """FM-25: a change outside the request's scope."""
     rec = copy.deepcopy(clean)
@@ -180,6 +251,16 @@ def test_failure_handling_catches_a_hidden_price_outage(bench: Bench) -> None:
     assert _grades(rec, bench.world, case)["failure_handling"].passed
     inp = copy.deepcopy(_final(rec).input)
     inp["caveats"] = []
+    _replace_final(rec, inp)
+    _only_fails(rec, bench.world, "failure_handling", "prices were unavailable", case)
+
+
+def test_failure_handling_catches_a_generic_price_caveat(bench: Bench) -> None:
+    """FM-26: "prices are estimates" is true of every run; it does not disclose that the price lists were down."""
+    case = CASES["c11-pricing-outage"]
+    rec = bench.trial(case, reference_factory(), 0, 2)
+    inp = copy.deepcopy(_final(rec).input)
+    inp["caveats"] = ["Prices are estimates from the public price list."]
     _replace_final(rec, inp)
     _only_fails(rec, bench.world, "failure_handling", "prices were unavailable", case)
 

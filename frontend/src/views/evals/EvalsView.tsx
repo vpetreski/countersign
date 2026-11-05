@@ -604,10 +604,10 @@ export function EvalReportView({ report, isSample }: { report: EvalReport; isSam
               {report.runs.total} runs in {report.runs.wall_seconds ?? "—"} s
             </span>
           )}
-          {report.mde && (
+          {report.min_significant_discordance && (
             <span>
-              minimum detectable effect: {report.mde.discordant_flips ?? "—"} discordant flips at α=
-              {report.mde.alpha ?? "—"}
+              minimum significant discordance: {report.min_significant_discordance.discordant_cases ?? "—"}{" "}
+              one-directional cases at α={report.min_significant_discordance.alpha ?? "—"}
             </span>
           )}
         </p>

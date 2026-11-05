@@ -45,6 +45,8 @@ HONESTY = (
     "grade Claude on the same cases."
 )
 Factory = Callable[[RunState], ChatModel]
+# Two agents passing each case with these probabilities, independently: what the dataset's power is quoted for.
+POWER_EXAMPLE = (0.8, 0.6)
 
 
 def eval_settings() -> Settings:
@@ -97,9 +99,8 @@ class Bench:
             catalog=self.catalog,
             policy=self.policy,
             clock=self.clock,
-            sleep=lambda _x: None,
+            sleep=lambda _x: None,  # the evaluation never sleeps (the executor gets the same function)
         )
-        runtime.executor._sleep = lambda _x: None  # the evaluation never sleeps
         who = {
             "operator": Principal(f"{ws}:operator", ws, "operator", Role.OPERATOR, "Sam"),
             "approver": Principal(f"{ws}:approver", ws, "approver", Role.APPROVER, "Alex"),
@@ -452,13 +453,22 @@ def build_report(
             "cases_all_pass_wilson": list(stats.wilson(sum(c["passed_all"] for c in cases), n)),
         },
         "pass_hat_k": pass_hat(reference),
-        "mde": {
-            "discordant_flips": stats.mde_flips(0.05),
+        "min_significant_discordance": {
+            "discordant_cases": stats.min_significant_discordance(0.05),
             "alpha": 0.05,
             "n_cases": n,
-            "share_of_cases": round(stats.mde_flips(0.05) / n, 4) if n else None,
+            "share_of_cases": round(stats.min_significant_discordance(0.05) / n, 4) if n else None,
             "test": "exact McNemar, two-sided",
-            "note": "the smallest paired effect detectable between two models on this dataset; offline regressions are exact diffs instead",
+            "note": "the fewest cases flipping one way (none the other) that can reach p < alpha when comparing two models; "
+            "a floor on significance, not a minimum detectable effect at any power. Offline regressions are exact diffs instead",
+            "power": {
+                "pass_probabilities": list(POWER_EXAMPLE),
+                "n_cases": n,
+                "alpha": 0.05,
+                "power": round(stats.mcnemar_power(*POWER_EXAMPLE, n, 0.05), 4),
+                "method": "exact: every multinomial outcome of (A-only passes, B-only passes, concordant) over "
+                "independent cases, summed where the test rejects",
+            },
         },
         "baseline": baseline_diff(cases, baseline_path),
         "mutation": mutation_analysis(reference, mutants) if mutants else None,

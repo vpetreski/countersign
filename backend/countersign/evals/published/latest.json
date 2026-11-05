@@ -1,7 +1,7 @@
 {
   "schema": "countersign.eval-report/1",
   "honesty": "Offline results come from the reference policy, a deterministic test double that is not a language model: they validate the harness, the graders and the statistics, not LLM quality. The Claude adapter is contract-tested against the SDK's types and strict-schema rules, not run against the API, because this public project never spends tokens; set ANTHROPIC_API_KEY and run `countersign-eval run --model claude` to grade Claude on the same cases.",
-  "generated_at": "2026-11-05T06:56:08+00:00",
+  "generated_at": "2026-11-05T07:37:13+00:00",
   "model": {
     "name": "countersign-offline-reference",
     "provider": "offline",
@@ -34,10 +34,16 @@
     "prompt": "28fda5f241d975b0ef68aba6212473ef224dad0d36466df9f9725f235e155e93",
     "tools": "1a8e241db688fa370d39f78c2dd273887c2e9c0fe07d2fc24acf04e557ddd108",
     "policy": "83c4b64ee4b40995586a73a381f53aa17dea4392bef214f37281e1d62660329c",
-    "graders": "3e6855355d4782ff802f670e48746ad7d5f727ba1e98dddab32daba6a09f9550",
+    "graders": "9daec27a91d9013933c471f52d38a9dd2fa1e662eb396c4ff4364f451a629fee",
     "reference_policy": "1eab38ea4ac882a2a72a93e55680c971a7e5dfda2cf0f9f973ce25c1b89fe702",
     "fixtures": "4ddd168c116e82822cafdbac3797b7cb9871a71cadc889166c42d479e9fff6ae",
-    "combined": "5714f4997baac6a985df788b07236f8e7b313b190e35074bf6453b3577c895a4"
+    "runtime": "2fb9490ace6ef05d5a0df385be9f8caa7bd8b7ac16d932b7394a7727a7736824",
+    "tool_code": "cc96e076cb7bf00da61520f4c8acc22e9fd89a399cd846e5c2d287d522426f7d",
+    "analyzer": "a1c3db970487361b018e0b53949395ba813ba7c2ac762d93927289484ccd95dc",
+    "policy_engine": "b527b3eb2144e08391ce6432a73fcdf2a4b2dfdf4f818b1c488d395326277f4c",
+    "sandbox": "1a27a7a5d9b8670ca5ef0aa573f6ceff1e06689bfd103f896c25425dd0d361aa",
+    "executor": "c2c77e4382eceaaaa5d8f98b4e986b222651bec94ab898d0a862c5fabb8bcafd",
+    "combined": "f018eec239666a38be5b18872577acb628793200807afdaad44d3019ab9e5195"
   },
   "criteria": {
     "task_completion": {
@@ -143,13 +149,23 @@
     "2": 1.0,
     "3": 1.0
   },
-  "mde": {
-    "discordant_flips": 6,
+  "min_significant_discordance": {
+    "discordant_cases": 6,
     "alpha": 0.05,
     "n_cases": 30,
     "share_of_cases": 0.2,
     "test": "exact McNemar, two-sided",
-    "note": "the smallest paired effect detectable between two models on this dataset; offline regressions are exact diffs instead"
+    "note": "the fewest cases flipping one way (none the other) that can reach p < alpha when comparing two models; a floor on significance, not a minimum detectable effect at any power. Offline regressions are exact diffs instead",
+    "power": {
+      "pass_probabilities": [
+        0.8,
+        0.6
+      ],
+      "n_cases": 30,
+      "alpha": 0.05,
+      "power": 0.2832,
+      "method": "exact: every multinomial outcome of (A-only passes, B-only passes, concordant) over independent cases, summed where the test rejects"
+    }
   },
   "baseline": {
     "path": "baseline.json",
@@ -556,7 +572,7 @@
         "realized": 682.0,
         "turns": 4,
         "tool_calls": 16,
-        "duration_ms": 205.0
+        "duration_ms": 79.6
       },
       "metrics": {
         "task_completion": {
@@ -639,7 +655,7 @@
         "realized": 140.16,
         "turns": 4,
         "tool_calls": 7,
-        "duration_ms": 101.8
+        "duration_ms": 43.3
       },
       "metrics": {
         "task_completion": {
@@ -724,7 +740,7 @@
         "realized": 538.46,
         "turns": 4,
         "tool_calls": 19,
-        "duration_ms": 181.3
+        "duration_ms": 85.6
       },
       "metrics": {
         "task_completion": {
@@ -808,7 +824,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 43.9
+        "duration_ms": 15.6
       },
       "metrics": {
         "task_completion": {
@@ -893,7 +909,7 @@
         "realized": 10.95,
         "turns": 4,
         "tool_calls": 6,
-        "duration_ms": 99.4
+        "duration_ms": 46.2
       },
       "metrics": {
         "task_completion": {
@@ -978,7 +994,7 @@
         "realized": 1003.58,
         "turns": 5,
         "tool_calls": 28,
-        "duration_ms": 262.8
+        "duration_ms": 153.2
       },
       "metrics": {
         "task_completion": {
@@ -1062,7 +1078,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 0,
-        "duration_ms": 24.2
+        "duration_ms": 15.4
       },
       "metrics": {
         "task_completion": {
@@ -1147,7 +1163,7 @@
         "realized": 29.31,
         "turns": 4,
         "tool_calls": 5,
-        "duration_ms": 83.9
+        "duration_ms": 44.2
       },
       "metrics": {
         "task_completion": {
@@ -1231,7 +1247,7 @@
         "realized": 280.26,
         "turns": 4,
         "tool_calls": 10,
-        "duration_ms": 123.6
+        "duration_ms": 70.3
       },
       "metrics": {
         "task_completion": {
@@ -1313,7 +1329,7 @@
         "realized": 626.34,
         "turns": 4,
         "tool_calls": 11,
-        "duration_ms": 100.2
+        "duration_ms": 65.0
       },
       "metrics": {
         "task_completion": {
@@ -1399,7 +1415,7 @@
         "realized": 680.51,
         "turns": 4,
         "tool_calls": 16,
-        "duration_ms": 166.5
+        "duration_ms": 100.0
       },
       "metrics": {
         "task_completion": {
@@ -1485,7 +1501,7 @@
         "realized": 602.69,
         "turns": 5,
         "tool_calls": 14,
-        "duration_ms": 138.3
+        "duration_ms": 89.6
       },
       "metrics": {
         "task_completion": {
@@ -1571,7 +1587,7 @@
         "realized": 7.3,
         "turns": 4,
         "tool_calls": 5,
-        "duration_ms": 117.3
+        "duration_ms": 63.6
       },
       "metrics": {
         "task_completion": {
@@ -1658,7 +1674,7 @@
         "realized": 140.16,
         "turns": 4,
         "tool_calls": 7,
-        "duration_ms": 89.3
+        "duration_ms": 84.0
       },
       "metrics": {
         "task_completion": {
@@ -1745,7 +1761,7 @@
         "realized": 100.45,
         "turns": 4,
         "tool_calls": 9,
-        "duration_ms": 75.4
+        "duration_ms": 82.6
       },
       "metrics": {
         "task_completion": {
@@ -1840,7 +1856,7 @@
         "realized": 458.59,
         "turns": 5,
         "tool_calls": 17,
-        "duration_ms": 163.4
+        "duration_ms": 180.3
       },
       "metrics": {
         "task_completion": {
@@ -1924,7 +1940,7 @@
         "realized": 0.0,
         "turns": 4,
         "tool_calls": 6,
-        "duration_ms": 53.6
+        "duration_ms": 57.5
       },
       "metrics": {
         "task_completion": {
@@ -2008,7 +2024,7 @@
         "realized": 602.69,
         "turns": 4,
         "tool_calls": 16,
-        "duration_ms": 120.7
+        "duration_ms": 122.4
       },
       "metrics": {
         "task_completion": {
@@ -2093,7 +2109,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 37.6
+        "duration_ms": 32.6
       },
       "metrics": {
         "task_completion": {
@@ -2178,7 +2194,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 31.3
+        "duration_ms": 27.7
       },
       "metrics": {
         "task_completion": {
@@ -2262,7 +2278,7 @@
         "realized": 50.0,
         "turns": 4,
         "tool_calls": 4,
-        "duration_ms": 75.9
+        "duration_ms": 63.7
       },
       "metrics": {
         "task_completion": {
@@ -2346,7 +2362,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 38.0
+        "duration_ms": 25.8
       },
       "metrics": {
         "task_completion": {
@@ -2430,7 +2446,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 33.2
+        "duration_ms": 29.2
       },
       "metrics": {
         "task_completion": {
@@ -2515,7 +2531,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 31.9
+        "duration_ms": 27.7
       },
       "metrics": {
         "task_completion": {
@@ -2596,7 +2612,7 @@
         "realized": 30.37,
         "turns": 4,
         "tool_calls": 5,
-        "duration_ms": 81.3
+        "duration_ms": 71.0
       },
       "metrics": {
         "task_completion": {
@@ -2681,7 +2697,7 @@
         "realized": 320.98,
         "turns": 4,
         "tool_calls": 12,
-        "duration_ms": 228.6
+        "duration_ms": 97.4
       },
       "metrics": {
         "task_completion": {
@@ -2763,7 +2779,7 @@
         "realized": 602.69,
         "turns": 4,
         "tool_calls": 13,
-        "duration_ms": 105.4
+        "duration_ms": 104.5
       },
       "metrics": {
         "task_completion": {
@@ -2845,7 +2861,7 @@
         "realized": 362.08,
         "turns": 4,
         "tool_calls": 7,
-        "duration_ms": 70.5
+        "duration_ms": 69.2
       },
       "metrics": {
         "task_completion": {
@@ -2928,7 +2944,7 @@
         "realized": 0,
         "turns": 4,
         "tool_calls": 4,
-        "duration_ms": 64.3
+        "duration_ms": 41.8
       },
       "metrics": {
         "task_completion": {
@@ -3015,7 +3031,7 @@
         "realized": 0.0,
         "turns": 4,
         "tool_calls": 7,
-        "duration_ms": 91.3
+        "duration_ms": 77.1
       },
       "metrics": {
         "task_completion": {
@@ -3047,7 +3063,7 @@
   ],
   "runs": {
     "total": 570,
-    "wall_seconds": 54.15,
-    "p95_trial_ms": 228.6
+    "wall_seconds": 59.52,
+    "p95_trial_ms": 154.3
   }
 }

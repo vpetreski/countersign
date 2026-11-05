@@ -5,7 +5,9 @@
 - `pass_hat_k`: pass^k, the chance that k independent trials of a case all pass, averaged over cases, with the
   unbiased per-case estimator C(c, k) / C(n, k) (c passes in n trials).
 - `mcnemar_exact`: the exact two-sided McNemar test on discordant pairs (a binomial sign test).
-- `mde_flips`: the fewest one-directional discordant cases an exact McNemar test can call significant.
+- `min_significant_discordance`: the fewest discordant cases, all in one direction, that the exact McNemar test
+  can call significant. A floor on what can ever be significant, not a minimum detectable effect at any power.
+- `mcnemar_power`: the exact power of that test for two agents with known per-case pass probabilities.
 Pure Python on purpose: the evaluation needs no numerical stack, and every function is checked against known
 values in tests/evals/test_stats.py.
 """
@@ -58,10 +60,11 @@ def cluster_bootstrap(
 def interval(
     case_means: Sequence[float], *, resamples: int = 2000, seed: int = 0
 ) -> tuple[tuple[float, float], str]:
-    """The cluster bootstrap, except where it degenerates: when every case scores the same 0 or 1 the bootstrap
-    returns a zero-width interval, which overstates certainty, so the Wilson interval over cases is used."""
+    """The cluster bootstrap, except where it degenerates: a zero-width bootstrap interval (every resample has the
+    same mean, as when every case scores the same 0, 1 or fraction) overstates certainty, so the Wilson interval
+    over cases is used instead, with the mean's share of the cases as its successes."""
     lo, hi = cluster_bootstrap(case_means, resamples=resamples, seed=seed)
-    if lo == hi and case_means and all(m in (0.0, 1.0) for m in case_means):
+    if lo == hi and case_means:
         return wilson(round(sum(case_means)), len(case_means)), "wilson over cases (bootstrap degenerate)"
     return (lo, hi), "cluster bootstrap over cases"
 
@@ -84,12 +87,31 @@ def mcnemar_exact(b: int, c: int) -> float:
     return min(1.0, 2 * tail)
 
 
-def mde_flips(alpha: float = 0.05) -> int:
-    """The fewest discordant cases, all in one direction, for which the exact McNemar test gives p < alpha."""
+def min_significant_discordance(alpha: float = 0.05) -> int:
+    """The fewest discordant cases, all in one direction (and none the other), for which the exact two-sided
+    McNemar test gives p < alpha. Fewer can never be significant; reaching it is not the same as detecting a
+    difference reliably (see `mcnemar_power`)."""
     d = 1
     while mcnemar_exact(d, 0) >= alpha:
         d += 1
     return d
+
+
+def mcnemar_power(p_a: float, p_b: float, n: int, alpha: float = 0.05) -> float:
+    """The exact power of the two-sided exact McNemar test at `alpha` on `n` independent cases, for agents that
+    pass each case with probability `p_a` and `p_b`, independently of each other.
+
+    Each case is a draw from a three-way multinomial: A passes and B fails with probability p_a(1 - p_b), A fails
+    and B passes with (1 - p_a)p_b, concordant otherwise. Every outcome (b, c, n - b - c) is enumerated and its
+    probability summed where the test rejects: no simulation, no normal approximation."""
+    pb, pc = p_a * (1 - p_b), (1 - p_a) * p_b
+    pd = 1 - pb - pc
+    power = 0.0
+    for b in range(n + 1):
+        for c in range(n - b + 1):
+            if mcnemar_exact(b, c) < alpha:
+                power += math.comb(n, b) * math.comb(n - b, c) * pb**b * pc**c * pd ** (n - b - c)
+    return power
 
 
 def coverage_simulation(

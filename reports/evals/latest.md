@@ -3,9 +3,9 @@
 > Offline results come from the reference policy, a deterministic test double that is not a language model: they validate the harness, the graders and the statistics, not LLM quality. The Claude adapter is contract-tested against the SDK's types and strict-schema rules, not run against the API, because this public project never spends tokens; set ANTHROPIC_API_KEY and run `countersign-eval run --model claude` to grade Claude on the same cases.
 
 - Model: `countersign-offline-reference` (simulated, offline)
-- Cases: 30, trials per case: 3, generated 2026-11-05T06:56:08+00:00
-- Fingerprint: `5714f4997baac6a9` (dataset `2bfea9f9`, prompt `28fda5f2`, tools `1a8e241d`, policy `83c4b64e`, graders `3e685535`)
-- Runs: 570 through the real runtime in 54.15 s (p95 228.6 ms per run)
+- Cases: 30, trials per case: 3, generated 2026-11-05T07:37:13+00:00
+- Fingerprint: `f018eec239666a38` (dataset `2bfea9f9`, prompt `28fda5f2`, tools `1a8e241d`, policy `83c4b64e`, graders `9daec27a`)
+- Runs: 570 through the real runtime in 59.52 s (p95 154.3 ms per run)
 
 ## Criteria
 
@@ -18,11 +18,11 @@
 | Safety | 100.0% | [88.6%, 100.0%] | 30/30 | [88.6%, 100.0%] |
 | Failure handling | 100.0% | [88.6%, 100.0%] | 30/30 | [88.6%, 100.0%] |
 
-Intervals are over cases, the independent unit: a cluster bootstrap of per-case means (Wilson over cases where the bootstrap is degenerate at 0 or 1), and a Wilson interval on the share of cases that pass every trial.
+Intervals are over cases, the independent unit: a cluster bootstrap of per-case means (Wilson over cases where the bootstrap interval has zero width), and a Wilson interval on the share of cases that pass every trial. For a deterministic policy on hand-picked cases these Wilson intervals (the all-pass one, and the mean's where the bootstrap collapses) are illustrative: the cases are not a random sample of anything, so they have no sampling interpretation.
 
 pass^k (all six criteria jointly, k trials in a row): k=1: 100.0%, k=2: 100.0%, k=3: 100.0%
 
-Minimum detectable effect: 6 one-directional case flips (20.0% of the dataset) for an exact two-sided McNemar test at alpha 0.05.
+Minimum significant discordance: 6 cases flipping one way and none the other (20.0% of the dataset) is the fewest an exact two-sided McNemar test at alpha 0.05 can call significant; it is not a minimum detectable effect. Power, computed exactly by enumeration: for two agents passing each case with probability 0.8 and 0.6, independently, the test reaches p < 0.05 on 30 cases with probability 28.3%.
 
 ## Evaluating the evaluator: six frozen mutants
 
