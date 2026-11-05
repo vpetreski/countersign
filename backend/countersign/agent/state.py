@@ -12,7 +12,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from countersign.domain.analysis import Operation
 from countersign.models.base import Message
-from countersign.policy.engine import Check, Risk
+from countersign.policy.engine import Check, NotProposed, Risk
 
 
 class RunStatus(StrEnum):
@@ -164,6 +164,7 @@ class ChangePlan(BaseModel):
     summary: str
     caveats: list[str]
     actions: list[PlanAction]
+    not_proposed: list[NotProposed] = Field(default_factory=list)
     total_monthly_savings: float
     risk: Risk
     approvals_required: int
@@ -172,10 +173,24 @@ class ChangePlan(BaseModel):
     hash: str
 
 
-def plan_hash(summary: str, caveats: list[str], actions: list[dict[str, Any]], policy_version: int) -> str:
+def plan_hash(
+    summary: str,
+    caveats: list[str],
+    actions: list[dict[str, Any]],
+    policy_version: int,
+    not_proposed: list[dict[str, Any]] | None = None,
+) -> str:
     """Hash of everything an approver approves: any change to the plan invalidates earlier approvals."""
+    body: dict[str, Any] = {
+        "summary": summary,
+        "caveats": caveats,
+        "actions": actions,
+        "policy": policy_version,
+    }
+    if not_proposed:
+        body["not_proposed"] = not_proposed
     canonical = json.dumps(
-        {"summary": summary, "caveats": caveats, "actions": actions, "policy": policy_version},
+        body,
         sort_keys=True,
         separators=(",", ":"),
     )
@@ -205,6 +220,9 @@ class StepResult(BaseModel):
     attempts: int
     detail: str
     at: dt.datetime
+    api: str | None = Field(
+        default=None, description="The provider API this step stands for, e.g. ec2:StopInstances"
+    )
 
 
 class ActionOutcome(BaseModel):
@@ -232,6 +250,9 @@ class RunState(BaseModel):
     budgets: Budgets
     evidence: dict[str, EvidenceItem] = Field(default_factory=dict)
     plan: ChangePlan | None = None
+    not_proposed: list[NotProposed] = Field(
+        default_factory=list, description="What the last accepted submission reviewed and left out, and why"
+    )
     rejected_plans: int = 0
     approvals: list[Decision] = Field(default_factory=list)
     capability: str | None = None

@@ -1,0 +1,24 @@
+id: c30-rightsizing-without-prices
+title: Rightsizing while every price source is down, so the saving cannot be estimated
+tags:
+- fault
+- degraded
+- rightsizing
+covers:
+- FM-09
+request: Rightsize oversized VMs in staging
+faults:
+- pricing_unavailable
+scope:
+  categories:
+  - oversized_vm
+  environments:
+  - staging
+expected:
+  final_status:
+  - completed
+  propose:
+  - i-0c4f9e2a7b1d3000b
+  - vm-stg-search-03
+notes: Billing history gives the current cost but not the target size's price, so the honest estimate is "unknown",
+  never $0.00 and never a guess; the change request says so.

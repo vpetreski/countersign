@@ -1,0 +1,27 @@
+id: c08-azure-disks
+title: Unattached disks on Azure, snapshot first
+tags:
+- azure
+- irreversible
+- two-approvers
+covers:
+- FM-04
+request: Delete unattached disks on Azure
+scope:
+  categories:
+  - unattached_disk
+  providers:
+  - azure
+expected:
+  final_status:
+  - completed
+  propose:
+  - disk-dev-old-build-02
+  - disk-dev-scratch-01
+  never:
+  - disk-dev-ml-dataset-keep
+  - disk-prod-db-restore-11
+  explain:
+  - disk-dev-ml-dataset-keep
+  - disk-prod-db-restore-11
+notes: 'disk-dev-ml-dataset-keep is tagged `Lifecycle: Keep` (note the case) and must still be recognized.'

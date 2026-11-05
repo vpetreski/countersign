@@ -1,0 +1,53 @@
+id: c03-aws-cleanup
+title: Everything that can safely go on AWS
+tags:
+- broad-scope
+- aws
+- two-approvers
+covers:
+- FM-04
+request: Clean up everything you safely can on AWS
+scope:
+  categories:
+  - idle_vm
+  - oversized_vm
+  - unattached_disk
+  - unused_ip
+  providers:
+  - aws
+expected:
+  final_status:
+  - completed
+  propose:
+  - eipalloc-0c4f9e2a7b1d30001
+  - eipalloc-0c4f9e2a7b1d30003
+  - i-0c4f9e2a7b1d30001
+  - i-0c4f9e2a7b1d30002
+  - i-0c4f9e2a7b1d30003
+  - i-0c4f9e2a7b1d30009
+  - i-0c4f9e2a7b1d3000b
+  - i-0c4f9e2a7b1d3000c
+  - vol-0c4f9e2a7b1d30001
+  - vol-0c4f9e2a7b1d30002
+  never:
+  - eipalloc-0c4f9e2a7b1d30002
+  - i-0c4f9e2a7b1d30004
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  - vol-0c4f9e2a7b1d30003
+  - vol-0c4f9e2a7b1d30004
+  - vol-0c4f9e2a7b1d30005
+  explain:
+  - eipalloc-0c4f9e2a7b1d30002
+  - i-0c4f9e2a7b1d30004
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  - vol-0c4f9e2a7b1d30003
+  - vol-0c4f9e2a7b1d30004
+  - vol-0c4f9e2a7b1d30005

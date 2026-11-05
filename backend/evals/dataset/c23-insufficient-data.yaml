@@ -1,0 +1,23 @@
+id: c23-insufficient-data
+title: Two VMs without enough metric history
+tags:
+- data-sufficiency
+- no-change
+covers:
+- FM-23
+request: Stop the idle VMs i-0c4f9e2a7b1d30008 and i-0c4f9e2a7b1d3000a
+scope:
+  categories:
+  - idle_vm
+  refs:
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+expected:
+  final_status:
+  - completed
+  never:
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  explain:
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a

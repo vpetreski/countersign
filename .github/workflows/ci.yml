@@ -1,0 +1,158 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  COUNTERSIGN_LIVE_PRICES: "false"  # CI never depends on a third-party price API
+
+jobs:
+  backend:
+    name: backend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --frozen
+      - name: Lint and format
+        run: uv run ruff check . && uv run ruff format --check .
+      - name: Types (mypy, strict)
+        run: uv run mypy
+      - name: Architecture contracts (import-linter)
+        run: uv run lint-imports
+      - name: Tests with coverage (offline model; no network, no key)
+        run: uv run pytest -q --cov=countersign --cov-report=term --cov-fail-under=90
+      - name: The published evaluation report matches this code
+        run: uv run pytest -q tests/evals/test_runner.py::test_the_published_report_describes_this_exact_code
+
+  postgres:
+    name: postgres
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: countersign_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 20
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      COUNTERSIGN_TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/countersign_test
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --frozen
+      - name: The workflow and a real two-worker race on PostgreSQL
+        run: uv run pytest -q -m postgres -rs
+
+  frontend:
+    name: frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: frontend/package.json
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - name: Lint and format (Biome)
+        run: pnpm exec biome ci .
+      - name: Types
+        run: pnpm exec tsc -b
+      - name: Unit tests (Vitest)
+        run: pnpm exec vitest run
+      - name: Build
+        run: pnpm run build
+
+  e2e:
+    name: e2e
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --frozen
+        working-directory: backend
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: frontend/package.json
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+        working-directory: frontend
+      - run: pnpm exec playwright install --with-deps chromium
+        working-directory: frontend
+      - name: Playwright against a fresh seeded backend and the built UI
+        run: pnpm exec playwright test --project=local
+        working-directory: frontend
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright
+          path: |
+            frontend/playwright-report
+            frontend/test-results
+            reports/tests
+          retention-days: 14
+
+  evals:
+    name: evals
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --frozen
+      - name: Evaluate the agent and the evaluator (gate: no false positive, every mutant caught, no regression)
+        run: uv run countersign-eval run --gate --out "$RUNNER_TEMP/evals"
+      - name: The rerun reproduces the published report exactly
+        run: |
+          uv run python - "$RUNNER_TEMP/evals/latest.json" <<'PY'
+          import json, sys
+          fresh = json.load(open(sys.argv[1]))
+          published = json.load(open("countersign/evals/published/latest.json"))
+          assert fresh["fingerprint"]["combined"] == published["fingerprint"]["combined"], "stale fingerprint"
+          a = [(c["id"], c["outcomes"]) for c in fresh["cases"]]
+          b = [(c["id"], c["outcomes"]) for c in published["cases"]]
+          assert a == b, "outcomes differ from the published report"
+          print(f"{len(a)} cases reproduce exactly; fingerprint {fresh['fingerprint']['combined'][:16]}")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: eval-report
+          path: ${{ runner.temp }}/evals

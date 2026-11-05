@@ -152,7 +152,7 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
                 "unauthorized",
             )
         try:
-            p = principal(s.settings, authorization.split(" ", 1)[1].strip())
+            p = principal(s.settings, authorization.split(" ", 1)[1].strip(), s.clock())
         except AuthError as exc:
             raise Problem(401, "Unauthorized", str(exc), "unauthorized") from exc
         with s.db.session() as session:
@@ -214,6 +214,10 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "no-referrer"
         response.headers["X-Frame-Options"] = "DENY"
+        if request.url.path != "/api/docs":  # the interactive docs page loads its own scripts
+            response.headers.setdefault(
+                "Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'; base-uri 'none'"
+            )
         response.headers.setdefault("Cache-Control", "no-store")
         return response
 
@@ -608,7 +612,11 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
                     .order_by(RunEventRow.seq)
                 )
             )
-        spans = sorted((e.payload for e in rows), key=lambda x: x.get("start_ns", 0))
+        spans = sorted((dict(e.payload) for e in rows), key=lambda x: x.get("start_ns", 0))
+        origin = spans[0].get("start_ns", 0) if spans else 0
+        for span in spans:  # nanosecond epochs exceed a double's exact range; offsets in microseconds do not
+            span["offset_us"] = (span.get("start_ns", 0) - origin) // 1000
+            span["duration_us"] = max(0, span.get("end_ns", 0) - span.get("start_ns", 0)) // 1000
         return {"trace_id": spans[0]["trace_id"] if spans else None, "spans": spans}
 
     # ------------------------------------------------------------ audit

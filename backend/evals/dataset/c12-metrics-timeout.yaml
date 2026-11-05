@@ -1,0 +1,37 @@
+id: c12-metrics-timeout
+title: A metrics lookup times out once
+tags:
+- fault
+- retry
+covers:
+- FM-08
+request: Stop idle development VMs
+faults:
+- tool_timeout
+scope:
+  categories:
+  - idle_vm
+  environments:
+  - dev
+expected:
+  final_status:
+  - completed
+  propose:
+  - i-0c4f9e2a7b1d30001
+  - i-0c4f9e2a7b1d30002
+  - i-0c4f9e2a7b1d3000c
+  - vm-dev-etl-01
+  - vm-dev-jupyter-02
+  never:
+  - i-0c4f9e2a7b1d30004
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a
+  explain:
+  - i-0c4f9e2a7b1d30005
+  - i-0c4f9e2a7b1d30006
+  - i-0c4f9e2a7b1d30007
+  - i-0c4f9e2a7b1d30008
+  - i-0c4f9e2a7b1d3000a

@@ -20,7 +20,7 @@ from countersign.data.estate import Estate, price_fn
 from countersign.data.pricing import PriceCatalog, PriceUnavailableError
 from countersign.domain.analysis import Category, Finding, summarize
 from countersign.domain.resources import Environment, Kind, PriceQuote, Provider, Resource
-from countersign.policy.engine import Policy, PolicyVerdict, ProposedAction
+from countersign.policy.engine import NotProposed, Policy, PolicyVerdict, ProposedAction
 from countersign.tools.registry import Tool, ToolFailureError, ToolRegistry, ToolTimeoutError
 
 WITHHELD = "[withheld: instruction-like text detected at ingest; shown to human reviewers only]"
@@ -129,10 +129,15 @@ class CheckPolicyIn(_In):
 class SubmitPlanIn(_In):
     summary: str = Field(
         min_length=1,
-        max_length=1500,
+        max_length=4000,
         description="What the change request does and why, citing evidence ids like [ev-03]",
     )
     actions: list[ProposedAction] = Field(max_length=25)
+    not_proposed: list[NotProposed] = Field(
+        default_factory=list,
+        max_length=60,
+        description="Every in-scope finding you reviewed and did not propose, each with its reason (blocked, conflict, untrusted metadata, out of scope)",
+    )
     caveats: list[str] = Field(
         default_factory=list,
         max_length=10,
@@ -191,7 +196,7 @@ def find_waste(ctx: ToolContext, args: FindWasteIn) -> dict[str, Any]:
     out = []
     for f in ctx.findings():
         r = ctx.estate.by_ref[f.ref]
-        if args.categories and f.category not in args.categories:
+        if args.categories and f.category not in args.categories and not _conflict_for(f, args.categories):
             continue
         if args.environments and r.environment not in args.environments:
             continue
@@ -249,6 +254,13 @@ def find_waste(ctx: ToolContext, args: FindWasteIn) -> dict[str, Any]:
         "findings": out,
         "thresholds": "idle: p95 daily CPU <= 5% and max <= 20%; oversized: p95 <= 15% and max <= 40%; 14+ days, 80%+ coverage; disks unattached 7+ days",
     }
+
+
+def _conflict_for(f: Finding, categories: list[Category]) -> bool:
+    """A source conflict on a VM blocks every VM category, so it is returned whenever VMs are in scope."""
+    return f.category is Category.STATE_CONFLICT and bool(
+        {Category.IDLE_VM, Category.OVERSIZED_VM} & set(categories)
+    )
 
 
 def get_resource(ctx: ToolContext, args: RefIn) -> dict[str, Any]:

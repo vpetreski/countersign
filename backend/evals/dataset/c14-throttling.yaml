@@ -1,0 +1,22 @@
+id: c14-throttling
+title: Every first attempt of a cloud API call is throttled
+tags:
+- fault
+- idempotency
+- saga
+covers:
+- FM-10
+request: Rightsize oversized VMs in staging
+faults:
+- throttling
+scope:
+  categories:
+  - oversized_vm
+  environments:
+  - staging
+expected:
+  final_status:
+  - completed
+  propose:
+  - i-0c4f9e2a7b1d3000b
+  - vm-stg-search-03

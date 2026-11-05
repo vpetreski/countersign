@@ -1,0 +1,28 @@
+id: c09-search-team
+title: Waste owned by one team
+tags:
+- team-scope
+- conflict
+covers:
+- FM-23
+request: Find waste owned by the search team
+scope:
+  categories:
+  - idle_vm
+  - oversized_vm
+  - unattached_disk
+  - unused_ip
+  teams:
+  - search
+expected:
+  final_status:
+  - completed
+  propose:
+  - i-0c4f9e2a7b1d30003
+  - i-0c4f9e2a7b1d3000b
+  - vm-stg-search-03
+  - vol-0c4f9e2a7b1d30002
+  never:
+  - i-0c4f9e2a7b1d30007
+  explain:
+  - i-0c4f9e2a7b1d30007

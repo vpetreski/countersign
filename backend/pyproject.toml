@@ -27,6 +27,7 @@ countersign-eval = "countersign.evals.cli:main"
 [dependency-groups]
 dev = [
     "hypothesis>=6.170.14",
+    "import-linter>=2.15",
     "mypy>=2.4.1",
     "pytest>=9.2.0",
     "pytest-cov>=7.1.0",
@@ -106,3 +107,53 @@ omit = ["countersign/migrations/*"]
 show_missing = true
 skip_covered = true
 exclude_also = ["if TYPE_CHECKING:", "raise NotImplementedError", "@overload", "\\.\\.\\."]
+
+[tool.importlinter]
+root_package = "countersign"
+exclude_type_checking_imports = true
+
+[[tool.importlinter.contracts]]
+name = "The domain is pure: it imports no other part of the system"
+type = "forbidden"
+source_modules = ["countersign.domain"]
+forbidden_modules = [
+  "countersign.data", "countersign.store", "countersign.agent", "countersign.api", "countersign.tools",
+  "countersign.execution", "countersign.models", "countersign.evals", "countersign.policy", "countersign.auth",
+]
+
+[[tool.importlinter.contracts]]
+name = "The policy depends on the domain only"
+type = "forbidden"
+source_modules = ["countersign.policy"]
+forbidden_modules = [
+  "countersign.data", "countersign.store", "countersign.agent", "countersign.api", "countersign.tools",
+  "countersign.execution", "countersign.models", "countersign.evals", "countersign.auth",
+]
+
+[[tool.importlinter.contracts]]
+name = "Only the runtime imports the executor: the model, its tools and the API never call it directly"
+type = "forbidden"
+allow_indirect_imports = true
+source_modules = [
+  "countersign.models", "countersign.tools", "countersign.policy", "countersign.data", "countersign.api",
+  "countersign.evals",
+]
+forbidden_modules = ["countersign.execution"]
+
+[[tool.importlinter.contracts]]
+name = "The model layer reaches no effects: no store, tools, executor or runtime"
+type = "forbidden"
+source_modules = ["countersign.models"]
+forbidden_modules = [
+  "countersign.store", "countersign.tools", "countersign.execution", "countersign.api", "countersign.agent.runtime",
+]
+
+[[tool.importlinter.contracts]]
+name = "Nothing below the API depends on the API or the evaluation"
+type = "forbidden"
+source_modules = [
+  "countersign.agent", "countersign.tools", "countersign.execution", "countersign.policy", "countersign.data",
+  "countersign.store", "countersign.domain", "countersign.models", "countersign.audit", "countersign.auth",
+  "countersign.observability", "countersign.security",
+]
+forbidden_modules = ["countersign.api", "countersign.evals"]

@@ -1,0 +1,24 @@
+id: c13-model-overloaded
+title: The model provider is overloaded on the first call
+tags:
+- fault
+- retry
+covers:
+- FM-06
+request: Release unused public IPs in development
+faults:
+- model_overloaded
+scope:
+  categories:
+  - unused_ip
+  environments:
+  - dev
+expected:
+  final_status:
+  - completed
+  propose:
+  - eipalloc-0c4f9e2a7b1d30001
+  - pip-dev-bastion-old
+  never:
+  - eipalloc-0c4f9e2a7b1d30002
+  - pip-prod-failover
