@@ -26,6 +26,7 @@ from countersign.agent.faults import Fault, FaultPlan
 from countersign.agent.prompts import SYSTEM_PROMPT
 from countersign.agent.resilience import call_with_retries
 from countersign.agent.state import (
+    CANCELLABLE,
     TERMINAL,
     WAITING_FOR_HUMAN,
     ActionOutcome,
@@ -50,7 +51,7 @@ from countersign.execution.executor import Executor
 from countersign.execution.sandbox import STEPS, SandboxCloud
 from countersign.models.base import ChatModel, ModelError, ModelRequest, ModelResponse
 from countersign.observability.tracing import agent_span, collect, provider_name, tracer
-from countersign.policy.engine import REVERSIBLE, Policy, PolicyVerdict, ProposedAction
+from countersign.policy.engine import REVERSIBLE, UNDO_ORDER, Policy, PolicyVerdict, ProposedAction
 from countersign.security.screening import redact
 from countersign.settings import Settings
 from countersign.store.db import Database
@@ -257,20 +258,29 @@ class Runtime:
         if principal.role is not Role.OPERATOR:
             raise RunForbiddenError("only an operator can answer the agent")
         with self._leased(principal, run_id) as tick:
-            st = tick.state
-            if tick.status is not RunStatus.AWAITING_INPUT or st.question is None:
-                raise RunConflictError(f"the run is {tick.status}, not waiting for an answer")
-            answer, _ = redact(text.strip())
-            reply = {
-                "type": "tool_result",
-                "tool_use_id": st.question.tool_use_id,
-                "content": json.dumps({"operator_answer": answer}),
-            }
-            st.messages.append({"role": "user", "content": [*st.pending_results, reply]})
-            st.pending_results, st.question = [], None
-            tick.event("answer", {"by": principal.sub, "text": answer})
-            tick.audit.append((principal.sub, "run.answered", run_id, {"answer": answer}))
-            tick.move(RunStatus.PLANNING, "operator answered")
+            expired = self._expire_if_overdue(tick)
+            if not expired:
+                self._answer(tick, principal, text)
+        if expired:
+            raise RunConflictError(
+                "the run expired after waiting 24 hours for a human; the answer was not used"
+            )
+
+    def _answer(self, tick: Tick, principal: Principal, text: str) -> None:
+        st = tick.state
+        if tick.status is not RunStatus.AWAITING_INPUT or st.question is None:
+            raise RunConflictError(f"the run is {tick.status}, not waiting for an answer")
+        answer, _ = redact(text.strip())
+        reply = {
+            "type": "tool_result",
+            "tool_use_id": st.question.tool_use_id,
+            "content": json.dumps({"operator_answer": answer}),
+        }
+        st.messages.append({"role": "user", "content": [*st.pending_results, reply]})
+        st.pending_results, st.question = [], None
+        tick.event("answer", {"by": principal.sub, "text": answer})
+        tick.audit.append((principal.sub, "run.answered", tick.row_id, {"answer": answer}))
+        tick.move(RunStatus.PLANNING, "operator answered")
 
     def decide(
         self,
@@ -283,7 +293,11 @@ class Runtime:
         if principal.role is not Role.APPROVER:
             raise RunForbiddenError("only an approver can countersign")
         with self._leased(principal, run_id) as tick:
-            self._decide(tick, principal, plan_hash_, dict(decisions), note)
+            expired = self._expire_if_overdue(tick)
+            if not expired:
+                self._decide(tick, principal, plan_hash_, dict(decisions), note)
+        if expired:
+            raise RunConflictError("the run expired after waiting 24 hours for a human; nothing was approved")
 
     def cancel(self, principal: Principal, run_id: str) -> None:
         if principal.role is not Role.OPERATOR:
@@ -291,6 +305,10 @@ class Runtime:
         with self._leased(principal, run_id) as tick:
             if tick.status in TERMINAL:
                 raise RunConflictError(f"the run is already {tick.status}")
+            if tick.status not in CANCELLABLE:
+                raise RunConflictError(
+                    f"the run is {tick.status}: every approved effect has happened, so nothing is left to cancel"
+                )
             for outcome in tick.state.outcomes:
                 if outcome.status == "pending":
                     outcome.status, outcome.detail = "skipped", "cancelled before execution"
@@ -301,14 +319,10 @@ class Runtime:
     # ------------------------------------------------------------------ one tick
 
     def _tick(self, tick: Tick) -> None:
-        now = self.clock()
         if tick.status in TERMINAL:
             return
         if tick.status in WAITING_FOR_HUMAN:
-            if now - self._updated_at(tick) > HUMAN_WAIT_LIMIT:
-                tick.state.report = "The run expired after waiting 24 hours for a human."
-                tick.audit.append(("system", "run.expired", tick.row_id, {"at_status": tick.status}))
-                tick.move(RunStatus.EXPIRED, "no human response within 24 hours")
+            self._expire_if_overdue(tick)
             return
         if tick.status is RunStatus.CREATED:
             tick.move(RunStatus.PLANNING, "started")
@@ -321,6 +335,16 @@ class Runtime:
             self._execute(tick)
         elif tick.status is RunStatus.VERIFYING:
             self._verify(tick)
+
+    def _expire_if_overdue(self, tick: Tick) -> bool:
+        """A run that has waited more than 24 hours for a person expires, whoever touches it next: an advance,
+        an answer or a countersign. A late answer or countersign is refused, never applied to a stale plan."""
+        if tick.status not in WAITING_FOR_HUMAN or self.clock() - self._updated_at(tick) <= HUMAN_WAIT_LIMIT:
+            return False
+        tick.state.report = "The run expired after waiting 24 hours for a human."
+        tick.audit.append(("system", "run.expired", tick.row_id, {"at_status": tick.status}))
+        tick.move(RunStatus.EXPIRED, "no human response within 24 hours")
+        return True
 
     def _updated_at(self, tick: Tick) -> dt.datetime:
         with self.db.session() as s:
@@ -652,8 +676,8 @@ class Runtime:
             r = ctx.estate.resolve(proposed.ref)
             assert r is not None  # the verdict passed P-008
             f = findings[r.ref]
-            staged.append((not REVERSIBLE[proposed.operation], index, proposed, r, f, verdict.actions[index]))
-        staged.sort(key=lambda s: (s[0], s[1]))  # reversible first; irreversible steps run last
+            staged.append((UNDO_ORDER[proposed.operation], index, proposed, r, f, verdict.actions[index]))
+        staged.sort(key=lambda s: (s[0], s[1]))  # stops and resizes, then deletions, then releases
         actions = [
             PlanAction(
                 id=f"act-{n:02d}",
@@ -679,7 +703,7 @@ class Runtime:
                 checks=v.checks,
                 warnings=list(f.warnings),
             )
-            for n, (_irrev, _i, p, r, f, v) in enumerate(staged, start=1)
+            for n, (_stage, _i, p, r, f, v) in enumerate(staged, start=1)
         ]
         dumped = [a.model_dump(mode="json") for a in actions]
         left_out = [n.model_dump(mode="json") for n in args.not_proposed]

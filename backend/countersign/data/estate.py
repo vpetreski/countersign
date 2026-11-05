@@ -12,11 +12,13 @@ import threading
 from collections import defaultdict
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field
+from typing import cast
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from countersign.data.pricing import PriceCatalog, PriceUnavailableError
+from countersign.data.quality import CheckResult, Status, sync_check
 from countersign.domain.analysis import Finding, analyze
 from countersign.domain.resources import (
     CostLine,
@@ -247,6 +249,18 @@ def _utc(value: dt.datetime) -> dt.datetime:
 
 def quality_results(session: Session) -> list[QualityResultRow]:
     return list(session.scalars(select(QualityResultRow).order_by(QualityResultRow.check_id)))
+
+
+def data_checks(session: Session, now: dt.datetime, sync_hours: float) -> list[CheckResult]:
+    """The checks stored at the last ingest, plus the sync check, computed now because a stored result
+    cannot age: when the daily sync stops, the Data view and the dashboard show it."""
+    stored = [
+        CheckResult(r.check_id, r.category, cast("Status", r.status), r.observed, r.expected, r.detail)
+        for r in quality_results(session)
+    ]
+    current = session.scalars(select(SourceSnapshot).where(SourceSnapshot.current.is_(True)))
+    synced = [_utc(x.fetched_at) for x in current]
+    return sorted([*stored, sync_check(synced, now, sync_hours)], key=lambda c: c.check_id)
 
 
 def quarantined(session: Session) -> list[QuarantineRow]:

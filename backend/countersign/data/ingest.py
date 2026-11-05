@@ -77,7 +77,12 @@ def ingest(db: Database, settings: Settings, now: dt.datetime | None = None) -> 
     now = now or dt.datetime.now(dt.UTC)
     batches = load_batches(settings)
     as_of = data_as_of(settings)
-    checks = run_checks(batches, fetched_at=now, now=now, freshness_hours=settings.inventory_freshness_hours)
+    checks = run_checks(
+        batches,
+        as_of,
+        metrics_hours=settings.metrics_freshness_hours,
+        billing_hours=settings.billing_freshness_hours,
+    )
     with db.session() as s:
         current = {
             row.source: row

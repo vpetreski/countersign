@@ -18,7 +18,7 @@ import { CitedSummary } from "../../components/Citations";
 import { NotProposedTable } from "../../components/NotProposed";
 import { useToast } from "../../components/toast";
 import { Badge, Button, Callout, Card, cx, EmptyState, Mono, Skeleton } from "../../components/ui";
-import { runKey, useConfig, useRun, useRunEvents } from "../../hooks";
+import { runKey, useConfig, useIntentKey, useRun, useRunEvents } from "../../hooks";
 import { isProblem } from "../../lib/api";
 import { AutoAdvancer, shouldAdvance } from "../../lib/autoAdvance";
 import { formatDateTime, formatMonthly } from "../../lib/format";
@@ -90,6 +90,7 @@ function useAutoAdvance(
 
 export function RunPanel({ runId }: { runId: string }) {
   const { api, persona, personas, setPersona, workspace } = useSession();
+  const decisionIntent = useIntentKey();
   const ws = workspace.workspace_id;
   const qc = useQueryClient();
   const toast = useToast();
@@ -139,17 +140,20 @@ export function RunPanel({ runId }: { runId: string }) {
   }, [run, qc, ws]);
 
   const decide = useMutation({
-    mutationFn: (v: { decisions: Record<string, Verdict>; note: string }) =>
-      api<RunView>(`/api/runs/${runId}/decision`, {
+    mutationFn: (v: { decisions: Record<string, Verdict>; note: string }) => {
+      const body = {
+        plan_hash: run?.plan?.hash,
+        decisions: Object.entries(v.decisions).map(([action_id, decision]) => ({ action_id, decision })),
+        note: v.note || null,
+      };
+      return api<RunView>(`/api/runs/${runId}/decision`, {
         method: "POST",
-        idempotent: true,
-        body: {
-          plan_hash: run?.plan?.hash,
-          decisions: Object.entries(v.decisions).map(([action_id, decision]) => ({ action_id, decision })),
-          note: v.note || null,
-        },
-      }),
+        body,
+        idempotencyKey: decisionIntent.take({ run: runId, persona: persona.key, body }),
+      });
+    },
     onSuccess: (r) => {
+      decisionIntent.reset();
       applyRun(r);
       const signers = r.plan?.approvals_received ?? 0;
       const need = r.plan?.approvals_required ?? 1;

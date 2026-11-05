@@ -361,6 +361,21 @@ def test_idempotency_keys_replay_and_refuse_reuse(api: Api) -> None:
     assert mismatch.status_code == 422 and mismatch.json()["type"].endswith("/idempotency_mismatch")
 
 
+@pytest.mark.api_validation
+def test_an_idempotency_key_belongs_to_its_caller(api: Api) -> None:
+    """Two approvers sending the same decision with the same key: the second is refused, never handed the first
+    approver's stored response, which would leave the second countersign unrecorded."""
+    t = api.workspace()
+    run = to_approval(api, t)
+    body, url = decision(run), f"/api/runs/{run['id']}/decision"
+    first = api.client.post(url, json=body, headers={"Idempotency-Key": "k-1", **api.auth(t["approver"])})
+    assert first.status_code == 200 and first.json()["plan"]["approvals_received"] == 1
+    reused = api.client.post(url, json=body, headers={"Idempotency-Key": "k-1", **api.auth(t["approver2"])})
+    assert reused.status_code == 422 and reused.json()["type"].endswith("/idempotency_mismatch")
+    own = api.client.post(url, json=body, headers={"Idempotency-Key": "k-2", **api.auth(t["approver2"])})
+    assert own.status_code == 200 and own.json()["status"] == "executing"
+
+
 @pytest.mark.api_failure
 def test_rate_limits_hold_per_workspace_and_per_client(clock: Clock) -> None:
     """FM-20: the public demo bounds how much one visitor can start."""

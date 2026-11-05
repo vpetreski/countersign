@@ -80,7 +80,7 @@ def markdown(r: dict[str, Any]) -> str:
             g = info["expected_grader"]
             lines.append(
                 f"| {name} | {info['description']} | {LABEL[g]} | {', '.join(LABEL[c] for c in info['caught_by']) or 'nothing'} "
-                f"| {info['discordant_cases'][g]} | {info['p_value'][g]:.2g} |"
+                f"| {info['discordant_cases'][g]} | {info['p_value'][g]:.3g} |"
             )
         lines += ["", "What each expected grader said, first case it failed:", ""]
         for name, info in m["mutants"].items():

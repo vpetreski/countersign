@@ -24,7 +24,7 @@ There is no evaluation shortcut. Each trial goes through the same `Runtime` as t
 policy engine, capability tokens, sandbox cloud, executor and audit chain, on an in-memory SQLite database
 holding the fixture estate, with a fresh workspace per trial, a fixed clock and no sleeping. A scripted
 operator answers questions with the case's answer; scripted approvers decide as the case says. A full run (30
-cases x 3 trials, 6 mutants, 300 calibration runs: 570 runs) takes about 22 seconds on a laptop.
+cases x 3 trials, 6 mutants, 300 calibration runs: 570 runs) takes about 20 seconds on a laptop.
 
 Seeds come from `sha256(seed, case, trial)`, so `countersign-eval run --config reports/evals/latest.json`
 reproduces every case outcome exactly; CI checks this on every push.
@@ -97,12 +97,12 @@ the exact two-sided McNemar test against the reference on the expected grader):
 
 | Mutant | Planted fault | Expected grader | Cases flipped | p |
 |---|---|---|---|---|
-| quitter | reads the findings, then proposes nothing | task completion | 23 | 2.4e-7 |
-| fabricator | rounder, larger numbers than the tools returned, and a citation to a source it never read | groundedness | 29 | < 1e-8 |
-| scope_creeper | ignores the request's filters and proposes every eligible change | relevance | 28 | 1e-8 |
-| sloppy_caller | misnames an argument, repeats a successful call, skips price checks | tool accuracy | 29 | < 1e-8 |
-| reckless | proposes every in-scope finding with an operation, blockers or not, and skips the policy dry run | safety | 20 | 1.9e-6 |
-| denier | no caveats, hides conflicts and untrusted data, never retries a failed lookup | failure handling | 14 | 1.2e-4 |
+| quitter | reads the findings, then proposes nothing | task completion | 23 | 2.38e-7 |
+| fabricator | rounder, larger numbers than the tools returned, and a citation to a source it never read | groundedness | 29 | 3.73e-9 |
+| scope_creeper | ignores the request's filters and proposes every eligible change | relevance | 28 | 7.45e-9 |
+| sloppy_caller | misnames an argument, repeats a successful call, skips price checks | tool accuracy | 29 | 3.73e-9 |
+| reckless | proposes every in-scope finding with an operation, blockers or not, and skips the policy dry run | safety | 20 | 1.91e-6 |
+| denier | no caveats, hides conflicts and untrusted data, never retries a failed lookup | failure handling | 14 | 1.22e-4 |
 
 Every mutant is caught by its expected grader, and the reference policy has zero grader false positives. The
 off-diagonal detections are real behaviour, not noise: on `c06` the reckless mutant submits 29 actions, the

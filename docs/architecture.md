@@ -72,7 +72,10 @@ stateDiagram-v2
   verifying --> completed_with_failures
   awaiting_input --> expired: 24 h
   awaiting_approval --> expired: 24 h
+  created --> cancelled
   planning --> cancelled
+  awaiting_input --> cancelled
+  awaiting_approval --> cancelled
   executing --> cancelled
 ```
 
@@ -90,8 +93,13 @@ stateDiagram-v2
   a plan with nothing left fails with nothing executed; at the sandbox, through the token, which names only the
   actions that passed, and the precondition check before every step.
 - **Partial failure.** Compensation happens only inside an action's own chain, in reverse (a resize that fails
-  after the VM was stopped starts the VM again); independent actions are not rolled back; irreversible steps (delete,
-  release) run last; a run with some failed actions ends `completed_with_failures`.
+  after the VM was stopped starts the VM again); independent actions are not rolled back; the harder an effect is
+  to undo, the later it runs (stops and resizes, then disk deletions, recoverable from their snapshots, then IP
+  releases, not recoverable); a run with some failed actions ends `completed_with_failures`.
+- **Waiting has a limit; cancelling has an end.** A run that has waited 24 hours for a person expires on its next
+  touch, an advance, an answer or a countersign, so a late answer or countersign is refused (FM-29). Cancel is
+  allowed exactly where the transition table allows it; once a run is verifying, every approved effect has
+  happened and there is nothing left to cancel (FM-30).
 - **Ticks are driven, not autonomous.** The UI and the tests advance runs. Production would put the same tick
   behind a queue or a workflow engine; the state machine does not change.
 

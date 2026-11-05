@@ -6,7 +6,6 @@ license = "MIT"
 requires-python = ">=3.14"
 authors = [{ name = "Vanja Petreski", email = "vanja@petreski.co" }]
 dependencies = [
-    "alembic>=1.20.1",
     "anthropic>=2.5.0",
     "fastapi>=0.162.0",
     "httpx>=0.28.1",

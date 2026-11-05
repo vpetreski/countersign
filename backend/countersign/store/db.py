@@ -44,7 +44,7 @@ class Database:
                 raise
 
     def create_all(self) -> None:
-        """For tests and local development; production runs the Alembic migration instead."""
+        """Create every missing table and record the schema version (`migrate.upgrade` also drops retired ones)."""
         Base.metadata.create_all(self.engine)
         with self.session() as s:
             s.merge(MetaRow(key="schema_version", value=SCHEMA_VERSION))

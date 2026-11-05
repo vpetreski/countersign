@@ -74,7 +74,7 @@ The full picture, with the run's state machine: [docs/architecture.md](docs/arch
 | Data | Paginated `DescribeInstances` / `DescribeVolumes` / `DescribeAddresses`, CloudWatch `GetMetricData`, CloudTrail `DetachVolume`, Azure Resource Graph and Monitor, FOCUS 1.4 billing; AWS Price List snapshot with provenance; Azure Retail Prices API live with snapshot fallback; 9 planted data defects ingestion must catch |
 | Agent | A durable state machine (13 states), one unit of work per tick, a compare-and-set lease, budgets, retries with full jitter, a circuit breaker, five injectable faults |
 | Policy | `policy.yaml`: eight rules (production, protection tags, untrusted metadata, grounding, data sufficiency, unknown environment, plan size, known resource), risk by operation, 1 or 2 approvers, separation of duties |
-| Execution | HMAC capability tokens, a saga executor (compensation inside an action, irreversible steps last), a sandbox cloud with idempotency keys and precondition checks |
+| Execution | HMAC capability tokens, a saga executor (compensation inside an action; the harder an effect is to undo, the later it runs), a sandbox cloud with idempotency keys and precondition checks |
 | Trust | Hash-chained audit log per workspace, OpenTelemetry GenAI spans (`invoke_agent`, `chat`, `execute_tool`), RFC 9457 errors, rate limits, CSP |
 | Models | `ChatModel` in Anthropic Messages semantics: the Claude adapter and the offline reference policy |
 | UI | React 19, TypeScript, Tailwind 4, TanStack Query: Agent, Estate, Data, Evals, Audit; a persona switcher makes separation of duties visible |
@@ -116,17 +116,17 @@ including what is faked and what is not tested: [docs/testing.md](docs/testing.m
 
 | Layer | Count | What it proves |
 |---|---|---|
-| Unit (`-m unit`) | 98 | Pure rules: statistics against known values, policy (with a Hypothesis property: no combination of actions lets a blocked resource through), tokens, retries, the grammar |
-| Integration (`-m integration`) | 120 | The runtime end to end on the real fixture estate: the critical workflow, every fault, crash-and-replay, leases, budgets, compensation, tenant isolation, the analyzer against every planted scenario, the documents against the code |
-| API (four `api_*` markers) | 34 | Success, validation, authorization and failure paths over HTTP, problem+json shapes, idempotency, rate limits, security headers |
-| Data validation (`-m data_validation`) | 12 | Every planted defect is caught: quarantine with reasons, deduplication, normalization, freshness |
+| Unit (`-m unit`) | 99 | Pure rules: statistics against known values, policy (with a Hypothesis property: no combination of actions lets a production, protected, flagged, unknown-environment or ungrounded resource through, each injected into resources whose findings stay eligible), tokens, retries, the grammar |
+| Integration (`-m integration`) | 126 | The runtime end to end on the real fixture estate: the critical workflow, every fault, crash-and-replay, leases, budgets, expiry, cancellation, the order of effects, compensation, tenant isolation, the analyzer against every planted scenario, migrations, the documents against the code |
+| API (four `api_*` markers) | 35 | Success, validation, authorization and failure paths over HTTP, problem+json shapes, idempotency keys bound to their caller, rate limits, security headers |
+| Data validation (`-m data_validation`) | 13 | Every planted defect is caught: quarantine with reasons, deduplication, normalization; freshness of the data and of the sync |
 | Claude contract (`-m claude_contract`) | 63 | The adapter against a mock of the Messages API with sockets refused: request shape, strict schemas, every stop reason, error mapping, key hygiene |
 | PostgreSQL (`-m postgres`) | 2 | The workflow and a real two-thread race on one run (CI's PostgreSQL 17 service) |
-| Frontend (Vitest) | 55 | Citations, the timeline reducer and its policy rows, money formatting, permissions, the trace layout, the auto-advance controller |
+| Frontend (Vitest) | 57 | Citations, the timeline reducer and its policy rows, money formatting, permissions, the trace layout, the auto-advance controller, one idempotency key per intent |
 | End to end (Playwright) | 6 | The critical workflow in a browser, the production refusal, a pricing outage, RBAC, the evals page, the audit chain; also run against the live deployment |
 | Evaluation | 30 cases | See below |
 
-329 backend tests, 93% line and branch coverage of the `countersign` package, no warnings. Summary and screenshots:
+338 backend tests, 93% line and branch coverage of the `countersign` package, no warnings. Summary and screenshots:
 [reports/tests/summary.md](reports/tests/summary.md).
 
 ## Evaluation
@@ -173,7 +173,7 @@ Production refuses to start with development secrets.
 
 ## Failure modes
 
-28 failure modes, each with its control, how it shows and its proof: [docs/failure-modes.md](docs/failure-modes.md).
+30 failure modes, each with its control, how it shows and its proof: [docs/failure-modes.md](docs/failure-modes.md).
 A few that matter most:
 
 | Failure | Control |

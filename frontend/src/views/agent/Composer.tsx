@@ -3,7 +3,7 @@ import { FlaskConical, Info, Lock, Play } from "lucide-react";
 import { useId, useState } from "react";
 import { useToast } from "../../components/toast";
 import { Button, Card, cx, Skeleton, Tooltip } from "../../components/ui";
-import { runKey, useConfig } from "../../hooks";
+import { runKey, useConfig, useIntentKey } from "../../hooks";
 import { canStartRun, startBlockedReason } from "../../lib/personas";
 import type { RunView } from "../../lib/types";
 import { useUrlParam } from "../../lib/url";
@@ -29,11 +29,19 @@ export function Composer() {
   const textId = useId();
   const reasonId = useId();
   const blocked = startBlockedReason(persona, personas);
+  const intent = useIntentKey();
 
   const start = useMutation({
-    mutationFn: () =>
-      api<RunView>("/api/runs", { method: "POST", body: { request: text.trim(), faults }, idempotent: true }),
+    mutationFn: () => {
+      const body = { request: text.trim(), faults };
+      return api<RunView>("/api/runs", {
+        method: "POST",
+        body,
+        idempotencyKey: intent.take({ persona: persona.key, body }),
+      });
+    },
     onSuccess: (run) => {
+      intent.reset();
       qc.setQueryData(runKey(workspace.workspace_id, persona.key, run.id), run);
       void qc.invalidateQueries({ queryKey: ["runs", workspace.workspace_id] });
       setRun(run.id);

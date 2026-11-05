@@ -29,9 +29,9 @@ actions, verified again where the change lands.
   server holds the signing secret and is out of scope.
 - The public demo hands out four personas per workspace, so anyone can approve. Separation of duties is real
   between personas; in production the personas would be real identities from an identity provider.
-- The audit chain is in the same database as the data. It detects edits and deletions; anchoring the head
-  outside the database (a transparency log, a write-once bucket) would make it tamper-evident against a
-  database administrator too.
+- The audit chain is in the same database as the data. It detects an edited, reordered or deleted entry; the
+  removal of the newest entries, or a rewrite of the whole chain by a database administrator, needs the head
+  anchored outside the database (a transparency log, a write-once bucket).
 - Injection screening is a heuristic and will miss things. The design does not depend on it: a missed
   injection can still only lead to a proposal, which the policy and people dispose of.
 - The sandbox cloud stands in for real provider APIs. A real integration would also need least-privilege IAM

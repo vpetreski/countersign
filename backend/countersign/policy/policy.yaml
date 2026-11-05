@@ -1,6 +1,7 @@
 # Countersign change policy, version 1. Evaluated by countersign/policy/engine.py before a change request
-# reaches a human, again when an approver decides, and a third time at the sandbox boundary (via the
-# capability token, which only names actions that passed). The model cannot change this file.
+# reaches a human, again when the last required countersign arrives (against the estate as it is then), and a
+# third time at the sandbox boundary (via the capability token, which only names actions that passed). The
+# model cannot change this file.
 version: 1
 max_actions_per_plan: 25
 rules:

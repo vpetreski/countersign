@@ -42,11 +42,14 @@ export interface RequestOptions {
   method?: "GET" | "POST";
   body?: unknown;
   token?: string;
+  /** Send a fresh Idempotency-Key with this request. */
   idempotent?: boolean;
+  /** Send this Idempotency-Key: one per user intent, so a retry of the same intent replays instead of repeating. */
+  idempotencyKey?: string;
   signal?: AbortSignal;
 }
 
-function newKey(): string {
+export function newIdempotencyKey(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 }
@@ -55,7 +58,8 @@ export async function request<T>(path: string, opts: RequestOptions = {}): Promi
   const headers: Record<string, string> = { Accept: "application/json, application/problem+json" };
   if (opts.body !== undefined) headers["Content-Type"] = "application/json";
   if (opts.token) headers.Authorization = `Bearer ${opts.token}`;
-  if (opts.idempotent) headers["Idempotency-Key"] = newKey();
+  const key = opts.idempotencyKey ?? (opts.idempotent ? newIdempotencyKey() : undefined);
+  if (key) headers["Idempotency-Key"] = key;
   let response: Response;
   try {
     response = await fetch(path, {

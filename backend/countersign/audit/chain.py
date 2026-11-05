@@ -1,9 +1,10 @@
 """Append-only, hash-chained audit log per workspace.
 
-Each entry's hash covers the previous hash and the entry's canonical JSON, so editing, deleting or reordering
-any entry breaks verification from that point on. The chain lives in the same database as the data it
-protects, so it detects tampering after the fact; production would also anchor the head hash externally
-(a WORM bucket or a transparency log) so the database owner cannot rewrite the whole chain.
+Each entry's hash covers the previous hash and the entry's canonical JSON, so editing, reordering or deleting
+an entry breaks verification from that point on. Removing the newest entries leaves a shorter chain that still
+verifies, and the chain lives in the same database as the data it protects: detecting truncation, or a rewrite
+of the whole chain by the database owner, needs the head hash anchored outside it (a WORM bucket or a
+transparency log), which production would add.
 """
 
 from __future__ import annotations
