@@ -61,8 +61,8 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["S", "PLR", "ARG", "PT011"]
-"scripts/**" = ["S", "T20"]
+"tests/**" = ["S", "PLR", "ARG", "PT011", "PT018"]
+"scripts/**" = ["S", "T20", "E501"]
 
 [tool.mypy]
 python_version = "3.14"
@@ -79,6 +79,14 @@ ignore_missing_imports = true
 testpaths = ["tests"]
 addopts = "-ra --strict-markers"
 markers = [
+  "unit: a pure function or class, no I/O",
+  "integration: several layers together (runtime, store, sandbox) on SQLite",
+  "api_success: an API route doing its job",
+  "api_validation: an API route refusing malformed input",
+  "api_authz: authentication, roles, separation of duties and tenant isolation",
+  "api_failure: an API route under a dependency failure or a conflict",
+  "data_validation: ingestion catching the planted data defects",
+  "claude_contract: the Claude adapter against the Messages API wire format (mocked HTTP, no paid call)",
   "postgres: needs a PostgreSQL server (COUNTERSIGN_TEST_DATABASE_URL)",
   "slow: longer statistical runs",
 ]
