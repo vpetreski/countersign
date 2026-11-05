@@ -138,7 +138,7 @@ jobs:
         with:
           enable-cache: true
       - run: uv sync --frozen
-      - name: Evaluate the agent and the evaluator (gate: no false positive, every mutant caught, no regression)
+      - name: "Evaluate the agent and the evaluator (gate: no false positive, every mutant caught, no regression)"
         run: uv run countersign-eval run --gate --out "$RUNNER_TEMP/evals"
       - name: The rerun reproduces the published report exactly
         run: |
