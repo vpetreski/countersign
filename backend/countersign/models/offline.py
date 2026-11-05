@@ -311,7 +311,16 @@ class ReferencePolicy:
         if waste is None or waste.output is None:
             return self.start(scope)
         if waste.error:
-            return ("find_waste failed; retrying with the same filters.", [("find_waste", waste.input)])
+            if len(t.all("find_waste")) == 1 and (waste.output or {}).get("retryable"):
+                return (
+                    "find_waste failed; retrying once with the same filters.",
+                    [("find_waste", waste.input)],
+                )
+            return (
+                "The analyzer could not be read, so I am not proposing any change: "
+                + str((waste.output or {}).get("error", "unknown error")),
+                [],
+            )
         submit = t.last("submit_change_plan")
         if submit is not None and submit.output is not None and submit.error:
             return self.revise(t, scope, submit)
@@ -329,6 +338,13 @@ class ReferencePolicy:
         actions = self.actions(t, candidates)
         if not actions:
             return self.submit_nothing(t, scope)
+        return self.propose(t, scope, actions)
+
+    def propose(
+        self, t: Transcript, scope: Scope, actions: list[dict[str, Any]]
+    ) -> tuple[str, list[tuple[str, dict[str, Any]]]]:
+        """Dry-run the change policy before asking a human (it costs nothing and catches mistakes early)."""
+        del t, scope
         return (
             f"Checking {len(actions)} proposed change(s) against the change policy before submitting.",
             [("check_policy", {"actions": actions})],
@@ -446,7 +462,9 @@ class ReferencePolicy:
             why = f"unattached for {f.get('unattached_days')} days; snapshot first"
         else:
             why = "allocated but not associated with anything"
-        return f"{why}; about ${f['est_monthly_savings_usd'] or 0:,.2f}/month."
+        if f["est_monthly_savings_usd"] is None:
+            return f"{why}; the saving cannot be estimated while the target size has no price."
+        return f"{why}; about ${f['est_monthly_savings_usd']:,.2f}/month."
 
     def actions(self, t: Transcript, candidates: list[dict[str, Any]]) -> list[dict[str, Any]]:
         out = []
@@ -484,27 +502,66 @@ class ReferencePolicy:
             )
         return out
 
-    def not_proposed(self, t: Transcript, scope: Scope, dropped: dict[str, list[str]]) -> list[str]:
-        lines = []
+    def not_proposed(
+        self, t: Transcript, scope: Scope, dropped: dict[str, list[str]]
+    ) -> list[dict[str, Any]]:
+        """Every in-scope finding left out, with its reason: conflicts first, then untrusted metadata, then
+        blockers, then what the policy dropped."""
+        ranked: list[tuple[int, dict[str, Any]]] = []
         for f in self.findings(t):
             if scope.refs and f["ref"] not in scope.refs:
                 continue
             if f["category"] not in scope.categories and f["category"] != "state_conflict":
                 continue
-            ev = f["evidence_id"]
+            ev = [f["evidence_id"]]
             if f["category"] == "state_conflict":
-                lines.append(
-                    f"{f['ref']}: inventory and billing disagree ({'; '.join(f['warnings'])}); needs a human look [{ev}]"
+                ranked.append(
+                    (
+                        0,
+                        {
+                            "ref": f["ref"],
+                            "reason": "inventory and billing disagree ("
+                            + "; ".join(f["warnings"])
+                            + "); needs a human look",
+                            "evidence_ids": ev,
+                        },
+                    )
                 )
             elif f["untrusted_text_withheld"]:
-                lines.append(
-                    f"{f['ref']}: its metadata contained instruction-like text, which was withheld and treated as data; excluded [{ev}]"
+                ranked.append(
+                    (
+                        1,
+                        {
+                            "ref": f["ref"],
+                            "reason": "its metadata contained instruction-like text, "
+                            "withheld and treated as data; excluded until a human reviews it",
+                            "evidence_ids": ev,
+                        },
+                    )
                 )
             elif not f["eligible"]:
-                lines.append(f"{f['ref']}: not proposed ({', '.join(f['blockers'])}) [{ev}]")
+                ranked.append(
+                    (
+                        2,
+                        {
+                            "ref": f["ref"],
+                            "reason": "blocked: " + ", ".join(f["blockers"]),
+                            "evidence_ids": ev,
+                        },
+                    )
+                )
             elif f["ref"] in dropped:
-                lines.append(f"{f['ref']}: dropped by policy ({', '.join(dropped[f['ref']])}) [{ev}]")
-        return lines
+                ranked.append(
+                    (
+                        3,
+                        {
+                            "ref": f["ref"],
+                            "reason": "dropped by policy: " + ", ".join(dropped[f["ref"]]),
+                            "evidence_ids": ev,
+                        },
+                    )
+                )
+        return [item for _, item in sorted(ranked, key=lambda r: r[0])][:60]
 
     def summary(
         self, t: Transcript, scope: Scope, actions: list[dict[str, Any]], dropped: dict[str, list[str]]
@@ -521,21 +578,16 @@ class ReferencePolicy:
         else:
             head += " No change is proposed."
         body = [
-            f"{a['operation']} {a['ref']}: {a['rationale']} [{', '.join(a['evidence_ids'])}]" for a in actions
+            f"{a['operation']} {a['ref']} ({_saving(by_ref[a['ref']])}) [{', '.join(a['evidence_ids'])}]."
+            for a in actions
         ]
-        rest = self.not_proposed(t, scope, dropped)
-        text = head
-        if body:
-            text += " " + " ".join(body)
-        if rest:
-            text += (
-                " Not proposed: "
-                + "; ".join(rest[:8])
-                + ("." if len(rest) <= 8 else f"; and {len(rest) - 8} more.")
-            )
+        left_out = self.not_proposed(t, scope, dropped)
+        text = " ".join([head, *body])
+        if left_out:
+            text += f" Reviewed and not proposed: {len(left_out)} finding(s), each listed with its reason."
         if scope.notes:
             text += " " + " ".join(scope.notes)
-        return text[:1500]
+        return _clip(text, 4000)
 
     def submit(
         self, t: Transcript, scope: Scope, policy: Call
@@ -557,6 +609,7 @@ class ReferencePolicy:
                     {
                         "summary": self.summary(t, scope, keep, dropped),
                         "actions": keep,
+                        "not_proposed": self.not_proposed(t, scope, dropped),
                         "caveats": self.caveats(t),
                     },
                 )
@@ -569,7 +622,12 @@ class ReferencePolicy:
             [
                 (
                     "submit_change_plan",
-                    {"summary": self.summary(t, scope, [], {}), "actions": [], "caveats": self.caveats(t)},
+                    {
+                        "summary": self.summary(t, scope, [], {}),
+                        "actions": [],
+                        "not_proposed": self.not_proposed(t, scope, {}),
+                        "caveats": self.caveats(t),
+                    },
                 )
             ],
         )
@@ -590,11 +648,25 @@ class ReferencePolicy:
                     {
                         "summary": self.summary(t, scope, keep, bad),
                         "actions": keep,
+                        "not_proposed": self.not_proposed(t, scope, bad),
                         "caveats": self.caveats(t),
                     },
                 )
             ],
         )
+
+
+def _saving(f: dict[str, Any]) -> str:
+    value = f["est_monthly_savings_usd"]
+    return "saving not estimable" if value is None else f"${value:,.2f}/mo"
+
+
+def _clip(text: str, limit: int) -> str:
+    """Shorten at a sentence boundary so a citation is never cut in half."""
+    if len(text) <= limit:
+        return text
+    cut = text.rfind(". ", 0, limit - 1)
+    return text[: cut + 1] if cut > 0 else text[:limit]
 
 
 def offline_model(seed: int = 0) -> ReferencePolicy:

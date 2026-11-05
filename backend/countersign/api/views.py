@@ -44,6 +44,7 @@ def run_view(row: RunRow, principal: Principal, *, detail: bool = True) -> dict[
         "report": st.report,
         "question": st.question.model_dump() if st.question else None,
         "budgets": st.budgets.model_dump(),
+        "not_proposed": [n.model_dump() for n in st.not_proposed],
         "waiting_for": "operator"
         if status is RunStatus.AWAITING_INPUT
         else ("approver" if status is RunStatus.AWAITING_APPROVAL else None),
@@ -64,6 +65,7 @@ def run_view(row: RunRow, principal: Principal, *, detail: bool = True) -> dict[
             "hash": plan.hash,
             "summary": plan.summary,
             "caveats": plan.caveats,
+            "not_proposed": [n.model_dump() for n in plan.not_proposed],
             "total_monthly_savings": plan.total_monthly_savings,
             "risk": plan.risk,
             "approvals_required": plan.approvals_required,
