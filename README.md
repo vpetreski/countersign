@@ -246,13 +246,13 @@ COUNTERSIGN_CLAUDE_EFFORT=high
 
 ## How AI was used
 
-Claude Code (Claude Opus 5.5) wrote this repository in one long session, running inside the harness I built
-for my own work: a verifier-gated goal loop whose definition of done is a single script with dozens of checks
-(fresh-clone tests, the live app, the published article and film), role subagents working in separate git
-worktrees (the UI and the Claude adapter were built in parallel and merged through pull requests), and an
-isolated second-opinion review of the plan at plan freeze. I set the brief and its constraints: no money spent
-by the public demo, fully pluggable into Claude, deployed live. The commits carry `Co-Authored-By: Claude`
-trailers from the fourth one on; all of them were written with it.
+Claude Code (Claude Opus 5.5) wrote this repository inside my harness: a verifier-gated goal loop whose
+definition of done is a single script with dozens of checks (fresh-clone tests, the live app, the documents),
+subagents working in separate git worktrees (the UI and the Claude adapter were built in parallel and merged
+through pull requests), an isolated second-opinion review of the plan when it froze, and two isolated reviews of
+the repository whose findings became the fixes in pull requests #5 to #8. I set the constraints: no money spent by
+the public demo, fully pluggable into Claude, deployed live. The commits carry `Co-Authored-By: Claude` trailers
+from the fourth one on; all of them were written with it.
 
 The history reads as a build log: the tag `core` is the smallest version that does the whole job; later commits
 harden it.
