@@ -94,3 +94,34 @@ def test_failure_mode_ids_are_well_formed_and_documented() -> None:
         documented = set(re.findall(r"\bFM-\d{2}\b", doc.read_text()))
         used = {fm for c in CASES for fm in c.covers}
         assert used <= documented, used - documented
+
+
+def test_every_documented_failure_mode_names_a_proof_that_exists() -> None:
+    """docs/failure-modes.md is a promise: each id names tests or cases that exist, and appears in the tests,
+    the dataset or the browser tests. Renaming a test or dropping a case without updating the table fails here."""
+    repo = dataset.BACKEND_ROOT.parent
+    rows = [
+        line
+        for line in (repo / "docs" / "failure-modes.md").read_text().splitlines()
+        if re.match(r"\| FM-\d{2} \|", line)
+    ]
+    ids = [row.split("|")[1].strip() for row in rows]
+    assert len(ids) >= 20 and ids == sorted(set(ids)), ids
+    short_case_ids = {c.id.split("-")[0] for c in CASES}
+    corpus = "\n".join(
+        path.read_text()
+        for folder in ("backend/tests", "backend/evals/dataset", "frontend/e2e")
+        for path in sorted((repo / folder).rglob("*"))
+        if path.is_file() and path.suffix in {".py", ".yaml", ".ts"}
+    )
+    for fm, row in zip(ids, rows, strict=True):
+        refs = re.findall(r"`([^`]+)`", row.rstrip().removesuffix("|").rsplit("|", 1)[-1])
+        assert refs, f"{fm} names no proof"
+        for ref in refs:
+            if ref.startswith("eval:"):
+                assert ref.removeprefix("eval:") in short_case_ids, f"{fm}: no case {ref}"
+            else:
+                file, _, name = ref.partition("::")
+                source = repo / "backend" / file
+                assert source.is_file() and f"def {name}(" in source.read_text(), f"{fm}: no test {ref}"
+        assert re.search(rf"\b{fm}\b", corpus), f"{fm} is not traced in tests, cases or browser tests"

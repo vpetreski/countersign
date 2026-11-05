@@ -27,3 +27,12 @@ def test_seed_then_ingest_is_idempotent(
         assert "/api/runs/{run_id}/decision" in doc["paths"]
     finally:
         get_settings.cache_clear()
+
+
+def test_the_published_openapi_document_is_current(capsys: pytest.CaptureFixture[str]) -> None:
+    """docs/openapi.json is what the API serves; a route or schema change without regenerating it fails here
+    (regenerate with `uv run countersign openapi > ../docs/openapi.json`)."""
+    assert cli.main(["openapi"]) == 0
+    served = json.loads(capsys.readouterr().out)
+    published = json.loads((Path(__file__).resolve().parents[2] / "docs" / "openapi.json").read_text())
+    assert served == published

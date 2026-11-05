@@ -121,5 +121,7 @@ def test_cli_fingerprint_and_a_small_run(tmp_path: Path, capsys: pytest.CaptureF
 def test_the_published_report_describes_this_exact_code() -> None:
     published = BACKEND_ROOT / "countersign" / "evals" / "published" / "latest.json"
     r = json.loads(published.read_text())
-    assert r["fingerprint"]["combined"] == fingerprint()["combined"], "stale report: run `make evals`"
+    assert r["fingerprint"]["combined"] == fingerprint()["combined"], (
+        "stale report: run `uv run countersign-eval run --publish`"
+    )
     assert r["n_cases"] == len(dataset.load()) and r["mutation"]["killed"] == len(MUTANTS)
