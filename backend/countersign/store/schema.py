@@ -176,6 +176,9 @@ class RunRow(Base):
     updated_at: Mapped[dt.datetime]
     state: Mapped[dict[str, Any]]
     plan_hash: Mapped[str | None] = mapped_column(String(64))
+    # A lease taken before each tick (compare-and-set), so two concurrent advances never both call the model.
+    lease_owner: Mapped[str | None] = mapped_column(String(32))
+    lease_until: Mapped[dt.datetime | None]
 
 
 class RunEventRow(Base):
