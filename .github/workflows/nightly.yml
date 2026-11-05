@@ -36,6 +36,10 @@ jobs:
     env:
       DATABASE_URL: sqlite:///./fuzz.sqlite3
       COUNTERSIGN_LIVE_PRICES: "false"
+      # The fuzzer creates thousands of runs from one address and workspace; lift the hourly limits so its
+      # requests reach the run logic instead of stopping at 429 (the limits have their own API tests).
+      COUNTERSIGN_RATE_LIMIT_RUNS_PER_HOUR: "1000000"
+      COUNTERSIGN_RATE_LIMIT_WORKSPACES_PER_HOUR: "1000000"
     steps:
       - uses: actions/checkout@v5
       - uses: astral-sh/setup-uv@v6
@@ -48,7 +52,7 @@ jobs:
           uv run uvicorn main:app --port 8000 &
           for i in $(seq 1 60); do curl -fs http://127.0.0.1:8000/api/health/live && break; sleep 1; done
           TOKEN=$(curl -fs -X POST http://127.0.0.1:8000/api/workspaces | python3 -c "import json,sys; print(json.load(sys.stdin)['tokens']['operator'])")
-          uv run schemathesis run http://127.0.0.1:8000/api/openapi.json --checks not_a_server_error --max-examples 40 \
+          uv run schemathesis run http://127.0.0.1:8000/api/openapi.json --checks not_a_server_error --max-examples 150 \
             --exclude-path /api/cron/sync -H "Authorization: Bearer $TOKEN"
 
   live-claude:

@@ -150,7 +150,7 @@
     "/api/findings": {
       "get": {
         "summary": "Findings",
-        "operationId": "findings_api_findings_get",
+        "operationId": "list_findings",
         "parameters": [
           {
             "name": "category",
@@ -235,13 +235,21 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful Response",
+            "description": "Findings over the workspace's estate",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "additionalProperties": true,
-                  "title": "Response Findings Api Findings Get"
+                  "title": "Response List Findings"
+                }
+              }
+            },
+            "links": {
+              "GetResource": {
+                "operationId": "get_resource",
+                "parameters": {
+                  "ref": "$response.body#/findings/0/ref"
                 }
               }
             }
@@ -262,7 +270,7 @@
     "/api/resources/{ref}": {
       "get": {
         "summary": "Resource",
-        "operationId": "resource_api_resources__ref__get",
+        "operationId": "get_resource",
         "parameters": [
           {
             "name": "ref",
@@ -298,7 +306,7 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": true,
-                  "title": "Response Resource Api Resources  Ref  Get"
+                  "title": "Response Get Resource"
                 }
               }
             }
@@ -367,7 +375,7 @@
     "/api/runs": {
       "post": {
         "summary": "Create Run",
-        "operationId": "create_run_api_runs_post",
+        "operationId": "create_run",
         "parameters": [
           {
             "name": "idempotency-key",
@@ -414,10 +422,54 @@
         },
         "responses": {
           "201": {
-            "description": "Successful Response",
+            "description": "The new run",
             "content": {
               "application/json": {
                 "schema": {}
+              }
+            },
+            "links": {
+              "GetRun": {
+                "operationId": "get_run",
+                "parameters": {
+                  "run_id": "$response.body#/id"
+                }
+              },
+              "AdvanceRun": {
+                "operationId": "advance_run",
+                "parameters": {
+                  "run_id": "$response.body#/id"
+                }
+              },
+              "AnswerRun": {
+                "operationId": "answer_run",
+                "parameters": {
+                  "run_id": "$response.body#/id"
+                }
+              },
+              "DecideRun": {
+                "operationId": "decide_run",
+                "parameters": {
+                  "run_id": "$response.body#/id"
+                }
+              },
+              "CancelRun": {
+                "operationId": "cancel_run",
+                "parameters": {
+                  "run_id": "$response.body#/id"
+                }
+              },
+              "RunEvents": {
+                "operationId": "run_events",
+                "parameters": {
+                  "run_id": "$response.body#/id"
+                }
+              },
+              "RunTrace": {
+                "operationId": "run_trace",
+                "parameters": {
+                  "run_id": "$response.body#/id"
+                }
               }
             }
           },
@@ -495,7 +547,7 @@
     "/api/runs/{run_id}": {
       "get": {
         "summary": "Get Run",
-        "operationId": "get_run_api_runs__run_id__get",
+        "operationId": "get_run",
         "parameters": [
           {
             "name": "run_id",
@@ -531,7 +583,7 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": true,
-                  "title": "Response Get Run Api Runs  Run Id  Get"
+                  "title": "Response Get Run"
                 }
               }
             }
@@ -552,7 +604,7 @@
     "/api/runs/{run_id}/advance": {
       "post": {
         "summary": "Advance",
-        "operationId": "advance_api_runs__run_id__advance_post",
+        "operationId": "advance_run",
         "parameters": [
           {
             "name": "run_id",
@@ -588,7 +640,7 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": true,
-                  "title": "Response Advance Api Runs  Run Id  Advance Post"
+                  "title": "Response Advance Run"
                 }
               }
             }
@@ -609,7 +661,7 @@
     "/api/runs/{run_id}/input": {
       "post": {
         "summary": "Answer",
-        "operationId": "answer_api_runs__run_id__input_post",
+        "operationId": "answer_run",
         "parameters": [
           {
             "name": "run_id",
@@ -655,7 +707,7 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": true,
-                  "title": "Response Answer Api Runs  Run Id  Input Post"
+                  "title": "Response Answer Run"
                 }
               }
             }
@@ -676,7 +728,7 @@
     "/api/runs/{run_id}/decision": {
       "post": {
         "summary": "Decide",
-        "operationId": "decide_api_runs__run_id__decision_post",
+        "operationId": "decide_run",
         "parameters": [
           {
             "name": "run_id",
@@ -755,7 +807,7 @@
     "/api/runs/{run_id}/cancel": {
       "post": {
         "summary": "Cancel",
-        "operationId": "cancel_api_runs__run_id__cancel_post",
+        "operationId": "cancel_run",
         "parameters": [
           {
             "name": "run_id",
@@ -791,7 +843,7 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": true,
-                  "title": "Response Cancel Api Runs  Run Id  Cancel Post"
+                  "title": "Response Cancel Run"
                 }
               }
             }
@@ -812,7 +864,7 @@
     "/api/runs/{run_id}/events": {
       "get": {
         "summary": "Events",
-        "operationId": "events_api_runs__run_id__events_get",
+        "operationId": "run_events",
         "parameters": [
           {
             "name": "run_id",
@@ -859,7 +911,7 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": true,
-                  "title": "Response Events Api Runs  Run Id  Events Get"
+                  "title": "Response Run Events"
                 }
               }
             }
@@ -880,7 +932,7 @@
     "/api/runs/{run_id}/trace": {
       "get": {
         "summary": "Trace",
-        "operationId": "trace_api_runs__run_id__trace_get",
+        "operationId": "run_trace",
         "parameters": [
           {
             "name": "run_id",
@@ -916,7 +968,7 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": true,
-                  "title": "Response Trace Api Runs  Run Id  Trace Get"
+                  "title": "Response Run Trace"
                 }
               }
             }

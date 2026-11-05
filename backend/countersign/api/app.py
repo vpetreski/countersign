@@ -426,7 +426,21 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
         findings = estate.findings(price_fn(s.catalog, live=s.settings.live_prices))
         return views.dashboard(estate, findings, quality, q_count)
 
-    @app.get("/api/findings")
+    @app.get(
+        "/api/findings",
+        operation_id="list_findings",
+        responses={
+            200: {
+                "description": "Findings over the workspace's estate",
+                "links": {
+                    "GetResource": {
+                        "operationId": "get_resource",
+                        "parameters": {"ref": "$response.body#/findings/0/ref"},
+                    }
+                },
+            }
+        },
+    )
     def findings(
         s: Svc,
         p: Who,
@@ -450,7 +464,7 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
             out.append(views.finding_view(f, estate))
         return {"count": len(out), "findings": out}
 
-    @app.get("/api/resources/{ref}")
+    @app.get("/api/resources/{ref}", operation_id="get_resource")
     def resource(ref: str, s: Svc, p: Who) -> dict[str, Any]:
         with s.db.session() as session:
             estate = ESTATE.view(session, p.workspace_id)
@@ -515,7 +529,26 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
 
     # ------------------------------------------------------------ runs
 
-    @app.post("/api/runs", status_code=201)
+    # OpenAPI links: a client, or a stateful fuzzer, can follow a created run to every operation on it.
+    run_links = {
+        name: {"operationId": op, "parameters": {"run_id": "$response.body#/id"}}
+        for name, op in (
+            ("GetRun", "get_run"),
+            ("AdvanceRun", "advance_run"),
+            ("AnswerRun", "answer_run"),
+            ("DecideRun", "decide_run"),
+            ("CancelRun", "cancel_run"),
+            ("RunEvents", "run_events"),
+            ("RunTrace", "run_trace"),
+        )
+    }
+
+    @app.post(
+        "/api/runs",
+        status_code=201,
+        operation_id="create_run",
+        responses={201: {"description": "The new run", "links": run_links}},
+    )
     def create_run(
         body: RunCreate, s: Svc, p: Who, idempotency_key: Annotated[str | None, Header()] = None
     ) -> JSONResponse:
@@ -544,21 +577,21 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
             )
         return {"runs": [views.run_view(r, p, detail=False) for r in rows]}
 
-    @app.get("/api/runs/{run_id}")
+    @app.get("/api/runs/{run_id}", operation_id="get_run")
     def get_run(run_id: str, s: Svc, p: Who) -> dict[str, Any]:
         return views.run_view(load_run(s, p, run_id), p)
 
-    @app.post("/api/runs/{run_id}/advance")
+    @app.post("/api/runs/{run_id}/advance", operation_id="advance_run")
     def advance(run_id: str, s: Svc, p: Who) -> dict[str, Any]:
         s.runtime.advance(p, run_id)
         return views.run_view(load_run(s, p, run_id), p)
 
-    @app.post("/api/runs/{run_id}/input")
+    @app.post("/api/runs/{run_id}/input", operation_id="answer_run")
     def answer(run_id: str, body: AnswerIn, s: Svc, p: Who) -> dict[str, Any]:
         s.runtime.answer(p, run_id, body.answer)
         return views.run_view(load_run(s, p, run_id), p)
 
-    @app.post("/api/runs/{run_id}/decision")
+    @app.post("/api/runs/{run_id}/decision", operation_id="decide_run")
     def decide(
         run_id: str, body: DecisionIn, s: Svc, p: Who, idempotency_key: Annotated[str | None, Header()] = None
     ) -> JSONResponse:
@@ -581,12 +614,12 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
             go,
         )
 
-    @app.post("/api/runs/{run_id}/cancel")
+    @app.post("/api/runs/{run_id}/cancel", operation_id="cancel_run")
     def cancel(run_id: str, s: Svc, p: Who) -> dict[str, Any]:
         s.runtime.cancel(p, run_id)
         return views.run_view(load_run(s, p, run_id), p)
 
-    @app.get("/api/runs/{run_id}/events")
+    @app.get("/api/runs/{run_id}/events", operation_id="run_events")
     def events(run_id: str, s: Svc, p: Who, after: Annotated[int, Query(ge=0)] = 0) -> dict[str, Any]:
         load_run(s, p, run_id)
         with s.db.session() as session:
@@ -601,7 +634,7 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
             "events": [{"seq": e.seq, "at": _iso(e.at), "type": e.type, "payload": e.payload} for e in rows]
         }
 
-    @app.get("/api/runs/{run_id}/trace")
+    @app.get("/api/runs/{run_id}/trace", operation_id="run_trace")
     def trace(run_id: str, s: Svc, p: Who) -> dict[str, Any]:
         load_run(s, p, run_id)
         with s.db.session() as session:
