@@ -11,8 +11,11 @@ remembering them, and must be reviewable by people who are not reading Python.
 
 `policy/policy.yaml` declares eight rules (production, protection tags, untrusted metadata, grounding, data
 sufficiency, known environment, plan size, known resource), risk by operation and the approval thresholds. The
-engine evaluates a plan when the model submits it, again when an approver decides, and a third time in effect
-at the sandbox, through the capability token that only names actions that passed. The model can call
+engine evaluates a plan when the model submits it; again at decision, when the last required countersign
+arrives and before the capability token is minted, on the actions nobody rejected and against the workspace's
+estate as it is then, so an action that no longer passes is left out of the token and a verdict that needs more
+approvers waits for them; and a third time in effect at the sandbox, through the token, which only names actions
+that passed the second evaluation, and the precondition check before every step. The model can call
 `check_policy` as a dry run.
 
 ## Consequences

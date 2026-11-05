@@ -64,6 +64,7 @@ TRANSITIONS: dict[RunStatus, frozenset[RunStatus]] = {
             RunStatus.AWAITING_APPROVAL,
             RunStatus.EXECUTING,
             RunStatus.REJECTED,
+            RunStatus.FAILED,  # the policy refused every approved action at decision
             RunStatus.CANCELLED,
             RunStatus.EXPIRED,
         }

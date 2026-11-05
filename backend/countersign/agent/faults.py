@@ -83,3 +83,9 @@ class FaultPlan:
             return False
         self.fired[fault.value] = self.fired.get(fault.value, 0) + 1
         return True
+
+    def inert(self) -> FaultPlan:
+        """The same faults with every shot already spent, on a copy of the counts: a condition of the run (a
+        price outage) still holds through `is_active`, but nothing fires and the run's own counts stay as they
+        are. For checks the runtime makes on its own behalf, which are not tool calls."""
+        return FaultPlan([f.value for f in self.active], {f.value: SHOTS[f] for f in self.active})

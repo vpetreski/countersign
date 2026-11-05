@@ -4,6 +4,7 @@ import random
 
 import pytest
 
+from countersign.agent.faults import Fault, FaultPlan
 from countersign.agent.resilience import CircuitBreaker, CircuitOpenError, Retry, call_with_retries
 from countersign.models.base import ModelError, ModelRequest
 from countersign.tools.registry import MAX_RESULT_BYTES, _bounded
@@ -92,3 +93,13 @@ def test_oversized_tool_results_are_trimmed_and_say_so() -> None:
     out = _bounded(big)
     assert len(str(out)) < MAX_RESULT_BYTES * 1.2
     assert out["truncated"]["total"] == 500 and out["truncated"]["kept"] < 500
+
+
+def test_an_inert_fault_plan_keeps_conditions_but_never_fires() -> None:
+    fired = {"tool_timeout": 0}
+    plan = FaultPlan(["pricing_unavailable", "tool_timeout", "state_drift"], fired)
+    inert = plan.inert()
+    assert inert.is_active(Fault.PRICING_UNAVAILABLE)  # a price outage still holds for the whole run
+    assert not any(inert.fire(f) for f in Fault)
+    assert fired == {"tool_timeout": 0}  # the run's own counts are untouched
+    assert plan.fire(Fault.TOOL_TIMEOUT)  # and the real plan still has its shot

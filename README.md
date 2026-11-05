@@ -31,9 +31,10 @@ evaluates itself, and before that it evaluates its own evaluator.
    old, one with gappy metrics, a legal-hold volume, a `Lifecycle: Keep` disk and a disk detached two days ago.
 4. Deleting disks is high risk, so two approvers must countersign. Alex and Jordan approve; Sam, the requester,
    cannot.
-5. Their decision mints a capability token naming exactly those actions and that plan hash. The executor stops
-   the VMs and snapshots then deletes the disks, every step idempotent and checked against current state, then
-   verifies the end state: **$682.00 a month realized**, the audit chain valid.
+5. The last countersign runs the policy again, against the estate as it is then, and mints a capability token
+   naming exactly the approved actions that still pass and that plan hash. The executor stops the VMs and
+   snapshots then deletes the disks, every step idempotent and checked against current state, then verifies the
+   end state: **$682.00 a month realized**, the audit chain valid.
 
 The same run with every price source down, a metrics timeout, an overloaded model, throttled cloud APIs and a
 resource that changes after approval ends `completed_with_failures`: one action not applied, the others done,
@@ -115,8 +116,8 @@ including what is faked and what is not tested: [docs/testing.md](docs/testing.m
 
 | Layer | Count | What it proves |
 |---|---|---|
-| Unit (`-m unit`) | 97 | Pure rules: statistics against known values, policy (with a Hypothesis property: no combination of actions lets a blocked resource through), tokens, retries, the grammar |
-| Integration (`-m integration`) | 117 | The runtime end to end on the real fixture estate: the critical workflow, every fault, crash-and-replay, leases, budgets, compensation, tenant isolation, the analyzer against every planted scenario, the documents against the code |
+| Unit (`-m unit`) | 98 | Pure rules: statistics against known values, policy (with a Hypothesis property: no combination of actions lets a blocked resource through), tokens, retries, the grammar |
+| Integration (`-m integration`) | 120 | The runtime end to end on the real fixture estate: the critical workflow, every fault, crash-and-replay, leases, budgets, compensation, tenant isolation, the analyzer against every planted scenario, the documents against the code |
 | API (four `api_*` markers) | 34 | Success, validation, authorization and failure paths over HTTP, problem+json shapes, idempotency, rate limits, security headers |
 | Data validation (`-m data_validation`) | 12 | Every planted defect is caught: quarantine with reasons, deduplication, normalization, freshness |
 | Claude contract (`-m claude_contract`) | 63 | The adapter against a mock of the Messages API with sockets refused: request shape, strict schemas, every stop reason, error mapping, key hygiene |
@@ -125,7 +126,7 @@ including what is faked and what is not tested: [docs/testing.md](docs/testing.m
 | End to end (Playwright) | 6 | The critical workflow in a browser, the production refusal, a pricing outage, RBAC, the evals page, the audit chain; also run against the live deployment |
 | Evaluation | 30 cases | See below |
 
-325 backend tests, 93% line and branch coverage of the `countersign` package, no warnings. Summary and screenshots:
+329 backend tests, 93% line and branch coverage of the `countersign` package, no warnings. Summary and screenshots:
 [reports/tests/summary.md](reports/tests/summary.md).
 
 ## Evaluation
@@ -172,7 +173,7 @@ Production refuses to start with development secrets.
 
 ## Failure modes
 
-27 failure modes, each with its control, how it shows and its proof: [docs/failure-modes.md](docs/failure-modes.md).
+28 failure modes, each with its control, how it shows and its proof: [docs/failure-modes.md](docs/failure-modes.md).
 A few that matter most:
 
 | Failure | Control |

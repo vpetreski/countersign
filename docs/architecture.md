@@ -39,7 +39,7 @@ flowchart LR
 | `security/` | Secret redaction and prompt-injection screening at ingest |
 | `tools/` | The registry (schema validation, timeouts, result-size bounds) and nine tools: seven read tools plus the two control tools the runtime handles (`submit_change_plan`, `ask_operator`) |
 | `models/` | The `ChatModel` protocol in Anthropic Messages semantics, the Claude adapter, the offline reference policy |
-| `policy/` | `policy.yaml` (P-001 to P-008), risk, approval routing; evaluated at submission, at decision and through the token |
+| `policy/` | `policy.yaml` (P-001 to P-008), risk, approval routing; evaluated at submission, again at decision against the current estate, and at the sandbox through the token |
 | `agent/` | The durable run state machine, budgets, retries with full jitter, the circuit breaker, fault injection, the system prompt |
 | `execution/` | HMAC capability tokens, the saga executor with compensation, the sandbox cloud with idempotency keys |
 | `audit/` | A hash chain per workspace and its verifier |
@@ -66,6 +66,7 @@ stateDiagram-v2
   planning --> budget_exhausted
   awaiting_approval --> executing: countersigned
   awaiting_approval --> rejected: every action rejected
+  awaiting_approval --> failed: policy refuses every approved action at decision
   executing --> verifying
   verifying --> completed
   verifying --> completed_with_failures
@@ -82,6 +83,12 @@ stateDiagram-v2
 - **Effectively-once effects.** Every step's idempotency key is `sha256(run | plan hash | action | step)`. The
   sandbox commits its write separately from the run state, so a crash between the two replays the step instead
   of repeating it.
+- **The policy, three times.** At submission, against the estate the agent read; at decision, when the last
+  required countersign arrives and before the capability token is minted, against the workspace's estate as
+  it is then (another run or a sync may have changed a resource): an action that no longer passes is left out
+  of the token and marked `skipped` with the rule, a verdict that now needs more approvers waits for them, and
+  a plan with nothing left fails with nothing executed; at the sandbox, through the token, which names only the
+  actions that passed, and the precondition check before every step.
 - **Partial failure.** Compensation happens only inside an action's own chain, in reverse (a resize that fails
   after the VM was stopped starts the VM again); independent actions are not rolled back; irreversible steps (delete,
   release) run last; a run with some failed actions ends `completed_with_failures`.

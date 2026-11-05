@@ -50,7 +50,7 @@ from countersign.execution.executor import Executor
 from countersign.execution.sandbox import STEPS, SandboxCloud
 from countersign.models.base import ChatModel, ModelError, ModelRequest, ModelResponse
 from countersign.observability.tracing import agent_span, collect, provider_name, tracer
-from countersign.policy.engine import REVERSIBLE, Policy, PolicyVerdict
+from countersign.policy.engine import REVERSIBLE, Policy, PolicyVerdict, ProposedAction
 from countersign.security.screening import redact
 from countersign.settings import Settings
 from countersign.store.db import Database
@@ -541,6 +541,7 @@ class Runtime:
         tick.event(
             "policy_evaluated",
             {
+                "stage": "submission",
                 "allowed": verdict.allowed,
                 "risk": verdict.risk,
                 "approvals_required": verdict.approvals_required,
@@ -762,36 +763,109 @@ class Runtime:
                 "awaiting_more_approvals", {"have": len(approvers), "need": st.plan.approvals_required}
             )
             return
+        verdict, blocked = self._recheck(tick, remaining)
+        executable = sorted(remaining - blocked.keys())
+        if executable and len(approvers) < verdict.approvals_required:
+            # The estate or the policy moved since submission: the remaining actions now need more approvers.
+            tick.event(
+                "awaiting_more_approvals", {"have": len(approvers), "need": verdict.approvals_required}
+            )
+            return
+        st.outcomes = [_decided(a.id, remaining, blocked) for a in st.plan.actions]
+        if not executable:
+            st.error = "the policy refused every approved action at decision"
+            st.report = f"Nothing was executed: {st.error}. {_report(tick)}"
+            tick.move(RunStatus.FAILED, st.error)
+            return
         exp = int((now + CAPABILITY_TTL).timestamp())
         st.capability = tokens.mint(
             self.settings.capability_secret.get_secret_value(),
             run_id=tick.row_id,
             workspace_id=tick.workspace_id,
             plan_hash=plan_hash_,
-            action_ids=sorted(remaining),
+            action_ids=executable,
             approvers=approvers,
             exp=exp,
         )
-        st.outcomes = [
-            ActionOutcome(
-                action_id=a.id,
-                status="pending" if a.id in remaining else "rejected",
-                detail="" if a.id in remaining else "rejected by an approver",
-            )
-            for a in st.plan.actions
-        ]
-        tick.event(
-            "capability_minted", {"actions": sorted(remaining), "approvers": approvers, "expires_at": exp}
-        )
+        tick.event("capability_minted", {"actions": executable, "approvers": approvers, "expires_at": exp})
         tick.audit.append(
             (
                 "system",
                 "capability.minted",
                 tick.row_id,
-                {"plan_hash": plan_hash_, "actions": sorted(remaining), "approvers": approvers},
+                {"plan_hash": plan_hash_, "actions": executable, "approvers": approvers},
             )
         )
         tick.move(RunStatus.EXECUTING, f"countersigned by {len(approvers)} approver(s)")
+
+    def _recheck(self, tick: Tick, remaining: set[str]) -> tuple[PolicyVerdict, dict[str, str]]:
+        """The policy again, at the moment a capability would be minted: the plan's remaining actions against
+        the workspace's estate as it is now, so a resource another run or a sync changed since submission
+        drops out. This is the runtime's own check, not a tool call: no fault fires and no budget is spent.
+        Returns the verdict and, for each action that no longer passes, why."""
+        st = tick.state
+        assert st.plan is not None
+        ctx = ToolContext(
+            state=st,
+            estate=self._estate(tick.workspace_id),
+            catalog=self.catalog,
+            live_prices=self.settings.live_prices,
+            policy=self.policy,
+            faults=FaultPlan(st.faults, st.faults_fired).inert(),
+            turn=st.budgets.model_turns,
+            timeout_s=self.settings.tool_timeout_seconds,
+        )
+        actions = [a for a in st.plan.actions if a.id in remaining]
+        verdict = evaluate(
+            ctx,
+            [
+                ProposedAction(
+                    ref=a.ref,
+                    operation=a.operation,
+                    target_sku=a.target_sku,
+                    rationale=a.rationale,
+                    evidence_ids=a.evidence_ids,
+                )
+                for a in actions
+            ],
+        )
+        plan_violations = [c for c in verdict.plan_checks if not c.passed]
+        blocked = {
+            a.id: "blocked by policy at decision: "
+            + ", ".join(f"{c.rule} {c.name} ({c.detail})" for c in [*v.violations, *plan_violations])
+            for a, v in zip(actions, verdict.actions, strict=True)
+            if not v.allowed or plan_violations
+        }
+        tick.event(
+            "policy_evaluated",
+            {
+                "stage": "decision",
+                "allowed": verdict.allowed,
+                "risk": verdict.risk,
+                "approvals_required": verdict.approvals_required,
+                "violations": [
+                    {"ref": a.ref, "rules": [c.rule for c in v.violations]}
+                    for a, v in zip(actions, verdict.actions, strict=True)
+                    if not v.allowed
+                ],
+            },
+        )
+        tick.audit.append(
+            (
+                "policy",
+                "plan.rechecked",
+                tick.row_id,
+                {
+                    "plan_hash": st.plan.hash,
+                    "stage": "decision",
+                    "allowed": sorted(remaining - blocked.keys()),
+                    "blocked": {k: blocked[k] for k in sorted(blocked)},
+                    "risk": verdict.risk,
+                    "approvals_required": verdict.approvals_required,
+                },
+            )
+        )
+        return verdict, blocked
 
     # ------------------------------------------------------------------ execution
 
@@ -1033,6 +1107,15 @@ def _result(call_id: str, output: dict[str, Any], *, error: bool = False) -> dic
     return block
 
 
+def _decided(action_id: str, remaining: set[str], blocked: Mapping[str, str]) -> ActionOutcome:
+    """An action's outcome once the approvals are in: blocked by the policy at decision, pending or rejected."""
+    if action_id in blocked:
+        return ActionOutcome(action_id=action_id, status="skipped", detail=blocked[action_id])
+    if action_id in remaining:
+        return ActionOutcome(action_id=action_id, status="pending")
+    return ActionOutcome(action_id=action_id, status="rejected", detail="rejected by an approver")
+
+
 def _problems(exc: ValidationError) -> list[dict[str, str]]:
     return [{"field": ".".join(str(p) for p in e["loc"]), "problem": e["msg"]} for e in exc.errors()[:8]]
 
@@ -1075,7 +1158,9 @@ def _report(tick: Tick, *, cancelled: bool = False) -> str:
     failed = [
         o
         for o in st.outcomes
-        if o.status in ("failed", "compensated") or (o.status == "succeeded" and o.verified is False)
+        if o.status in ("failed", "compensated")
+        or (o.status == "succeeded" and o.verified is False)
+        or (o.status == "skipped" and not cancelled)  # blocked by the policy at decision
     ]
     rejected = [o for o in st.outcomes if o.status == "rejected"]
     skipped = [o for o in st.outcomes if o.status == "skipped"]
