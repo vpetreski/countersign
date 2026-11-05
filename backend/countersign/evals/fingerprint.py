@@ -1,9 +1,11 @@
 """The evaluation's fingerprint: a hash of everything that defines what was measured.
 
 Components: the dataset, the system prompt, the tool schemas the model sees, the change policy, the grader and
-runner code, the reference policy and its mutants, the fixture data, and the code every trial runs through: the
-runtime, the tools, the analyzer, the policy engine, the sandbox and the executor. A report whose fingerprint
-differs from the code's is stale; CI and the published-report test both refuse it.
+runner code, the reference policy and its mutants, the fixture data, and the code a trial runs through: the
+runtime, the tools, the analyzer, the policy engine, the sandbox and the executor, ingestion and screening, the
+domain and model-boundary types, the store, the audit chain, tracing and the settings. Only the code a trial never
+runs is left out: the HTTP API, authentication, the model factory, the Claude adapter and the command lines. A
+report whose fingerprint differs from the code's is stale; CI and the published-report test both refuse it.
 """
 
 from __future__ import annotations
@@ -26,6 +28,14 @@ RUN_SOURCES: dict[str, tuple[str, ...]] = {
     "policy_engine": ("policy/engine.py",),
     "sandbox": ("execution/sandbox.py",),
     "executor": ("execution/executor.py", "execution/tokens.py"),
+    "ingestion": (
+        *sorted(p.relative_to(PACKAGE).as_posix() for p in (PACKAGE / "data").rglob("*.py")),
+        "security/screening.py",
+    ),
+    "types": ("domain/resources.py", "models/base.py"),
+    "store": ("store/db.py", "store/migrate.py", "store/schema.py", "audit/chain.py"),
+    "tracing": ("observability/tracing.py",),
+    "settings": ("settings.py",),
 }
 
 

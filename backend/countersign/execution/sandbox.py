@@ -39,6 +39,7 @@ COMPENSATION = {
     "delete": None,
     "release": None,
 }
+UNDOES = {inverse: forward for forward, inverse in COMPENSATION.items() if inverse}  # start: stop, ...
 # The provider API each step stands for, shown in the UI and the audit log.
 API = {
     (Provider.AWS, "stop"): "ec2:StopInstances",
@@ -119,8 +120,10 @@ class SandboxCloud:
         compensation: bool = False,
     ) -> Effect:
         """Perform one step of an approved action, at most once. The token must name this action with this
-        content; a new effect also needs an unexpired token and passes the guardrails, while a replay of a
-        step already done, or a compensation that undoes one, only needs the token to be genuine."""
+        content, and the step must be one of the action's own steps. A new effect also needs an unexpired token
+        and passes the guardrails; a replay of a step already done needs only a genuine token, and so does a
+        compensation, which must undo a step of this action that really ran. The caller's word is not trusted
+        for any of this: the sandbox checks it against the action and its own record of effects."""
         now = self._clock()
         claims = tokens.verify(
             self._secret,
@@ -133,11 +136,23 @@ class SandboxCloud:
             now=int(now.timestamp()),
             allow_expired=True,
         )
+        forward = UNDOES.get(step) if compensation else step
+        if forward is None or forward not in action.steps:
+            if compensation:
+                raise GuardrailError(
+                    f"{step} does not undo a step of {action.id} ({', '.join(action.steps)})"
+                )
+            raise tokens.CapabilityError(f"{step} is not a step of the approved action {action.id}")
         key = idempotency_key(run_id, plan_hash, action.id, step, undo=compensation)
         with self._db.session() as s:
             done = s.get(ExecutionRow, key)
             if done is not None:
                 return Effect(step, True, f"replayed: {done.result.get('detail', '')}", dict(done.result))
+            if (
+                compensation
+                and s.get(ExecutionRow, idempotency_key(run_id, plan_hash, action.id, forward)) is None
+            ):
+                raise PreconditionFailedError(f"nothing to undo: {forward} never ran for {action.id}")
             if claims.exp < int(now.timestamp()) and not compensation:
                 raise tokens.CapabilityError(
                     "capability token expired: the countersignatures no longer authorise new effects; "

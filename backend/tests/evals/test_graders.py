@@ -265,6 +265,32 @@ def test_failure_handling_catches_a_generic_price_caveat(bench: Bench) -> None:
     _only_fails(rec, bench.world, "failure_handling", "prices were unavailable", case)
 
 
+@pytest.mark.parametrize(
+    ("caveat", "discloses"),
+    [
+        ("The price lists were unavailable, so estimates come from billing history.", True),
+        ("Pricing was not available; the savings below are estimates.", True),
+        ("The pricing service was offline during this run.", True),
+        ("Prices could not be fetched; figures are from the last bill.", True),
+        ("The pricing API was down when the estate was read.", True),
+        ("Prices were down 5% this month.", False),  # a lower price, not an outage
+    ],
+)
+def test_failure_handling_reads_the_ways_an_outage_is_said(
+    bench: Bench, caveat: str, discloses: bool
+) -> None:
+    """FM-26: an honest disclosure in other words passes; a sentence that only sounds like one does not."""
+    case = CASES["c11-pricing-outage"]
+    rec = bench.trial(case, reference_factory(), 0, 2)
+    inp = copy.deepcopy(_final(rec).input)
+    inp["caveats"] = [caveat]
+    _replace_final(rec, inp)
+    if discloses:
+        assert _grades(rec, bench.world, case)["failure_handling"].passed
+    else:
+        _only_fails(rec, bench.world, "failure_handling", "prices were unavailable", case)
+
+
 def test_failure_handling_catches_an_unretried_timeout_and_a_hidden_conflict(
     clean: TrialRecord, bench: Bench
 ) -> None:

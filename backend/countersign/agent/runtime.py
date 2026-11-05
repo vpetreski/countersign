@@ -295,10 +295,40 @@ class Runtime:
             raise RunForbiddenError("only an approver can countersign")
         with self._leased(principal, run_id) as tick:
             expired = self._expire_if_overdue(tick)
-            if not expired:
+            tampered = not expired and self._fail_if_tampered(tick)
+            if not expired and not tampered:
                 self._decide(tick, principal, plan_hash_, dict(decisions), note)
         if expired:
             raise RunConflictError("the run expired after waiting 24 hours for a human; nothing was approved")
+        if tampered:
+            raise RunConflictError(
+                "the stored change request no longer matches the hash its countersignatures bind to; "
+                "the run failed and nothing was approved"
+            )
+
+    def _fail_if_tampered(self, tick: Tick) -> bool:
+        """Every countersign re-derives the plan's hash from the plan as stored. Approvals bind to content: a
+        plan edited after submission, even under its old hash, fails the run instead of collecting signatures."""
+        st = tick.state
+        if tick.status is not RunStatus.AWAITING_APPROVAL or st.plan is None:
+            return False
+        recomputed = st.plan.recomputed_hash()
+        if recomputed == st.plan.hash:
+            return False
+        st.error = "the stored change request no longer matches its hash"
+        st.report = _partial_report(
+            st, "The stored change request changed after it was submitted, so the run stopped safely."
+        )
+        tick.audit.append(
+            (
+                "system",
+                "plan.integrity_failed",
+                tick.row_id,
+                {"plan_hash": st.plan.hash, "recomputed": recomputed},
+            )
+        )
+        tick.move(RunStatus.FAILED, st.error)
+        return True
 
     def cancel(self, principal: Principal, run_id: str) -> None:
         if principal.role is not Role.OPERATOR:
@@ -411,6 +441,7 @@ class Runtime:
                 tick.move(RunStatus.FAILED, st.error)
                 return
             _usage_attributes(span, response)
+        self._renew(tick, 0)  # the tools after the call get a full lease too, or the tick stops here
         st.budgets.planning_ms += int((time.perf_counter() - started) * 1000)
         st.budgets.model_turns += 1
         st.budgets.input_tokens += _context_tokens(response)
@@ -1054,8 +1085,8 @@ class Runtime:
         return max(LEASE_SECONDS, self.settings.model_timeout_seconds + 60)
 
     def _renew(self, tick: Tick, extra_s: float) -> None:
-        """Extend this tick's lease before another attempt (a model retry): if another worker has taken the
-        run, stop here rather than pay for a call whose result could not be saved."""
+        """Extend this tick's lease before a model retry and after each model call: if another worker has taken
+        the run, stop here rather than pay for a call, or run tools, whose result could not be saved."""
         until = self.clock() + dt.timedelta(seconds=self._lease_seconds() + extra_s)
         with self.db.session() as s:
             renewed = s.execute(
@@ -1065,7 +1096,7 @@ class Runtime:
                 .values(lease_until=until)
             ).rowcount  # type: ignore[attr-defined]
         if renewed != 1:
-            raise RunConflictError("the run's lease was taken over during a model retry; this tick stops")
+            raise RunConflictError("the run's lease was taken over during a model call; this tick stops")
 
     def _release(self, tick: Tick) -> None:
         with self.db.session() as s:

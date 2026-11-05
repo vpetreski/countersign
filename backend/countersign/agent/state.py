@@ -183,6 +183,16 @@ class ChangePlan(BaseModel):
     policy_version: int
     hash: str
 
+    def recomputed_hash(self) -> str:
+        """The hash of the plan as it is stored now: equal to `hash` unless the plan changed after submission."""
+        return plan_hash(
+            self.summary,
+            self.caveats,
+            [a.model_dump(mode="json") for a in self.actions],
+            self.policy_version,
+            [n.model_dump(mode="json") for n in self.not_proposed],
+        )
+
 
 def plan_hash(
     summary: str,

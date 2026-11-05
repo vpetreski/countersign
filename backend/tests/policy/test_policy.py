@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from collections.abc import Callable
 
 import pytest
@@ -14,6 +15,7 @@ from countersign.domain.resources import Environment, Resource
 from countersign.domain.rules import protected_by
 from countersign.policy.engine import Policy, ProposedAction, Risk, default_policy
 from countersign.store.db import Database
+from countersign.tools.catalog import _routing_saving
 from tests.conftest import FIXTURES, NOW, make_settings
 
 pytestmark = pytest.mark.unit
@@ -128,6 +130,33 @@ def test_large_impact_needs_two_approvers_whatever_the_risk(
         if f.eligible and f.operation is Operation.STOP_VM and f.environment == "dev"
     ]
     assert judge(low_bar, world, [act(f) for f in stops]).approvals_required == 2  # type: ignore[attr-defined]
+
+
+def test_an_unknown_saving_is_routed_like_one_at_the_two_approver_threshold(
+    world: tuple[dict[str, Resource], dict[str, Finding]],
+) -> None:
+    """FM-09: the tool layer routes a saving it cannot estimate at the two-approver threshold, a finite number
+    that is safe in any JSON column: the same low-risk stop needs two countersignatures when its saving is
+    unknown and one when it is a known $0."""
+    policy = default_policy()
+    stop = next(
+        f
+        for f in world[1].values()
+        if f.eligible and f.operation is Operation.STOP_VM and f.environment == "dev"
+    )
+    a = act(stop)
+    for saving, need in ((None, 2), (0.0, 1)):
+        priced = stop.model_copy(update={"est_monthly_savings_usd": saving})
+        routed = _routing_saving(priced, policy.two_approvers_at)
+        assert math.isfinite(routed)
+        verdict = policy.evaluate(
+            [a],
+            resolve={stop.ref: world[0][stop.ref]},
+            findings={**world[1], stop.ref: priced},
+            evidence_refs={"ev-01": stop.ref},
+            savings={stop.ref: routed},
+        )
+        assert verdict.risk is Risk.LOW and verdict.approvals_required == need
 
 
 def test_plan_size_limit(world: tuple[dict[str, Resource], dict[str, Finding]]) -> None:

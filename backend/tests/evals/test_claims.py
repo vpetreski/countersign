@@ -1,5 +1,5 @@
 """When the groundedness grader reads a percentage as a CPU claim: near a CPU word, inside one clause, not
-labelled as coverage, and not one of the analyzer's own thresholds cited as a threshold."""
+nearer another metric's word, and not one of the analyzer's own CPU thresholds cited as a threshold."""
 
 from __future__ import annotations
 
@@ -34,6 +34,13 @@ pytestmark = pytest.mark.unit
         ("CPU was low. Then 7% of the budget went", []),  # a sentence boundary ends the clause
         ("CPU was low; 7% of the budget", []),
         ("saves 30% of the bill", []),
+        ("vCPU p95 2.1%", [2.1]),  # "vCPU", "CPUs" and "processor" are CPU words too
+        ("the CPUs peaked at 12%", [12.0]),
+        ("processor load stayed at 3%", [3.0]),
+        ("p95 CPU 2.1%, so stopping it cuts 30% of the team's bill", [2.1]),  # the bill is nearer the 30
+        ("p95 CPU 2.3% and memory 40%", [2.3]),
+        ("memory utilization 40%", []),  # memory's utilization, not the CPU's
+        ("CPU under 80%", [80.0]),  # 80% is the coverage rule, not a CPU threshold: a claim to check
     ],
 )
 def test_which_percentages_are_cpu_claims(text: str, claims: list[float]) -> None:
@@ -58,4 +65,4 @@ def test_the_threshold_word_must_be_near_too() -> None:
 def test_the_exempt_values_are_the_analyzers_own_thresholds() -> None:
     t = DEFAULT_THRESHOLDS
     assert {t.idle_p95_cpu, t.idle_max_cpu, t.rightsize_p95_cpu, t.rightsize_max_cpu} == {5, 20, 15, 40}
-    assert sorted(ANALYZER_THRESHOLDS) == [5.0, 15.0, 20.0, 40.0, 80.0]  # 80% is the minimum metrics coverage
+    assert sorted(ANALYZER_THRESHOLDS) == [5.0, 15.0, 20.0, 40.0]  # not 80%, the minimum metrics coverage

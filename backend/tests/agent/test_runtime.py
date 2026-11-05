@@ -4,6 +4,7 @@ Failure-mode ids (FM-xx) refer to docs/failure-modes.md."""
 
 from __future__ import annotations
 
+import copy
 import dataclasses
 from typing import Any
 
@@ -26,6 +27,7 @@ from countersign.agent.state import (
     RunStatus,
     check_transition,
 )
+from countersign.api.views import run_view
 from countersign.audit import chain
 from countersign.domain.analysis import Operation
 from countersign.execution import tokens
@@ -376,6 +378,54 @@ def test_a_countersign_restarts_the_wait_for_the_next_one(harness: Harness) -> N
     harness.approve_all(run_id, "approver2")
     row = harness.run(run_id)
     assert row.status == "executing" and row.state["capability"] is not None
+
+
+def test_a_plan_edited_between_countersigns_fails_the_run_instead_of_collecting_signatures(
+    harness: Harness,
+) -> None:
+    """FM-14: the first approver countersigns the plan; the stored plan is then edited under the same hash (the
+    disk deletion loses its snapshot step). Every countersign re-derives the hash from the plan as stored, so
+    the second one finds the mismatch: the run fails, nothing is minted or run, and the audit log says why."""
+    h = harness
+    run_id = h.start()
+    h.drive(run_id, WAITING | FINAL)
+    plan = h.plan(run_id)
+    assert plan["approvals_required"] == 2
+    h.approve_all(run_id, "approver")
+    with h.db.session() as s:
+        row = s.get(RunRow, run_id)
+        assert row is not None
+        state = copy.deepcopy(row.state)
+        disk = next(a for a in state["plan"]["actions"] if a["operation"] == "delete_disk")
+        disk["steps"] = ["delete"]
+        row.state = state
+    with pytest.raises(RunConflictError, match="no longer matches the hash"):
+        h.approve_all(run_id, "approver2")
+    row = h.run(run_id)
+    assert row.status == "failed" and row.state["capability"] is None
+    assert count(h, ExecutionRow) == 0 and count(h, ResourceOverrideRow) == 0
+    assert "plan.integrity_failed" in audit_actions(h)
+    with h.db.session() as s:
+        assert chain.verify(s, h.ws).valid
+
+
+def test_the_view_counts_only_decisions_on_the_current_plan(harness: Harness) -> None:
+    """A decision binds to the hash it signed: the view's tally, like the runtime's, ignores one on another
+    hash, and that approver may decide on the current plan."""
+    h = harness
+    run_id = h.start()
+    h.drive(run_id, WAITING | FINAL)
+    h.approve_all(run_id, "approver")
+    assert run_view(h.run(run_id), h.who["approver"])["plan"]["approvals_received"] == 1
+    with h.db.session() as s:
+        row = s.get(RunRow, run_id)
+        assert row is not None
+        state = copy.deepcopy(row.state)
+        state["approvals"][0]["plan_hash"] = "0" * 64
+        row.state = state
+    view = run_view(h.run(run_id), h.who["approver"])
+    assert view["plan"]["approvals_received"] == 0 and view["can"]["decide"]
+    assert all(a["approvals"] == 0 for a in view["plan"]["actions"])
 
 
 def test_a_run_can_be_cancelled_until_verification_starts(harness: Harness) -> None:
