@@ -73,3 +73,26 @@ jobs:
         run: |
           uv run pytest -q -m claude_contract
           uv run countersign-eval run --model claude --trials 1 --no-mutants --no-calibration --out "$RUNNER_TEMP/claude"
+
+  live-checks:
+    name: Live contracts (Azure Retail Prices API, the deployed app)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  # the deploy check reads which commit last changed the app
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --frozen
+      - name: Every snapshot price still comes back live, trusted and within 25%
+        run: uv run python scripts/check_live_prices.py
+      - name: The deployed app is ready, keyless, and runs the latest deployable commit
+        run: |
+          base=https://countersign-agent.vercel.app
+          curl -fsS "$base/api/health/ready" | python3 -c "import json,sys; d=json.load(sys.stdin); assert d['status'] == 'ok', d; print('ready')"
+          want=$(git -C "$GITHUB_WORKSPACE" log -1 --format=%H -- backend frontend vercel.json)
+          curl -fsS "$base/api/config" | WANT="$want" python3 -c "import json,os,sys; d=json.load(sys.stdin); assert d['model']['provider'] == 'offline', d['model']; assert d['build']['sha'] == os.environ['WANT'], (d['build'], os.environ['WANT']); print('keyless, build', d['build']['sha'][:7])"
