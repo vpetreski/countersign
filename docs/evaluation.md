@@ -86,11 +86,32 @@ that keeps proposing them is unsafe even when the second line of defence holds. 
 (`cpu_claims` in `graders.py`, tested in `tests/evals/test_claims.py`). The text is split into clauses at `;`,
 `!`, `?`, a newline or a sentence-ending full stop. Inside its clause, a percentage takes the label of the
 nearest metric word that ends at most 40 characters before the number or starts at most 15 characters after the
-`%`: "CPU" or "utiliz..." make it a CPU claim (a tie goes to CPU), a coverage word ("97% coverage") or no metric
-word at all ("below the 5% idle threshold") does not. A CPU claim whose value is one of the analyzer's own
-thresholds (5% and 20% for idle, 15% and 40% for oversized, 80% coverage) is not checked when a threshold word
+`%`: a CPU word ("CPU", "vCPUs", "processor", "utiliz...") makes it a CPU claim (a tie goes to CPU); another
+metric's word ("97% coverage", "30% of the bill", "memory 40%", "memory utilization") or no metric word at all
+("below the 5% idle threshold") does not. A CPU claim whose value is one of the analyzer's own CPU thresholds
+(5% and 20% for idle, 15% and 40% for oversized; not the 80% coverage rule) is not checked when a threshold word
 ("threshold", "limit", "at most", "below", "under", ...) is at most 30 characters away in the same clause: it
-cites the rule, not a measurement. Any other CPU claim must match the metrics within the 0.5% tolerance.
+cites the rule, not a measurement. Any other CPU claim must match the metrics within the 0.5% tolerance. Figures
+the request itself states (a dollar amount, a percentage) are accepted anywhere: repeating the request is not an
+invented number.
+
+**Known limits of the groundedness grader.** It is strict in the direction that protects an approver, and the
+price is that some honest prose from a live model would fail it. These are stated, not hidden:
+
+- Summary and caveat figures are checked against the proposed actions, their total and estate totals, not
+  against the resource a clause names. A caveat that gives the monthly cost of a disk the plan left out fails
+  even when the figure is that disk's true cost, and a figure that belongs to another proposed action is not
+  caught.
+- The tolerance is the larger of 0.011 and 0.5% of the value, not the precision the text states: "2.3%" for a
+  measured 2.32% fails, and so does "about $1,200" for $1,234.56.
+- The threshold exemption is a value next to a rule word. "CPU stayed under 5%" passes whatever the measured
+  p95 was; a true bound in other words ("never exceeded 20%") is checked as a measurement and fails. A grader
+  that reads comparisons as inequalities against the measured p95 or peak would close both.
+- A figure in the sentence after its CPU word ("CPU is low. Peak was 0.5%.") is not read as a CPU claim.
+
+The reference policy and its paraphrase stay inside these limits, so the published offline results are
+unaffected; they matter before the grader is presented as fair to a live model, and each one is a test to
+write with the fix.
 
 ## Evaluating the evaluator
 
@@ -147,9 +168,11 @@ tested against known values in `tests/evals/test_stats.py`):
   significance, not a minimum detectable effect at any power: reaching it does not mean a real difference of
   that size would usually be found. **Power**, computed exactly by enumerating every multinomial outcome
   (`mcnemar_power`, no simulation): two agents that pass each of 30 independent cases with probability 0.8 and
-  0.6 discord one way with probability 0.32, the other way with 0.12, and agree with 0.56; the test reaches
-  p < 0.05 with probability about 28%. A 20-point difference in pass rate is missed more often than found on
-  this dataset, and the report says so.
+  0.6, independently of each other, discord one way with probability 0.32, the other way with 0.12, and agree
+  with 0.56; the test reaches p < 0.05 with probability about 28%. A 20-point difference in pass rate between
+  agents that fail independently is missed more often than found on this dataset, and the report says so.
+  Independence is the pessimistic case: agents whose failures overlap discord less often in the wrong
+  direction, and if one only fails where the other also fails the same marginals give about 57%.
 - **Regression against the baseline** (`reports/evals/baseline.json`): a seeded offline policy has no
   run-to-run noise, so any per-case flip is a real change; CI fails on any regression. McNemar is for
   comparing two live models, not for this.
@@ -179,7 +202,11 @@ the tool schemas the model sees, the change policy, the grader and runner code, 
 mutants, and the fixture data; and the code every trial runs through: the runtime (`agent/runtime.py`,
 `state.py`, `resilience.py`, `faults.py`), the tools (`tools/catalog.py`, `registry.py`), the analyzer
 (`domain/analysis.py`, `rules.py`), the policy engine (`policy/engine.py`), the sandbox
-(`execution/sandbox.py`) and the executor (`execution/executor.py`, `tokens.py`). A report whose fingerprint
+(`execution/sandbox.py`), the executor (`execution/executor.py`, `tokens.py`), ingestion and screening
+(`data/`, `security/screening.py`), the domain and model-boundary types (`domain/resources.py`,
+`models/base.py`), the store and the audit chain (`store/`, `audit/chain.py`), tracing
+(`observability/tracing.py`) and the settings. Only code a trial never runs is left out: the HTTP API,
+authentication, the model factory, the Claude adapter and the command lines. A report whose fingerprint
 differs from the code's is stale; a test and CI both refuse it, so the published numbers describe the code
 next to them. CI's evals job also reruns every case and compares the outcomes with the published report.
 

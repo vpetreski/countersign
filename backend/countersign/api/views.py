@@ -22,12 +22,14 @@ def run_view(row: RunRow, principal: Principal, *, detail: bool = True) -> dict[
     st = RunState.model_validate(row.state)
     status = RunStatus(row.status)
     plan = st.plan
+    # Only decisions on the plan as it stands count, as in the runtime: a decision binds to the hash it signed.
+    current = [d for d in st.approvals if plan is not None and d.plan_hash == plan.hash]
     tally: dict[str, dict[str, int]] = defaultdict(lambda: {"approve": 0, "reject": 0})
-    for d in st.approvals:
+    for d in current:
         for action_id, verdict in d.decisions.items():
             tally[action_id][verdict] += 1
     outcomes = {o.action_id: o for o in st.outcomes}
-    approvers = sorted({d.approver for d in st.approvals})
+    approvers = sorted({d.approver for d in current})
     view: dict[str, Any] = {
         "id": row.id,
         "status": status,

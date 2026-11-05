@@ -65,6 +65,21 @@ def test_the_critical_workflow_on_postgres(pg: Database) -> None:
     assert tz == "timestamp with time zone"
 
 
+def test_a_price_outage_run_is_stored_and_executed_on_postgres(pg: Database) -> None:
+    """FM-09 on jsonb: a saving that cannot be estimated is stored as null, never as a number PostgreSQL would
+    refuse, and the run goes from two countersignatures to verified execution."""
+    h = make_harness(pg, Clock())
+    run_id = h.start("Rightsize oversized VMs", faults=["pricing_unavailable"])
+    assert h.drive(run_id, WAITING | FINAL).status == "awaiting_approval"
+    plan = h.plan(run_id)
+    assert plan["savings_complete"] is False and plan["approvals_required"] == 2
+    assert any(a["est_monthly_savings"] is None for a in plan["actions"])
+    h.approve_all(run_id)
+    assert h.drive(run_id, FINAL).status == "completed"
+    with pg.session() as s:
+        assert chain.verify(s, h.ws).valid
+
+
 def test_two_workers_racing_on_one_run_call_the_model_once(pg: Database) -> None:
     """FM-13 with real concurrency: both threads pass the barrier together; the lease admits one."""
     calls: list[int] = []

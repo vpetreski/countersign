@@ -7,7 +7,6 @@ Text that came from cloud metadata and was flagged at ingest as instruction-like
 from __future__ import annotations
 
 import datetime as dt
-import math
 from collections import Counter, defaultdict
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -410,17 +409,20 @@ def check_policy(ctx: ToolContext, args: CheckPolicyIn) -> dict[str, Any]:
     }
 
 
-def _routing_saving(f: Finding) -> float:
-    return math.inf if f.est_monthly_savings_usd is None else f.est_monthly_savings_usd
+def _routing_saving(f: Finding, threshold: float) -> float:
+    return threshold if f.est_monthly_savings_usd is None else f.est_monthly_savings_usd
 
 
 def evaluate(ctx: ToolContext, actions: list[ProposedAction]) -> PolicyVerdict:
     """The policy verdict for `actions` against this run's estate, findings and retrieved evidence."""
     findings = ctx.finding_map()
     resolve = {a.ref: r for a in actions if (r := ctx.estate.resolve(a.ref)) is not None}
-    # A saving that cannot be estimated is routed as if it reached the two-approver threshold: an unknown
-    # impact never lowers the number of countersignatures.
-    savings = {ref: _routing_saving(findings[r.ref]) for ref, r in resolve.items() if r.ref in findings}
+    # A saving that cannot be estimated is routed as if it reached the two-approver threshold (a finite value,
+    # safe in any JSON): an unknown impact never lowers the number of countersignatures.
+    threshold = ctx.policy.two_approvers_at
+    savings = {
+        ref: _routing_saving(findings[r.ref], threshold) for ref, r in resolve.items() if r.ref in findings
+    }
     evidence_refs = {k: v.ref for k, v in ctx.state.evidence.items()}
     return ctx.policy.evaluate(
         actions, resolve=resolve, findings=findings, evidence_refs=evidence_refs, savings=savings

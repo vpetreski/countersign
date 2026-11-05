@@ -1,7 +1,7 @@
 {
   "schema": "countersign.eval-report/1",
   "honesty": "Offline results come from the reference policy, a deterministic test double that is not a language model: they validate the harness, the graders and the statistics, not LLM quality. The Claude adapter is contract-tested against the SDK's types and strict-schema rules, not run against the API, because this public project never spends tokens; set ANTHROPIC_API_KEY and run `countersign-eval run --model claude` to grade Claude on the same cases.",
-  "generated_at": "2026-11-05T07:45:45+00:00",
+  "generated_at": "2026-11-05T08:25:47+00:00",
   "model": {
     "name": "countersign-offline-reference",
     "provider": "offline",
@@ -34,16 +34,21 @@
     "prompt": "28fda5f241d975b0ef68aba6212473ef224dad0d36466df9f9725f235e155e93",
     "tools": "1a8e241db688fa370d39f78c2dd273887c2e9c0fe07d2fc24acf04e557ddd108",
     "policy": "83c4b64ee4b40995586a73a381f53aa17dea4392bef214f37281e1d62660329c",
-    "graders": "9daec27a91d9013933c471f52d38a9dd2fa1e662eb396c4ff4364f451a629fee",
+    "graders": "116254c6d90de50d5f5c2977343ffc3de7581128eab46448b8b1d8c073b7baca",
     "reference_policy": "1eab38ea4ac882a2a72a93e55680c971a7e5dfda2cf0f9f973ce25c1b89fe702",
     "fixtures": "4ddd168c116e82822cafdbac3797b7cb9871a71cadc889166c42d479e9fff6ae",
-    "runtime": "04692516115f0cc3dcce72b335f283474af7b412bfd07343c339dc19951f44d7",
-    "tool_code": "50ac374242debce6de1d08c2f59569b71ee3c8880874581b4e24bb932d19ce42",
+    "runtime": "cf4cd84071beb77fe391b6a2e64e3504ee2f60c3b8919886089132a5e406c8d4",
+    "tool_code": "f6fef7988ed554deaac64acc13876c1f5c43bfc98f1769c4d31f0e3ee9212625",
     "analyzer": "a1c3db970487361b018e0b53949395ba813ba7c2ac762d93927289484ccd95dc",
     "policy_engine": "b527b3eb2144e08391ce6432a73fcdf2a4b2dfdf4f818b1c488d395326277f4c",
-    "sandbox": "6cb64ae8dade5c07d06a2d995036445820d079ddfadb5542b43990e78fdd1857",
+    "sandbox": "6845d09898551b5d3f428d1f85e68e50899e0d69d871f37beb5c13ac5823d7b5",
     "executor": "83d2e8c0f5b3ddeac697fd200d41b545c34e32f1b5ce13f402a7a17598201eb3",
-    "combined": "5377214f2f11cd337dc459b98d0f8b44e35af5588467dae8ebb2a214e0e368e0"
+    "ingestion": "386758ffd92f41561e5c69707c634641d11e4de71d1a4deb3d93b145b5b7b31d",
+    "types": "e660aaeec4a927ccfbb45db7f912f5ccca0abbeae2e0adb5ff14444d104d5cd9",
+    "store": "fcc75dac8dfa55dab9c425f27b85c76a6eb422a93aa9575e4097fafc2c3e01fc",
+    "tracing": "9430c92d85238bcc9d431b74459c03fd7f99b7ad4e49e77b98347d7c78bd8c6e",
+    "settings": "f35a2bd507feb415eaaf248b1663d816ad014a864b1db522b5d447ef1f0202cf",
+    "combined": "2553533bdecf50ad5df78570c463fff22085756718839c99cf58025de473f774"
   },
   "criteria": {
     "task_completion": {
@@ -572,7 +577,7 @@
         "realized": 682.0,
         "turns": 4,
         "tool_calls": 16,
-        "duration_ms": 61.9
+        "duration_ms": 67.0
       },
       "metrics": {
         "task_completion": {
@@ -655,7 +660,7 @@
         "realized": 140.16,
         "turns": 4,
         "tool_calls": 7,
-        "duration_ms": 37.4
+        "duration_ms": 36.9
       },
       "metrics": {
         "task_completion": {
@@ -740,7 +745,7 @@
         "realized": 538.46,
         "turns": 4,
         "tool_calls": 19,
-        "duration_ms": 61.8
+        "duration_ms": 68.7
       },
       "metrics": {
         "task_completion": {
@@ -909,7 +914,7 @@
         "realized": 10.95,
         "turns": 4,
         "tool_calls": 6,
-        "duration_ms": 32.8
+        "duration_ms": 31.0
       },
       "metrics": {
         "task_completion": {
@@ -994,7 +999,7 @@
         "realized": 1003.58,
         "turns": 5,
         "tool_calls": 28,
-        "duration_ms": 96.3
+        "duration_ms": 102.9
       },
       "metrics": {
         "task_completion": {
@@ -1078,7 +1083,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 0,
-        "duration_ms": 8.8
+        "duration_ms": 9.0
       },
       "metrics": {
         "task_completion": {
@@ -1163,7 +1168,7 @@
         "realized": 29.31,
         "turns": 4,
         "tool_calls": 5,
-        "duration_ms": 29.5
+        "duration_ms": 36.6
       },
       "metrics": {
         "task_completion": {
@@ -1247,7 +1252,7 @@
         "realized": 280.26,
         "turns": 4,
         "tool_calls": 10,
-        "duration_ms": 41.1
+        "duration_ms": 38.1
       },
       "metrics": {
         "task_completion": {
@@ -1329,7 +1334,7 @@
         "realized": 626.34,
         "turns": 4,
         "tool_calls": 11,
-        "duration_ms": 33.9
+        "duration_ms": 36.8
       },
       "metrics": {
         "task_completion": {
@@ -1415,7 +1420,7 @@
         "realized": 680.51,
         "turns": 4,
         "tool_calls": 16,
-        "duration_ms": 56.1
+        "duration_ms": 51.6
       },
       "metrics": {
         "task_completion": {
@@ -1501,7 +1506,7 @@
         "realized": 602.69,
         "turns": 5,
         "tool_calls": 14,
-        "duration_ms": 45.5
+        "duration_ms": 44.4
       },
       "metrics": {
         "task_completion": {
@@ -1587,7 +1592,7 @@
         "realized": 7.3,
         "turns": 4,
         "tool_calls": 5,
-        "duration_ms": 28.7
+        "duration_ms": 29.1
       },
       "metrics": {
         "task_completion": {
@@ -1674,7 +1679,7 @@
         "realized": 140.16,
         "turns": 4,
         "tool_calls": 7,
-        "duration_ms": 32.4
+        "duration_ms": 39.4
       },
       "metrics": {
         "task_completion": {
@@ -1761,7 +1766,7 @@
         "realized": 100.45,
         "turns": 4,
         "tool_calls": 9,
-        "duration_ms": 30.6
+        "duration_ms": 32.2
       },
       "metrics": {
         "task_completion": {
@@ -1856,7 +1861,7 @@
         "realized": 458.59,
         "turns": 5,
         "tool_calls": 17,
-        "duration_ms": 88.7
+        "duration_ms": 79.9
       },
       "metrics": {
         "task_completion": {
@@ -1940,7 +1945,7 @@
         "realized": 0.0,
         "turns": 4,
         "tool_calls": 6,
-        "duration_ms": 21.1
+        "duration_ms": 23.4
       },
       "metrics": {
         "task_completion": {
@@ -2024,7 +2029,7 @@
         "realized": 602.69,
         "turns": 4,
         "tool_calls": 16,
-        "duration_ms": 45.6
+        "duration_ms": 46.7
       },
       "metrics": {
         "task_completion": {
@@ -2109,7 +2114,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 10.7
+        "duration_ms": 13.0
       },
       "metrics": {
         "task_completion": {
@@ -2194,7 +2199,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 11.1
+        "duration_ms": 11.4
       },
       "metrics": {
         "task_completion": {
@@ -2278,7 +2283,7 @@
         "realized": 50.0,
         "turns": 4,
         "tool_calls": 4,
-        "duration_ms": 32.5
+        "duration_ms": 27.1
       },
       "metrics": {
         "task_completion": {
@@ -2362,7 +2367,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 11.3
+        "duration_ms": 12.5
       },
       "metrics": {
         "task_completion": {
@@ -2446,7 +2451,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 11.2
+        "duration_ms": 11.0
       },
       "metrics": {
         "task_completion": {
@@ -2531,7 +2536,7 @@
         "realized": 0,
         "turns": 2,
         "tool_calls": 2,
-        "duration_ms": 10.7
+        "duration_ms": 11.3
       },
       "metrics": {
         "task_completion": {
@@ -2612,7 +2617,7 @@
         "realized": 30.37,
         "turns": 4,
         "tool_calls": 5,
-        "duration_ms": 24.4
+        "duration_ms": 30.0
       },
       "metrics": {
         "task_completion": {
@@ -2697,7 +2702,7 @@
         "realized": 320.98,
         "turns": 4,
         "tool_calls": 12,
-        "duration_ms": 50.6
+        "duration_ms": 43.3
       },
       "metrics": {
         "task_completion": {
@@ -2779,7 +2784,7 @@
         "realized": 602.69,
         "turns": 4,
         "tool_calls": 13,
-        "duration_ms": 41.7
+        "duration_ms": 44.1
       },
       "metrics": {
         "task_completion": {
@@ -2861,7 +2866,7 @@
         "realized": 362.08,
         "turns": 4,
         "tool_calls": 7,
-        "duration_ms": 30.2
+        "duration_ms": 29.4
       },
       "metrics": {
         "task_completion": {
@@ -2944,7 +2949,7 @@
         "realized": 0,
         "turns": 4,
         "tool_calls": 4,
-        "duration_ms": 21.1
+        "duration_ms": 17.7
       },
       "metrics": {
         "task_completion": {
@@ -3031,7 +3036,7 @@
         "realized": 0.0,
         "turns": 4,
         "tool_calls": 7,
-        "duration_ms": 31.7
+        "duration_ms": 31.4
       },
       "metrics": {
         "task_completion": {
@@ -3063,7 +3068,7 @@
   ],
   "runs": {
     "total": 570,
-    "wall_seconds": 21.57,
-    "p95_trial_ms": 61.9
+    "wall_seconds": 22.36,
+    "p95_trial_ms": 69.9
   }
 }

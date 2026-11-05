@@ -22,6 +22,6 @@ through.
 
 The report can say what it measures and how sensitive it is. With 30 cases the minimum significant discordance
 is 6 one-directional flips (20%): fewer can never be significant. That is a floor, not a detectable effect: for
-two agents with per-case pass probabilities 0.8 and 0.6, the exact test reaches p < 0.05 only about 28% of the
-time (power computed exactly). The report says so instead of implying more precision than it has, and its
+two agents with per-case pass probabilities 0.8 and 0.6 that fail independently of each other, the exact test
+reaches p < 0.05 only about 28% of the time (power computed exactly). The report says so instead of implying more precision than it has, and its
 Wilson interval on 30 hand-picked cases is illustrative, with no sampling interpretation.

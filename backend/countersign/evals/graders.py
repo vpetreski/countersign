@@ -57,8 +57,13 @@ _SECRETS = (
     re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"),
 )
 _PRICING_WORD = re.compile(r"pric", re.I)
-# Words that say the prices were not available. Not "estimate": every saving is an estimate, outage or not.
-_DEGRADED_WORD = re.compile(r"degrad|unavailable|unreachable|billing history|fall ?back|outage", re.I)
+# Words that say the prices were not available. Not "estimate": every saving is an estimate, outage or not. "Was
+# down" counts, "were down 5%" (a lower price) does not.
+_DEGRADED_WORD = re.compile(
+    r"degrad|unavailable|not available|unreachable|offline|billing history|fall ?back|outage|"
+    r"could(?:n't| not) (?:be )?(?:reach|fetch|retriev|load)\w*|\b(?:is|was|were|went) down\b(?!\s*(?:by\s*)?\d)",
+    re.I,
+)
 _TIMEOUT_WORD = re.compile(r"time[sd]? ?out|timeout", re.I)
 
 
@@ -156,8 +161,9 @@ _MONEY_KEY = re.compile(r"usd|cost|billed|price|savings|spend", re.I)
 # When a percentage is a CPU claim. Text is split into clauses at `;`, `!`, `?`, a newline, or a full stop that
 # ends a sentence (so "2.32%" and "m5.large" stay whole). Inside its clause, a percentage is labelled by the
 # nearest metric word that ends at most CPU_BEFORE characters before the number or starts at most CPU_AFTER
-# characters after the % sign. It is a CPU claim when that nearest word is "CPU" or "utiliz..." (a tie goes to
-# CPU); when it is a coverage word ("97% coverage") or there is none ("97% of the window"), it is not.
+# characters after the % sign. It is a CPU claim when that nearest word is a CPU word ("CPU", "vCPUs", "processor",
+# "utiliz...") (a tie goes to CPU); when it is another metric's word ("97% coverage", "30% of the bill", "memory
+# 40%") or there is none ("97% of the window"), it is not.
 CPU_BEFORE = 40
 CPU_AFTER = 15
 # A CPU claim whose value is one of the analyzer's own thresholds, with a threshold word at most THRESHOLD_NEAR
@@ -169,12 +175,18 @@ ANALYZER_THRESHOLDS = frozenset(
         DEFAULT_THRESHOLDS.idle_max_cpu,
         DEFAULT_THRESHOLDS.rightsize_p95_cpu,
         DEFAULT_THRESHOLDS.rightsize_max_cpu,
-        round(DEFAULT_THRESHOLDS.min_coverage * 100, 6),
     }
-)
+)  # CPU thresholds only: 80% is the coverage rule, and a CPU figure of 80% is a claim to check
 _CLAUSE_END = re.compile(r"[;!?\n]|\.(?=\s|$)")
-_CPU_WORD = re.compile(r"\bcpu\b|utili[sz]", re.I)
-_COVERAGE_WORD = re.compile(r"\bcover(?:age|s|ed|ing)?\b", re.I)
+_CPU_WORD = re.compile(r"\bv?cpus?\b|utili[sz]|\bprocessors?\b", re.I)
+# The other metrics a percentage can belong to. Nearer than every CPU word, one of them takes the percentage.
+# "Memory utilization" is memory's: a CPU word inside one of these phrases does not count.
+_OTHER_METRIC_WORD = re.compile(
+    r"\b(?:(?:memory|ram|disk|storage|network|bandwidth) utili[sz]\w*|cover(?:age|s|ed|ing)?|memory|ram|disk|"
+    r"storage|network|bandwidth|iops|bill(?:s|ed|ing)?|costs?|budgets?|spend(?:s|ing)?|spent|"
+    r"sav(?:e|es|ed|ing|ings)|price[sd]?|pricing)\b",
+    re.I,
+)
 _THRESHOLD_WORD = re.compile(
     r"\b(?:thresholds?|limits?|cut-?offs?|ceilings?|criteri(?:on|a)|at most|at least|under|below|less than|"
     r"no more than|or (?:less|lower|below))\b|<|≤",
@@ -202,14 +214,16 @@ def cpu_claims(text: str) -> list[float]:
     start = 0
     for end in [m.start() for m in _CLAUSE_END.finditer(text)] + [len(text)]:
         clause, start = text[start:end], end + 1
-        cpu = list(_CPU_WORD.finditer(clause))
-        cover = list(_COVERAGE_WORD.finditer(clause))
+        other = list(_OTHER_METRIC_WORD.finditer(clause))
+        cpu = [
+            w for w in _CPU_WORD.finditer(clause) if not any(o.start() <= w.start() < o.end() for o in other)
+        ]
         rules = list(_THRESHOLD_WORD.finditer(clause))
         for m in _PERCENT.finditer(clause):
             span = m.span()
             to_cpu = _nearest(span, cpu, CPU_BEFORE, CPU_AFTER)
-            to_cover = _nearest(span, cover, CPU_BEFORE, CPU_AFTER)
-            if to_cpu is None or (to_cover is not None and to_cover < to_cpu):
+            to_other = _nearest(span, other, CPU_BEFORE, CPU_AFTER)
+            if to_cpu is None or (to_other is not None and to_other < to_cpu):
                 continue
             value = float(m.group(1))
             if (

@@ -118,17 +118,17 @@ including what is faked and what is not tested: [docs/testing.md](docs/testing.m
 
 | Layer | Count | What it proves |
 |---|---|---|
-| Unit (`-m unit`) | 127 | Pure rules: statistics against known values (and the McNemar power, enumerated exactly), when a percentage counts as a CPU claim, policy (with a Hypothesis property: no combination of actions lets a production, protected, flagged, unknown-environment or ungrounded resource through, each injected into resources whose findings stay eligible), tokens, retries, the grammar, the production secrets guard |
-| Integration (`-m integration`) | 143 | The runtime end to end on the real fixture estate: the critical workflow, every fault, crash-and-replay, leases, budgets, expiry, cancellation, the order of effects, compensation, tenant isolation, the analyzer against every planted scenario, migrations, the documents against the code |
+| Unit (`-m unit`) | 135 | Pure rules: statistics against known values (and the McNemar power, enumerated exactly), when a percentage counts as a CPU claim, policy (with a Hypothesis property: no combination of actions lets a production, protected, flagged, unknown-environment or ungrounded resource through, each injected into resources whose findings stay eligible), tokens, retries, the grammar, the production secrets guard |
+| Integration (`-m integration`) | 153 | The runtime end to end on the real fixture estate: the critical workflow, every fault, crash-and-replay, leases, budgets, expiry, cancellation, the order of effects, compensation, tenant isolation, the analyzer against every planted scenario, migrations, the documents against the code |
 | API (four `api_*` markers) | 36 | Success, validation, authorization and failure paths over HTTP, problem+json shapes, idempotency keys bound to their caller, rate limits, security headers (on a 500 too) |
 | Data validation (`-m data_validation`) | 14 | Every planted defect is caught: quarantine with reasons (secrets masked), deduplication, normalization; freshness of the data and of the sync |
 | Claude contract (`-m claude_contract`) | 63 | The adapter against a mock of the Messages API with sockets refused: request shape, strict schemas, every stop reason, error mapping, key hygiene |
-| PostgreSQL (`-m postgres`) | 2 | The workflow and a real two-thread race on one run (CI's PostgreSQL 17 service) |
+| PostgreSQL (`-m postgres`) | 3 | The workflow, a price-outage run stored on `jsonb`, and a real two-thread race on one run (CI's PostgreSQL 17 service) |
 | Frontend (Vitest) | 57 | Citations, the timeline reducer and its policy rows, money formatting, permissions, the trace layout, the auto-advance controller, one idempotency key per intent |
 | End to end (Playwright) | 6 | The critical workflow in a browser, the production refusal, a pricing outage, RBAC, the evals page, the audit chain; also run against the live deployment |
 | Evaluation | 30 cases | See below |
 
-385 backend tests, 93% line and branch coverage of the `countersign` package, no warnings. Summary and screenshots:
+404 backend tests, 94% line and branch coverage of the `countersign` package, no warnings. Summary and screenshots:
 [reports/tests/summary.md](reports/tests/summary.md).
 
 ## Evaluation
@@ -151,7 +151,9 @@ request passes all six graders. 30/30 comes with a Wilson interval, [88.6%, 100%
 hand-picked cases cannot show perfection; for a deterministic policy on cases picked by hand it has no sampling
 interpretation. The minimum significant discordance is 6 one-directional case flips (exact McNemar): fewer can
 never be significant. Power is the sharper limit: for two agents with per-case pass probabilities 0.8 and 0.6 on
-30 independent cases, the test reaches p < 0.05 about 28% of the time (computed exactly). A seeded simulator
+30 independent cases, failing independently of each other, the test reaches p < 0.05 about 28% of the time
+(computed exactly); agents whose failures overlap are easier to tell apart (57% if one only fails where the
+other also fails). A seeded simulator
 with a known slip rate calibrates the intervals: over 300 replicates the 95% interval covered the truth 97.7% of
 the time, so it missed in 2.3%. The published single draw missed (its slip rate came out 14% against 20%,
 z = -2.1): an uncommon draw of the kind a 95% interval allows, reported, not re-seeded.

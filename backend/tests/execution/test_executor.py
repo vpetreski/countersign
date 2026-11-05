@@ -20,7 +20,7 @@ from countersign.execution.sandbox import (
     idempotency_key,
 )
 from countersign.execution.tokens import CapabilityError
-from countersign.store.schema import RunRow
+from countersign.store.schema import ExecutionRow, RunRow
 from tests.conftest import FINAL, GROUND_TRUTH, WAITING, Harness
 
 SCEN = GROUND_TRUTH["scenarios"]
@@ -165,6 +165,53 @@ def test_an_expired_capability_finishes_and_undoes_but_starts_nothing_new(harnes
         sandbox.apply(step="resize", **base)
     undo = sandbox.apply(step="start", compensation=True, **base)
     assert not undo.replayed and current(harness, resize.ref).state is State.RUNNING
+
+
+def test_an_undo_must_undo_a_step_that_ran_and_a_step_must_belong_to_its_action(harness: Harness) -> None:
+    """FM-32: "compensation" is the caller's word, and the sandbox does not take it. An undo must be the inverse
+    of one of the action's own steps that really ran, and a forward step must be one of the action's steps, so
+    a mislabelled call cannot use the undo path to skip the expiry check and the guardrails."""
+    run_id, actions, token = approved(harness, DEFAULT)
+    stop = next(a for a in actions if a.operation == "stop_vm")
+    plan_hash = harness.run(run_id).state["plan"]["hash"]
+    sandbox = harness.runtime.sandbox
+    base: dict[str, Any] = {
+        "token": token,
+        "run_id": run_id,
+        "workspace_id": harness.ws,
+        "plan_hash": plan_hash,
+        "action": stop,
+    }
+    before = current(harness, stop.ref).state
+    with pytest.raises(CapabilityError, match="not a step of the approved action"):
+        sandbox.apply(step="start", **base)  # a stop_vm action has no start step
+    with pytest.raises(PreconditionFailedError, match="nothing to undo"):
+        sandbox.apply(step="start", compensation=True, **base)  # the stop never ran
+    harness.clock.advance(hours=2)  # past the capability's one-hour lifetime
+    with pytest.raises(GuardrailError, match="does not undo a step"):
+        sandbox.apply(step="stop", compensation=True, **base)  # a new effect labelled as an undo
+    assert current(harness, stop.ref).state is before
+    with harness.db.session() as s:
+        assert s.get(ExecutionRow, idempotency_key(run_id, plan_hash, stop.id, "stop")) is None
+
+
+def test_a_new_target_size_after_approval_is_stopped_by_the_digest_alone(harness: Harness) -> None:
+    """FM-14: the same development VM, a different size. The guardrail has nothing to object to, so only the
+    token's digest of the approved content stands between the edit and the sandbox."""
+    run_id, actions, _ = approved(harness, "Rightsize oversized VMs")
+    i, resize = next((i, a) for i, a in enumerate(actions) if a.operation == "resize_vm")
+    guardrail(current(harness, resize.ref))  # the resource itself may be changed
+    with harness.db.session() as s:
+        row = s.get(RunRow, run_id)
+        assert row is not None
+        state = copy.deepcopy(row.state)
+        state["plan"]["actions"][i]["target_sku"] = "m5.4xlarge"  # a bigger size than the one approved
+        row.state = state
+    row = harness.drive(run_id, FINAL)
+    outcome = next(o for o in row.state["outcomes"] if o["action_id"] == resize.id)
+    assert outcome["status"] == "failed" and "changed after approval" in outcome["detail"]
+    after = current(harness, resize.ref)
+    assert after.sku == resize.current_sku and after.state is State.RUNNING
 
 
 def test_the_sandbox_refuses_calls_without_a_valid_capability(harness: Harness) -> None:
