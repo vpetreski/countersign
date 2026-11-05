@@ -388,7 +388,8 @@ function Calibration({ report }: { report: EvalReport }) {
               </p>
               <p className="mt-1 text-sky-100/80">
                 Realized slip rate {formatRatio(r.rate)} ({r.slips ?? "—"} of {r.chances ?? "—"}) against a
-                configured {formatRatio(c.noise)}; z = {num(r.z)?.toFixed(2) ?? "—"}. {r.note}
+                configured {formatRatio(c.noise)}; z = {num(r.z)?.toFixed(2) ?? "—"}.
+                {r.note && <span className="mt-1 block text-sky-100/70">{r.note}</span>}
               </p>
             </div>
           )}
@@ -635,30 +636,36 @@ export function EvalReportView({ report, isSample }: { report: EvalReport; isSam
         )}
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+      <Card
+        title="Mutation testing"
+        subtitle={
+          <>
+            Deliberately broken agents; a grader that scores a mutant down catches it
+            {num(report.mutation?.score) !== null && <> · score {formatRatio(report.mutation?.score)}</>}
+            {num(report.mutation?.killed) !== null && (
+              <>
+                {" "}
+                · {report.mutation?.killed} of {report.mutation?.total} killed
+              </>
+            )}
+            {num(report.mutation?.reference_false_positives) !== null && (
+              <> · {report.mutation?.reference_false_positives} false positives on the reference</>
+            )}
+          </>
+        }
+      >
+        <MutationMatrix report={report} />
+      </Card>
+
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
         <Card
           title="pass^k"
           subtitle="Probability that all k trials of a case pass: the reliability a user feels"
         >
           <PassHatK report={report} />
         </Card>
-        <Card
-          title="Mutation testing"
-          subtitle={
-            <>
-              Deliberately broken agents; a grader that scores a mutant down catches it
-              {num(report.mutation?.score) !== null && <> · score {formatRatio(report.mutation?.score)}</>}
-              {num(report.mutation?.reference_false_positives) !== null && (
-                <> · {report.mutation?.reference_false_positives} false positives on the reference</>
-              )}
-            </>
-          }
-        >
-          <MutationMatrix report={report} />
-        </Card>
+        <Calibration report={report} />
       </div>
-
-      <Calibration report={report} />
 
       <Card title="Cases" subtitle="Every trial of every case, per criterion">
         <CasesTable report={report} />

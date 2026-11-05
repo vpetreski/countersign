@@ -238,7 +238,7 @@ export function Tooltip({
         id={id}
         className={cx(
           "pointer-events-none invisible absolute left-1/2 z-50 -translate-x-1/2 rounded-lg border border-zinc-700 bg-zinc-900/95 px-3 py-2 text-left text-xs font-normal leading-relaxed text-zinc-200 opacity-0 shadow-xl shadow-black/40 backdrop-blur transition-opacity duration-150 group-focus-within/tt:visible group-focus-within/tt:opacity-100 group-hover/tt:visible group-hover/tt:opacity-100",
-          wide ? "w-80" : "w-64",
+          wide ? "w-80 max-w-[calc(100vw-2rem)]" : "w-64 max-w-[calc(100vw-2rem)]",
           side === "top" ? "bottom-full mb-2" : "top-full mt-2",
         )}
       >
@@ -338,7 +338,7 @@ export function Callout({
       )}
     >
       {icon && <div className="mt-0.5 shrink-0">{icon}</div>}
-      <div className="min-w-0 flex-1">
+      <div className="min-w-0 flex-1 basis-64">
         <div className="text-sm font-semibold">{title}</div>
         {children && <div className="mt-1 text-sm opacity-90">{children}</div>}
       </div>

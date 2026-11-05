@@ -64,6 +64,8 @@
   }
 
   body {
+    /* Tooltips are absolutely positioned; never let one widen the page on a narrow screen. */
+    overflow-x: clip;
     font-feature-settings: "cv11", "ss01", "tnum";
     min-height: 100vh;
   }
@@ -72,6 +74,11 @@
   [data-testid="execution"],
   [data-testid="trace"] {
     scroll-margin-top: 8.5rem;
+  }
+
+  /* Fieldsets default to min-content width, which breaks narrow layouts. */
+  fieldset {
+    min-width: 0;
   }
 
   ::selection {

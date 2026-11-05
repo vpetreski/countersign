@@ -318,9 +318,9 @@ export function ChangeRequest({
                           />
                         </button>
                         <div className="min-w-0">
-                          <p className="flex items-center gap-1.5">
-                            <Mono className="text-[11px] text-zinc-500">{a.id}</Mono>
-                            <Mono className="text-zinc-100">{a.ref}</Mono>
+                          <p className="flex flex-wrap items-baseline gap-x-1.5">
+                            <Mono className="text-[11px] whitespace-nowrap text-zinc-500">{a.id}</Mono>
+                            <Mono className="whitespace-nowrap text-zinc-100">{a.ref}</Mono>
                           </p>
                           {a.name !== a.ref && <p className="truncate text-xs text-zinc-400">{a.name}</p>}
                           <div className="mt-1 flex flex-wrap gap-1">
@@ -357,7 +357,7 @@ export function ChangeRequest({
                       <button
                         type="button"
                         onClick={() => setOpen((o) => ({ ...o, [a.id]: !isOpen }))}
-                        className="inline-flex items-center gap-1 rounded-md border border-zinc-700/80 px-1.5 py-0.5 text-xs text-zinc-300 hover:border-zinc-600"
+                        className="inline-flex items-center gap-1 whitespace-nowrap rounded-md border border-zinc-700/80 px-1.5 py-0.5 text-xs text-zinc-300 hover:border-zinc-600"
                         aria-label={`${passed} of ${a.checks.length} policy checks passed for ${a.ref}; show checks`}
                       >
                         <ShieldCheck className="size-3 text-emerald-400" aria-hidden />

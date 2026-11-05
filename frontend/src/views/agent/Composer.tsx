@@ -79,7 +79,7 @@ export function Composer() {
             className="w-full resize-y rounded-lg border border-zinc-700/80 bg-zinc-950/60 px-3.5 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-emerald-500/60 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-emerald-500/30"
             data-testid="request-input"
           />
-          <fieldset className="mt-2 flex flex-wrap gap-1.5">
+          <fieldset className="mt-2 flex min-w-0 flex-wrap gap-1.5">
             <legend className="sr-only">Example requests</legend>
             {PRESETS.map((p) => (
               <button
@@ -100,7 +100,7 @@ export function Composer() {
           </fieldset>
         </div>
 
-        <fieldset>
+        <fieldset className="min-w-0">
           <legend className="mb-2 flex items-center gap-1.5 text-xs font-medium text-zinc-400">
             <FlaskConical className="size-3.5" aria-hidden />
             Fault injection

@@ -228,7 +228,7 @@ export function RunPanel({ runId }: { runId: string }) {
     <div className="space-y-6" id="run-panel" data-testid="run-panel" data-run={run.id}>
       <Card bodyClassName="space-y-5 px-5 py-5">
         <div className="flex flex-wrap items-start gap-4">
-          <div className="min-w-0 flex-1">
+          <div className="min-w-0 flex-1 basis-72">
             <div className="flex flex-wrap items-center gap-2">
               <Badge tone={TONE_TO_BADGE[statusTone(run.status)]} className="text-xs">
                 {statusLabel(run.status)}
