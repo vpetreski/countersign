@@ -569,11 +569,11 @@ def test_http_errors_map_to_model_errors(
 @pytest.mark.parametrize(
     ("effect", "kind", "detail"),
     [
-        (httpx2.ReadTimeout("read timed out"), "timeout", "no response from the Anthropic API within 90 s"),
+        (httpx2.ReadTimeout("read timed out"), "timeout", "no response from the Anthropic API within 300 s"),
         (
             httpx2.ConnectTimeout("connect timed out"),
             "timeout",
-            "no response from the Anthropic API within 90 s",
+            "no response from the Anthropic API within 300 s",
         ),
         (
             httpx2.ConnectError("connection refused"),

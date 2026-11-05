@@ -19,7 +19,8 @@ from sqlalchemy.orm import Session
 from countersign.agent.state import PlanAction
 from countersign.data.estate import ESTATE
 from countersign.domain.analysis import Operation
-from countersign.domain.resources import Provider, Resource, State
+from countersign.domain.resources import Environment, Provider, Resource, State
+from countersign.domain.rules import protected_by
 from countersign.execution import tokens
 from countersign.store.db import Database
 from countersign.store.schema import ExecutionRow, ResourceOverrideRow
@@ -65,6 +66,11 @@ class PreconditionFailedError(RuntimeError):
     """Current state is not what the step expects (someone else changed the resource). Not retryable."""
 
 
+class GuardrailError(PreconditionFailedError):
+    """The sandbox's own deny rules refused the effect, whatever the token says: like a cloud's deny policies,
+    they hold even if every check above them was skipped or wrong. Not retryable."""
+
+
 @dataclass(frozen=True)
 class Effect:
     step: str
@@ -73,8 +79,25 @@ class Effect:
     result: dict[str, Any]
 
 
-def idempotency_key(run_id: str, plan_hash: str, action_id: str, step: str) -> str:
-    return hashlib.sha256(f"{run_id}|{plan_hash}|{action_id}|{step}".encode()).hexdigest()
+def idempotency_key(run_id: str, plan_hash: str, action_id: str, step: str, *, undo: bool = False) -> str:
+    """The key of one effect. A compensation has its own key ("undo:start"), so undoing a stop never collides
+    with the forward start step of a resize."""
+    name = f"undo:{step}" if undo else step
+    return hashlib.sha256(f"{run_id}|{plan_hash}|{action_id}|{name}".encode()).hexdigest()
+
+
+def guardrail(r: Resource) -> None:
+    """Deny rules on the resource as it is now, checked before every forward effect: no production, no
+    resource without an environment tag, nothing protected by a tag, nothing whose metadata awaits review."""
+    if r.environment is Environment.PROD:
+        raise GuardrailError(f"refusing to change {r.ref}: it is production")
+    if r.environment is Environment.UNKNOWN:
+        raise GuardrailError(f"refusing to change {r.ref}: it has no environment tag")
+    tag = protected_by(r.tags)
+    if tag:
+        raise GuardrailError(f"refusing to change {r.ref}: protected by {tag}")
+    if "suspicious_content" in r.flags:
+        raise GuardrailError(f"refusing to change {r.ref}: its metadata awaits a human review")
 
 
 class SandboxCloud:
@@ -93,51 +116,56 @@ class SandboxCloud:
         action: PlanAction,
         step: str,
         throttle: bool = False,
+        compensation: bool = False,
     ) -> Effect:
+        """Perform one step of an approved action, at most once. The token must name this action with this
+        content; a new effect also needs an unexpired token and passes the guardrails, while a replay of a
+        step already done, or a compensation that undoes one, only needs the token to be genuine."""
         now = self._clock()
-        tokens.verify(
+        claims = tokens.verify(
             self._secret,
             token,
             run_id=run_id,
             workspace_id=workspace_id,
             plan_hash=plan_hash,
             action_id=action.id,
+            action_digest=tokens.action_digest(action.model_dump(mode="json")),
             now=int(now.timestamp()),
+            allow_expired=True,
         )
-        key = idempotency_key(run_id, plan_hash, action.id, step)
+        key = idempotency_key(run_id, plan_hash, action.id, step, undo=compensation)
         with self._db.session() as s:
             done = s.get(ExecutionRow, key)
-            if done is not None and done.status == "done":
+            if done is not None:
                 return Effect(step, True, f"replayed: {done.result.get('detail', '')}", dict(done.result))
+            if claims.exp < int(now.timestamp()) and not compensation:
+                raise tokens.CapabilityError(
+                    "capability token expired: the countersignatures no longer authorise new effects; "
+                    "start a new run"
+                )
             if throttle:
                 raise ThrottledError(f"{_api(action, step)}: RequestLimitExceeded (simulated throttling)")
             current = self._current(s, workspace_id, action)
+            if not compensation:
+                guardrail(current)
             detail, update, extra = self._effect(s, run_id, plan_hash, action, step, current)
             if update is not None:
                 self._write_override(s, workspace_id, run_id, current, now, **update)
             result = {"detail": detail, "api": _api(action, step), **extra}
-            if done is None:
-                s.add(
-                    ExecutionRow(
-                        idempotency_key=key,
-                        workspace_id=workspace_id,
-                        run_id=run_id,
-                        operation=f"{action.operation}:{step}",
-                        resource_id=action.resource_id,
-                        status="done",
-                        attempts=1,
-                        result=result,
-                        created_at=now,
-                        updated_at=now,
-                    )
+            s.add(
+                ExecutionRow(
+                    idempotency_key=key,
+                    workspace_id=workspace_id,
+                    run_id=run_id,
+                    operation=f"{action.operation}:{'undo:' if compensation else ''}{step}",
+                    resource_id=action.resource_id,
+                    status="done",
+                    attempts=1,
+                    result=result,
+                    created_at=now,
+                    updated_at=now,
                 )
-            else:
-                done.status, done.attempts, done.result, done.updated_at = (
-                    "done",
-                    done.attempts + 1,
-                    result,
-                    now,
-                )
+            )
         return Effect(step, False, detail, result)
 
     def current(self, workspace_id: str, action: PlanAction) -> Resource:

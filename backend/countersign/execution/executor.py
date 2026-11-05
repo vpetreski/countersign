@@ -3,7 +3,8 @@
 Throttling is retried with exponential backoff and full jitter. A step whose precondition fails stops the
 action, and the steps it already completed are compensated in reverse order (a resize that stopped a VM
 starts it again). Independent actions are never rolled back because a sibling failed: each action is its own
-saga, irreversible steps run last, and a run with some failed actions ends completed_with_failures.
+saga, the runtime orders actions so that the harder an effect is to undo the later it runs, and a run with some
+failed actions ends completed_with_failures. A compensation has its own idempotency key ("undo:<step>").
 """
 
 from __future__ import annotations
@@ -147,7 +148,7 @@ class Executor:
             inverse = COMPENSATION.get(step)
             if inverse is None:
                 continue
-            key = idempotency_key(run_id, plan_hash, action.id, inverse)
+            key = idempotency_key(run_id, plan_hash, action.id, inverse, undo=True)
             try:
                 effect = self._sandbox.apply(
                     token=token,
@@ -156,6 +157,7 @@ class Executor:
                     plan_hash=plan_hash,
                     action=action,
                     step=inverse,
+                    compensation=True,
                 )
             except (PreconditionFailedError, ThrottledError, CapabilityError) as exc:
                 steps.append(

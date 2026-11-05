@@ -153,7 +153,9 @@ class PlanAction(BaseModel):
     current_sku: str
     target_sku: str | None
     monthly_cost: float | None
-    est_monthly_savings: float
+    est_monthly_savings: float | None = Field(
+        description="Computed by code; None when it cannot be estimated (no price for the target), never $0.00"
+    )
     price_source: str | None
     risk: Risk
     reversible: bool
@@ -172,6 +174,9 @@ class ChangePlan(BaseModel):
     actions: list[PlanAction]
     not_proposed: list[NotProposed] = Field(default_factory=list)
     total_monthly_savings: float
+    savings_complete: bool = Field(
+        default=True, description="False when an action's saving could not be estimated: the total is a floor"
+    )
     risk: Risk
     approvals_required: int
     revision: int
@@ -270,6 +275,10 @@ class RunState(BaseModel):
     degraded: list[str] = Field(default_factory=list)
     error: str | None = None
     seed: int = 0
+    waiting_since: dt.datetime | None = Field(
+        default=None,
+        description="When the run began waiting for a person (entering a wait, or a person's last decision)",
+    )
 
     def next_evidence_id(self) -> str:
         return f"ev-{len(self.evidence) + 1:02d}"

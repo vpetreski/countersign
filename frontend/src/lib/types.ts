@@ -130,7 +130,8 @@ export interface PlanAction {
   current_sku: string;
   target_sku: string | null;
   monthly_cost: number | null;
-  est_monthly_savings: number;
+  /** null when no price exists for the change (for example a resize target with no price list). */
+  est_monthly_savings: number | null;
   price_source: string | null;
   risk: Risk;
   reversible: boolean;
@@ -157,6 +158,8 @@ export interface Plan {
   caveats: string[];
   not_proposed?: NotProposed[];
   total_monthly_savings: number;
+  /** false when some action's saving could not be estimated: the total is then a lower bound. */
+  savings_complete?: boolean;
   risk: Risk;
   approvals_required: number;
   approvals_received: number;

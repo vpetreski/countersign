@@ -82,22 +82,30 @@ stateDiagram-v2
 - **One unit of work per tick.** `POST /api/runs/{id}/advance` does one model turn, or one action's execution,
   or the verification. The state, its events, spans and audit entries are saved in one transaction.
 - **A lease before any model call.** A compare-and-set on `lease_owner` and `lease_until` admits one worker per
-  run; a second gets 409. A worker that dies holding a lease loses it after 120 s.
-- **Effectively-once effects.** Every step's idempotency key is `sha256(run | plan hash | action | step)`. The
+  run; a second gets 409. The lease lasts 120 s offline and, with Claude, the model timeout plus 60 s; it is
+  renewed before each model retry, and a tick whose lease another worker has taken stops before paying for
+  another call. A worker that dies holding a lease loses it when the lease runs out.
+- **Effectively-once effects.** Every step's idempotency key is `sha256(run | plan hash | action | step)`; a
+  compensation has its own (`undo:<step>`), so an undo never collides with the forward step it reverses. The
   sandbox commits its write separately from the run state, so a crash between the two replays the step instead
   of repeating it.
 - **The policy, three times.** At submission, against the estate the agent read; at decision, when the last
   required countersign arrives and before the capability token is minted, against the workspace's estate as
   it is then (another run or a sync may have changed a resource): an action that no longer passes is left out
   of the token and marked `skipped` with the rule, a verdict that now needs more approvers waits for them, and
-  a plan with nothing left fails with nothing executed; at the sandbox, through the token, which names only the
-  actions that passed, and the precondition check before every step.
+  a plan with nothing left fails with nothing executed; at the sandbox, through the token, which binds each
+  action that passed to a SHA-256 digest of its content, the sandbox's own guardrails (no production, unknown
+  environment, protection tag or flagged metadata, whatever the token says) and the precondition check before
+  every step.
 - **Partial failure.** Compensation happens only inside an action's own chain, in reverse (a resize that fails
   after the VM was stopped starts the VM again); independent actions are not rolled back; the harder an effect is
   to undo, the later it runs (stops and resizes, then disk deletions, recoverable from their snapshots, then IP
   releases, not recoverable); a run with some failed actions ends `completed_with_failures`.
 - **Waiting has a limit; cancelling has an end.** A run that has waited 24 hours for a person expires on its next
-  touch, an advance, an answer or a countersign, so a late answer or countersign is refused (FM-29). Cancel is
+  touch, an advance, an answer or a countersign, so a late answer or countersign is refused (FM-29). The 24
+  hours count from when the run began to wait for a person (`waiting_since`): polling does not restart them, a
+  countersign does. The capability lives one hour: once it expires, the executor may still replay or undo what
+  it named, never start a new effect (FM-32). Cancel is
   allowed exactly where the transition table allows it; once a run is verifying, every approved effect has
   happened and there is nothing left to cancel (FM-30).
 - **Ticks are driven, not autonomous.** The UI and the tests advance runs. Production would put the same tick
@@ -109,8 +117,8 @@ The model sees seven read tools: `get_estate_summary`, `find_waste`, `get_resour
 `get_cost_history`, `quote_price`, `check_policy`, and two control tools the runtime handles itself:
 `submit_change_plan` and `ask_operator`. Every read tool returns an evidence id; an action must cite evidence
 this run retrieved about its own resource (P-004). Only `ref`, `operation`, `target_sku`, `rationale` and
-`evidence_ids` come from the model; every number in a plan (costs, savings, risk, steps) is computed by code
-from the analyzer's finding. A change request also lists what the agent reviewed and left out, with reasons, so
+`evidence_ids` come from the model; every structured figure in a plan (costs, savings, risk, steps) is computed
+by code from the analyzer's finding, and a saving with no price is `null` ("not estimable"), never $0. A change request also lists what the agent reviewed and left out, with reasons, so
 an approver sees the exclusions next to the proposals.
 
 `ChatModel` speaks the Anthropic Messages format (text and `tool_use` blocks, `stop_reason`, usage). Two

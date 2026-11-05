@@ -190,6 +190,7 @@ export function ChangeRequest({
         <div className="flex flex-wrap items-center gap-2">
           <Badge tone={riskTone(plan.risk)}>risk {plan.risk}</Badge>
           <Badge tone="accent" className="text-sm">
+            {plan.savings_complete === false ? "at least " : ""}
             {formatMonthly(plan.total_monthly_savings)} estimated
           </Badge>
         </div>
@@ -338,13 +339,21 @@ export function ChangeRequest({
                       </p>
                     </td>
                     <td className={cx(td, "text-right font-mono text-emerald-300 tabular-nums")}>
-                      {formatMonthly(a.est_monthly_savings)}
+                      {a.est_monthly_savings === null ? (
+                        <span className="text-amber-300">not estimable</span>
+                      ) : (
+                        formatMonthly(a.est_monthly_savings)
+                      )}
                       {a.price_source && <p className="text-[11px] text-zinc-500">{a.price_source}</p>}
                     </td>
                     <td className={td}>
                       <div className="flex flex-col items-start gap-1">
                         <Badge tone={riskTone(a.risk)}>{a.risk}</Badge>
-                        {a.reversible ? (
+                        {a.operation === "delete_disk" ? (
+                          <Badge tone="warn" icon={<Undo2 className="size-3" aria-hidden />}>
+                            recoverable from snapshot
+                          </Badge>
+                        ) : a.reversible ? (
                           <Badge icon={<Undo2 className="size-3" aria-hidden />}>reversible</Badge>
                         ) : (
                           <Badge tone="warn" icon={<Lock className="size-3" aria-hidden />}>
