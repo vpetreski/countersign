@@ -105,9 +105,9 @@ pytest with the coverage floor, the published-report check), `postgres` (the thr
 PostgreSQL 17 service), `frontend` (Biome, `tsc -b`, Vitest, the production build), `e2e` (Playwright against a
 fresh backend and the built UI, one retry, screenshots and traces kept as artifacts) and `evals` (the full
 evaluation with its gate, then an exact comparison with the published report). The nightly workflow adds the
-deep evaluation (10 trials, 1,000 coverage replicates), authenticated stateful Schemathesis fuzzing, the live
-contracts (the Azure price API and the deployment), and the Claude job: contract tests always, the live
-evaluation only when the repository has a key.
+deep evaluation (10 trials, 20 calibration trials per case, 1,000 coverage replicates), authenticated stateful
+Schemathesis fuzzing, the live contracts (the Azure price API and the deployment), and the Claude job: contract
+tests always, the live evaluation only when the repository has a key.
 
 ## What is not tested, and why
 

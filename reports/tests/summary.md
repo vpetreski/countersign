@@ -24,7 +24,7 @@ PostgreSQL 17.
 | Browser, `live` project against https://countersign-agent.vercel.app | local | **6 passed** (46 s), on Neon PostgreSQL at schema 0002 |
 | Live API: the critical workflow | local, against production | 8 actions, $682.00 a month, two countersigns, the policy rechecked at decision, completed, $682.00 realized, audit chain valid (16 entries; run `run_f9ec20e1a29011b7`) |
 | Evaluation with its gate | CI, same run | 30 cases x 3 trials, every criterion 30/30, mutation score 6/6, 0 false positives, the 30 cases reproduce the published report exactly (fingerprint `2553533bdecf50ad`) |
-| Deep evaluation | Nightly [run 41995691888](https://github.com/vpetreski/countersign/actions/runs/41995691888) on `8250ef1` | 30 cases x 10 trials, every criterion 30/30, mutation score 6/6, 0 false positives, interval coverage 99.5% over 1,000 replicates |
+| Deep evaluation | Nightly [run 41995691888](https://github.com/vpetreski/countersign/actions/runs/41995691888) on `8250ef1` | 30 cases x 10 trials, every criterion 30/30, mutation score 6/6, 0 false positives, interval coverage 99.5% over 1,000 replicates of 20 calibration trials per case |
 | API fuzzing (Schemathesis, stateful) | Nightly, same run | 3,119 cases, 206 stateful scenarios, API links covered 8 of 21 (13 of them inferred by Schemathesis), no 5xx |
 | Claude contract tests | Nightly, same run | 63 passed; the live Claude evaluation skipped (no key, by design) |
 | Live contracts | Nightly, same run | 18/18 Azure prices live, trusted and within 25% of the snapshot; the deployment ready, keyless, in production mode, build `86da46b` |
