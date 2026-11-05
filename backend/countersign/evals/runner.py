@@ -271,7 +271,9 @@ def mutation_analysis(reference: VariantResult, mutants: dict[str, VariantResult
                 c: round(stats.mean([cr.passes(c) / v.trials for cr in v.cases]), 6) for c in CRITERIA
             },
             "discordant_cases": discordant,
-            "p_value": {c: round(stats.mcnemar_exact(discordant[c], 0), 8) for c in CRITERIA},
+            "p_value": {
+                c: float(f"{stats.mcnemar_exact(discordant[c], 0):.3g}") for c in CRITERIA
+            },  # 3 significant digits
             "significant": {c: stats.mcnemar_exact(discordant[c], 0) < 0.05 for c in CRITERIA},
             "example": examples,
         }
