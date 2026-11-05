@@ -163,6 +163,7 @@ Method, grammar and limits: [docs/evaluation.md](docs/evaluation.md). Report: [r
 | | evals | the full evaluation with its gate (no false positive, every mutant caught, no regression), then an exact comparison with the published report |
 | Nightly | deep evals | 10 trials, 20 calibration trials, 1000 coverage replicates |
 | | API fuzzing | authenticated, stateful Schemathesis that follows OpenAPI links into real runs: no input may produce a 5xx |
+| | Live contracts | every Azure snapshot price still comes back live, trusted and within 25%; the deployed app is ready, keyless and current |
 | | Claude | contract tests always; the live evaluation only if the repository has a key |
 
 Deployment: one Vercel project with two services (`web`, `api`) from [vercel.json](vercel.json), Neon Postgres,

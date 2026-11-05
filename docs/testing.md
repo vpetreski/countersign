@@ -20,6 +20,7 @@ Counts below are for `main`; exact results with their commit are in
 | Frontend | Vitest | 53 in 9 files | `frontend/src/**/*.test.ts(x)` | Citations and evidence chips, the not-proposed list, the timeline reducer, money formatting, persona permissions, the trace layout, the auto-advance controller, the evals view |
 | Browser | Playwright | 6 | `frontend/e2e/countersign.spec.ts` | The critical workflow, the production refusal, a pricing outage, RBAC, the evals page and the audit chain, in Chromium; the `local` project against a fresh seeded backend, the `live` project against a deployment |
 | Evaluation | `countersign-eval` | 30 cases | `backend/evals/dataset/` | The agent and the evaluator: see [evaluation.md](evaluation.md) |
+| Live contracts | `scripts/check_live_prices.py` (nightly) | 18 prices + the deployment | `.github/workflows/nightly.yml` | Every Azure price the snapshot covers comes back from the public Retail Prices API through the real fetcher, trusted and within 25% of the snapshot; the deployed app is ready, keyless and running the latest deployable commit |
 | Fuzzing | Schemathesis (nightly) | about 3,200 cases | `.github/workflows/nightly.yml` | No input the OpenAPI document allows makes the API answer 5xx (an operator's token, the cron route excluded); OpenAPI links let its stateful phase follow created runs and findings into every operation on them |
 
 The backend's 325 tests (the six pytest layers) cover 93% of the `countersign` package, lines and branches
@@ -101,8 +102,9 @@ pytest with the coverage floor, the published-report check), `postgres` (the two
 PostgreSQL 17 service), `frontend` (Biome, `tsc -b`, Vitest, the production build), `e2e` (Playwright against a
 fresh backend and the built UI, one retry, screenshots and traces kept as artifacts) and `evals` (the full
 evaluation with its gate, then an exact comparison with the published report). The nightly workflow adds the
-deep evaluation (10 trials, 1,000 coverage replicates), authenticated stateful Schemathesis fuzzing, and the Claude job:
-contract tests always, the live evaluation only when the repository has a key.
+deep evaluation (10 trials, 1,000 coverage replicates), authenticated stateful Schemathesis fuzzing, the live
+contracts (the Azure price API and the deployment), and the Claude job: contract tests always, the live
+evaluation only when the repository has a key.
 
 ## What is not tested, and why
 

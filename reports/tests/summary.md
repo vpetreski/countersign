@@ -1,7 +1,7 @@
 # Test results
 
-Results for commit `d29b2a7` (the last change to the code; later commits change documents only), recorded
-5 November 2026. Local runs: macOS 27 on arm64, Python 3.14.10 with uv 0.13.7, Node 26.13.0 with pnpm 10.34.9,
+Results for commit `d29b2a7`, the last change to the application and its tests, recorded 5 November 2026.
+`5a5bfd2` adds the nightly live-contract job (its first run is below); later commits change documents only. Local runs: macOS 27 on arm64, Python 3.14.10 with uv 0.13.7, Node 26.13.0 with pnpm 10.34.9,
 Playwright 1.64.1 (Chromium), PostgreSQL 16.15. CI: GitHub's Ubuntu runners, Node 24, PostgreSQL 17.
 
 ## Summary
@@ -25,6 +25,7 @@ Playwright 1.64.1 (Chromium), PostgreSQL 16.15. CI: GitHub's Ubuntu runners, Nod
 | Deep evaluation | Nightly [run 41976086210](https://github.com/vpetreski/countersign/actions/runs/41976086210) | 30 cases x 10 trials, every criterion 30/30, mutation score 6/6, interval coverage 99.5% over 1,000 replicates |
 | API fuzzing (Schemathesis, stateful) | Nightly, same run | 3,139 cases, 202 stateful scenarios, 8 of 8 OpenAPI links followed, no 5xx |
 | Claude contract tests | Nightly, same run | 63 passed; the live Claude evaluation skipped (no key, by design) |
+| Live contracts | Nightly [run 41976889601](https://github.com/vpetreski/countersign/actions/runs/41976889601) on `5a5bfd2` | 18/18 Azure prices live, trusted and within 25% of the snapshot; the deployment ready, keyless, build `5a5bfd2`; that run's fuzzing (3,189 cases) and deep evaluation also green |
 
 The evaluation report itself, with intervals, the mutation matrix and calibration:
 [reports/evals/latest.md](../evals/latest.md).
