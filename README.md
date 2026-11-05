@@ -122,7 +122,7 @@ including what is faked and what is not tested: [docs/testing.md](docs/testing.m
 | Data validation (`-m data_validation`) | 12 | Every planted defect is caught: quarantine with reasons, deduplication, normalization, freshness |
 | Claude contract (`-m claude_contract`) | 63 | The adapter against a mock of the Messages API with sockets refused: request shape, strict schemas, every stop reason, error mapping, key hygiene |
 | PostgreSQL (`-m postgres`) | 2 | The workflow and a real two-thread race on one run (CI's PostgreSQL 17 service) |
-| Frontend (Vitest) | 53 | Citations, the timeline reducer, money formatting, permissions, the trace layout, the auto-advance controller |
+| Frontend (Vitest) | 55 | Citations, the timeline reducer and its policy rows, money formatting, permissions, the trace layout, the auto-advance controller |
 | End to end (Playwright) | 6 | The critical workflow in a browser, the production refusal, a pricing outage, RBAC, the evals page, the audit chain; also run against the live deployment |
 | Evaluation | 30 cases | See below |
 
