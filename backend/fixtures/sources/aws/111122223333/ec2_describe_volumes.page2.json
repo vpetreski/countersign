@@ -1,0 +1,252 @@
+{
+ "Volumes": [
+  {
+   "VolumeId": "vol-0f56164c4246e957b8",
+   "Size": 500,
+   "VolumeType": "gp3",
+   "State": "in-use",
+   "CreateTime": "2025-09-01T10:54:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 3000,
+   "Attachments": [
+    {
+     "InstanceId": "i-0fa3526284be7f7356",
+     "State": "attached",
+     "AttachTime": "2025-09-01T10:54:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-0f56164c4246e957b8"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "ml-serving-prod-21-data"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "ml-research"
+    },
+    {
+     "Key": "owner",
+     "Value": "ml-research@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1040"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-06bd28345d20c3442b",
+   "Size": 100,
+   "VolumeType": "gp3",
+   "State": "in-use",
+   "CreateTime": "2025-03-31T10:19:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 3000,
+   "Attachments": [
+    {
+     "InstanceId": "i-05b8b7c64c9c9955cd",
+     "State": "attached",
+     "AttachTime": "2025-03-31T10:19:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-06bd28345d20c3442b"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "storefront-web-prod-23-data"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "web-storefront"
+    },
+    {
+     "Key": "owner",
+     "Value": "storefront@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1050"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-0c7c5af6ac41cc5553",
+   "Size": 500,
+   "VolumeType": "gp3",
+   "State": "in-use",
+   "CreateTime": "2026-04-01T10:13:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 3000,
+   "Attachments": [
+    {
+     "InstanceId": "i-09b069856ef612e174",
+     "State": "attached",
+     "AttachTime": "2026-04-01T10:13:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-0c7c5af6ac41cc5553"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "storefront-ssr-prod-24-data"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "web-storefront"
+    },
+    {
+     "Key": "owner",
+     "Value": "storefront@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1050"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-02de44482ffa16a0a3",
+   "Size": 200,
+   "VolumeType": "gp3",
+   "State": "in-use",
+   "CreateTime": "2025-05-27T10:38:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 3000,
+   "Attachments": [
+    {
+     "InstanceId": "i-01d621843817e349c6",
+     "State": "attached",
+     "AttachTime": "2025-05-27T10:38:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-02de44482ffa16a0a3"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "tools-ci-runner-prod-25-data"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "internal-tools"
+    },
+    {
+     "Key": "owner",
+     "Value": "it-tools@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1060"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-0eca73551e44713e75",
+   "Size": 100,
+   "VolumeType": "gp2",
+   "State": "in-use",
+   "CreateTime": "2025-04-12T10:26:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 300,
+   "Attachments": [
+    {
+     "InstanceId": "i-03e5f7abfb1bd9710d",
+     "State": "attached",
+     "AttachTime": "2025-04-12T10:26:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-0eca73551e44713e75"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "tools-wiki-prod-28-data"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "internal-tools"
+    },
+    {
+     "Key": "owner",
+     "Value": "it-tools@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1060"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-0de0daaec74a38ccfd",
+   "Size": 50,
+   "VolumeType": "gp3",
+   "State": "in-use",
+   "CreateTime": "2026-01-05T10:25:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 3000,
+   "Attachments": [
+    {
+     "InstanceId": "i-0c4f9e2a7b1d30004",
+     "State": "attached",
+     "AttachTime": "2026-01-05T10:25:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-0de0daaec74a38ccfd"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "i-0c4f9e2a7b1d30004-root"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  }
+ ]
+}

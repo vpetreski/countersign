@@ -1,0 +1,442 @@
+{
+ "Reservations": [
+  {
+   "ReservationId": "r-06fb4d0e2cd1791f0c",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0172f4d47a8a9d5ace",
+     "InstanceType": "m6i.large",
+     "LaunchTime": "2026-06-22T10:48:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1d",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.8.93.194",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-0d1ebd704764926d18",
+        "Status": "attached",
+        "AttachTime": "2026-06-22T10:48:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "airflow-worker-prod-15"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "data-platform"
+      },
+      {
+       "Key": "owner",
+       "Value": "data-platform@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1030"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-0a3ad880b6b2e2b8f7",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0aec5473349c871ebb",
+     "InstanceType": "m5.xlarge",
+     "LaunchTime": "2025-07-11T10:42:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1d",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.6.47.109",
+     "BlockDeviceMappings": [],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "spark-driver-prod-17"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "data-platform"
+      },
+      {
+       "Key": "owner",
+       "Value": "data-platform@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1030"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-0d84c2dca8017ac769",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-08f112d893099a133f",
+     "InstanceType": "m5.xlarge",
+     "LaunchTime": "2026-02-01T10:54:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1b",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.23.157.144",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-0169c77c98d2b6e959",
+        "Status": "attached",
+        "AttachTime": "2026-02-01T10:54:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "ml-trainer-prod-18"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "ml-research"
+      },
+      {
+       "Key": "owner",
+       "Value": "ml-research@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1040"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-0d22e6623e436ca943",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0fa3526284be7f7356",
+     "InstanceType": "c6i.xlarge",
+     "LaunchTime": "2025-09-01T10:54:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1a",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.22.1.171",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-0f56164c4246e957b8",
+        "Status": "attached",
+        "AttachTime": "2025-09-01T10:54:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "ml-serving-prod-21"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "ml-research"
+      },
+      {
+       "Key": "owner",
+       "Value": "ml-research@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1040"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-04d5be47397d22bae6",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-05b8b7c64c9c9955cd",
+     "InstanceType": "c6i.xlarge",
+     "LaunchTime": "2025-03-31T10:19:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1b",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.6.135.11",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-06bd28345d20c3442b",
+        "Status": "attached",
+        "AttachTime": "2025-03-31T10:19:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "storefront-web-prod-23"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "web-storefront"
+      },
+      {
+       "Key": "owner",
+       "Value": "storefront@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1050"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-0e5b87caed9ffb9e54",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-09b069856ef612e174",
+     "InstanceType": "m6i.xlarge",
+     "LaunchTime": "2026-04-01T10:13:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1c",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.2.169.85",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-0c7c5af6ac41cc5553",
+        "Status": "attached",
+        "AttachTime": "2026-04-01T10:13:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "storefront-ssr-prod-24"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "web-storefront"
+      },
+      {
+       "Key": "owner",
+       "Value": "storefront@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1050"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-06e5341cf10c11ea91",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-01d621843817e349c6",
+     "InstanceType": "t3.medium",
+     "LaunchTime": "2025-05-27T10:38:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1a",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.5.161.59",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-02de44482ffa16a0a3",
+        "Status": "attached",
+        "AttachTime": "2025-05-27T10:38:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "tools-ci-runner-prod-25"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "internal-tools"
+      },
+      {
+       "Key": "owner",
+       "Value": "it-tools@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1060"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-04f2703f2be3c75369",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-03e5f7abfb1bd9710d",
+     "InstanceType": "t3.medium",
+     "LaunchTime": "2025-04-12T10:26:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1c",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.31.98.219",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-0eca73551e44713e75",
+        "Status": "attached",
+        "AttachTime": "2025-04-12T10:26:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "tools-wiki-prod-28"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "internal-tools"
+      },
+      {
+       "Key": "owner",
+       "Value": "it-tools@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1060"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

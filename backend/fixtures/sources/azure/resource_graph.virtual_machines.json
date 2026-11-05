@@ -1,0 +1,1175 @@
+{
+ "totalRecords": 25,
+ "count": 25,
+ "data": [
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-etl/providers/Microsoft.Compute/virtualMachines/vm-dev-etl-01",
+   "name": "vm-dev-etl-01",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-dev-etl",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Dev",
+    "Team": "data-platform",
+    "Owner": "data-platform@example.com",
+    "CostCenter": "CC-1030"
+   },
+   "properties": {
+    "vmId": "8dc9c6b4-2e4d-c43b-8aee-1b540f7576e2",
+    "hardwareProfile": {
+     "vmSize": "Standard_D4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-dev-etl-01-os",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-etl/providers/Microsoft.Compute/disks/disk-dev-etl-01-os"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2026-06-04T10:58:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml/providers/Microsoft.Compute/virtualMachines/vm-dev-jupyter-02",
+   "name": "vm-dev-jupyter-02",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "westeurope",
+   "resourceGroup": "rg-dev-ml",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Development",
+    "Team": "ml-research",
+    "Owner": "ml-research@example.com",
+    "CostCenter": "CC-1040"
+   },
+   "properties": {
+    "vmId": "6534c324-0d74-b74a-3aa2-5e62fbc3a040",
+    "hardwareProfile": {
+     "vmSize": "Standard_E4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-dev-jupyter-02-os",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml/providers/Microsoft.Compute/disks/disk-dev-jupyter-02-os"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2026-08-18T10:39:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web/providers/Microsoft.Compute/virtualMachines/vm-prod-api-07",
+   "name": "vm-prod-api-07",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-web",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Production",
+    "Team": "web-storefront",
+    "Owner": "storefront@example.com",
+    "CostCenter": "CC-1050"
+   },
+   "properties": {
+    "vmId": "6ac2d35c-20e3-f2d2-9236-c437e367b99f",
+    "hardwareProfile": {
+     "vmSize": "Standard_D4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-prod-api-07-os",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web/providers/Microsoft.Compute/disks/disk-prod-api-07-os"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2025-09-27T10:00:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stg-search/providers/Microsoft.Compute/virtualMachines/vm-stg-search-03",
+   "name": "vm-stg-search-03",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-stg-search",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "environment": "Staging",
+    "Team": "search",
+    "Owner": "search-team@example.com",
+    "CostCenter": "CC-1020"
+   },
+   "properties": {
+    "vmId": "bd348b70-0619-45fa-5003-5303e0132222",
+    "hardwareProfile": {
+     "vmSize": "Standard_D4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-stg-search-03-os",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stg-search/providers/Microsoft.Compute/disks/disk-stg-search-03-os"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2026-05-05T10:22:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-tools/providers/Microsoft.Compute/virtualMachines/vm-dev-build-agent-09",
+   "name": "vm-dev-build-agent-09",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-dev-tools",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Dev",
+    "Team": "internal-tools",
+    "Owner": "it-tools@example.com",
+    "CostCenter": "CC-1060"
+   },
+   "properties": {
+    "vmId": "1c4c1cb6-758e-52b6-e69a-8d6827b83a23",
+    "hardwareProfile": {
+     "vmSize": "Standard_D2s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-dev-build-agent-09-os",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-tools/providers/Microsoft.Compute/disks/disk-dev-build-agent-09-os"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2026-03-26T10:01:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/deallocated",
+       "displayStatus": "VM deallocated"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-payments/providers/Microsoft.Compute/virtualMachines/vm-prod-pay-gateway-31",
+   "name": "vm-prod-pay-gateway-31",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-payments",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Production",
+    "Team": "payments",
+    "Owner": "payments-oncall@example.com",
+    "CostCenter": "CC-1010"
+   },
+   "properties": {
+    "vmId": "e86f7a19-4a01-64ed-015e-fa37aa886f99",
+    "hardwareProfile": {
+     "vmSize": "Standard_E4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-prod-pay-gateway-31-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-payments/providers/Microsoft.Compute/disks/disk-prod-pay-gateway-31-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2026-02-14T10:56:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-payments/providers/Microsoft.Compute/virtualMachines/vm-stag-pay-gateway-32",
+   "name": "vm-stag-pay-gateway-32",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-stag-payments",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Staging",
+    "Team": "payments",
+    "Owner": "payments-oncall@example.com",
+    "CostCenter": "CC-1010"
+   },
+   "properties": {
+    "vmId": "08298ded-6f94-b9c8-d3f8-9692b81b664d",
+    "hardwareProfile": {
+     "vmSize": "Standard_D4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-stag-pay-gateway-32-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-payments/providers/Microsoft.Compute/disks/disk-stag-pay-gateway-32-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2026-03-05T10:21:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-payments/providers/Microsoft.Compute/virtualMachines/vm-prod-pay-fraud-33",
+   "name": "vm-prod-pay-fraud-33",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "westeurope",
+   "resourceGroup": "rg-prod-payments",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Production",
+    "Team": "payments",
+    "Owner": "payments-oncall@example.com",
+    "CostCenter": "CC-1010"
+   },
+   "properties": {
+    "vmId": "c6fb313a-bf15-82bd-3e70-33fa604534a8",
+    "hardwareProfile": {
+     "vmSize": "Standard_E4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-prod-pay-fraud-33-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-payments/providers/Microsoft.Compute/disks/disk-prod-pay-fraud-33-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2026-03-02T10:32:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-search/providers/Microsoft.Compute/virtualMachines/vm-prod-srch-crawler-34",
+   "name": "vm-prod-srch-crawler-34",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-search",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Production",
+    "Team": "search",
+    "Owner": "search-team@example.com",
+    "CostCenter": "CC-1020"
+   },
+   "properties": {
+    "vmId": "4ee72e91-b14e-2084-0c01-1891368b8c60",
+    "hardwareProfile": {
+     "vmSize": "Standard_D2s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-prod-srch-crawler-34-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-search/providers/Microsoft.Compute/disks/disk-prod-srch-crawler-34-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2026-07-13T10:00:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-search/providers/Microsoft.Compute/virtualMachines/vm-stag-srch-crawler-35",
+   "name": "vm-stag-srch-crawler-35",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-stag-search",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Staging",
+    "Team": "search",
+    "Owner": "search-team@example.com",
+    "CostCenter": "CC-1020"
+   },
+   "properties": {
+    "vmId": "3e08277f-78c9-1f84-cdad-7655c53deeb9",
+    "hardwareProfile": {
+     "vmSize": "Standard_E4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-stag-srch-crawler-35-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-search/providers/Microsoft.Compute/disks/disk-stag-srch-crawler-35-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2026-03-08T10:19:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-data-platform/providers/Microsoft.Compute/virtualMachines/vm-prod-dp-synapse-bridge-36",
+   "name": "vm-prod-dp-synapse-bridge-36",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "westeurope",
+   "resourceGroup": "rg-prod-data-platform",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Production",
+    "Team": "data-platform",
+    "Owner": "data-platform@example.com",
+    "CostCenter": "CC-1030"
+   },
+   "properties": {
+    "vmId": "d3a11a38-7ecd-16bc-ced2-ee796b558a12",
+    "hardwareProfile": {
+     "vmSize": "Standard_D4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-prod-dp-synapse-bridge-36-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-data-platform/providers/Microsoft.Compute/disks/disk-prod-dp-synapse-bridge-36-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2025-11-02T10:41:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-data-platform/providers/Microsoft.Compute/virtualMachines/vm-dev-dp-synapse-bridge-37",
+   "name": "vm-dev-dp-synapse-bridge-37",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-dev-data-platform",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Dev",
+    "Team": "data-platform",
+    "Owner": "data-platform@example.com",
+    "CostCenter": "CC-1030"
+   },
+   "properties": {
+    "vmId": "ff9aee9e-21f8-c8e1-4eb0-463f22d138a5",
+    "hardwareProfile": {
+     "vmSize": "Standard_B2ms"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-dev-dp-synapse-bridge-37-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-data-platform/providers/Microsoft.Compute/disks/disk-dev-dp-synapse-bridge-37-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2025-12-13T10:32:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-data-platform/providers/Microsoft.Compute/virtualMachines/vm-prod-dp-ingest-38",
+   "name": "vm-prod-dp-ingest-38",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-data-platform",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Production",
+    "Team": "data-platform",
+    "Owner": "data-platform@example.com",
+    "CostCenter": "CC-1030"
+   },
+   "properties": {
+    "vmId": "0c1530e5-a709-9e04-7cd8-749f66d445c1",
+    "hardwareProfile": {
+     "vmSize": "Standard_E4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-prod-dp-ingest-38-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-data-platform/providers/Microsoft.Compute/disks/disk-prod-dp-ingest-38-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2026-05-08T10:07:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-data-platform/providers/Microsoft.Compute/virtualMachines/vm-stag-dp-ingest-39",
+   "name": "vm-stag-dp-ingest-39",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-stag-data-platform",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Staging",
+    "Team": "data-platform",
+    "Owner": "data-platform@example.com",
+    "CostCenter": "CC-1030"
+   },
+   "properties": {
+    "vmId": "bf01e9cf-6759-e3b3-23de-513361cc9b9a",
+    "hardwareProfile": {
+     "vmSize": "Standard_D4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-stag-dp-ingest-39-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-data-platform/providers/Microsoft.Compute/disks/disk-stag-dp-ingest-39-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2025-12-10T10:52:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-data-platform/providers/Microsoft.Compute/virtualMachines/vm-dev-dp-ingest-40",
+   "name": "vm-dev-dp-ingest-40",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-dev-data-platform",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Dev",
+    "Team": "data-platform",
+    "Owner": "data-platform@example.com",
+    "CostCenter": "CC-1030"
+   },
+   "properties": {
+    "vmId": "0727817e-c81c-e6da-ff14-54d1b5c8eaab",
+    "hardwareProfile": {
+     "vmSize": "Standard_D4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-dev-dp-ingest-40-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-data-platform/providers/Microsoft.Compute/disks/disk-dev-dp-ingest-40-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2025-02-09T10:13:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-ml-research/providers/Microsoft.Compute/virtualMachines/vm-prod-ml-notebook-41",
+   "name": "vm-prod-ml-notebook-41",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-ml-research",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Production",
+    "Team": "ml-research",
+    "Owner": "ml-research@example.com",
+    "CostCenter": "CC-1040"
+   },
+   "properties": {
+    "vmId": "c70f02c0-172c-5ce7-79e7-12bf32165bec",
+    "hardwareProfile": {
+     "vmSize": "Standard_D2s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-prod-ml-notebook-41-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-ml-research/providers/Microsoft.Compute/disks/disk-prod-ml-notebook-41-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2026-08-27T10:07:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml-research/providers/Microsoft.Compute/virtualMachines/vm-dev-ml-notebook-42",
+   "name": "vm-dev-ml-notebook-42",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "westeurope",
+   "resourceGroup": "rg-dev-ml-research",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Dev",
+    "Team": "ml-research",
+    "Owner": "ml-research@example.com",
+    "CostCenter": "CC-1040"
+   },
+   "properties": {
+    "vmId": "7b02cbdf-9ad8-57e6-f38f-4b00dccdc204",
+    "hardwareProfile": {
+     "vmSize": "Standard_B2ms"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-dev-ml-notebook-42-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml-research/providers/Microsoft.Compute/disks/disk-dev-ml-notebook-42-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2025-12-02T10:10:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-ml-research/providers/Microsoft.Compute/virtualMachines/vm-prod-ml-batch-43",
+   "name": "vm-prod-ml-batch-43",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-ml-research",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Production",
+    "Team": "ml-research",
+    "Owner": "ml-research@example.com",
+    "CostCenter": "CC-1040"
+   },
+   "properties": {
+    "vmId": "cc54dad8-82ce-d305-def0-c7b6433e718c",
+    "hardwareProfile": {
+     "vmSize": "Standard_D2s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-prod-ml-batch-43-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-ml-research/providers/Microsoft.Compute/disks/disk-prod-ml-batch-43-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2025-04-24T10:44:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml-research/providers/Microsoft.Compute/virtualMachines/vm-dev-ml-batch-44",
+   "name": "vm-dev-ml-batch-44",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "westeurope",
+   "resourceGroup": "rg-dev-ml-research",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Dev",
+    "Team": "ml-research",
+    "Owner": "ml-research@example.com",
+    "CostCenter": "CC-1040"
+   },
+   "properties": {
+    "vmId": "988f1749-0070-4e63-373e-b2f99a7a5699",
+    "hardwareProfile": {
+     "vmSize": "Standard_B2ms"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-dev-ml-batch-44-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml-research/providers/Microsoft.Compute/disks/disk-dev-ml-batch-44-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2026-05-25T10:04:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web-storefront/providers/Microsoft.Compute/virtualMachines/vm-prod-web-cms-45",
+   "name": "vm-prod-web-cms-45",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-web-storefront",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Production",
+    "Team": "web-storefront",
+    "Owner": "storefront@example.com",
+    "CostCenter": "CC-1050"
+   },
+   "properties": {
+    "vmId": "2e92b2ad-a65e-0594-8429-6be6eb86f134",
+    "hardwareProfile": {
+     "vmSize": "Standard_B2ms"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-prod-web-cms-45-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web-storefront/providers/Microsoft.Compute/disks/disk-prod-web-cms-45-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2025-10-02T10:37:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web-storefront/providers/Microsoft.Compute/virtualMachines/vm-prod-web-cdn-origin-46",
+   "name": "vm-prod-web-cdn-origin-46",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-web-storefront",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Production",
+    "Team": "web-storefront",
+    "Owner": "storefront@example.com",
+    "CostCenter": "CC-1050"
+   },
+   "properties": {
+    "vmId": "22a3caee-56b1-a4fc-a741-0a952b5d1680",
+    "hardwareProfile": {
+     "vmSize": "Standard_E4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-prod-web-cdn-origin-46-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web-storefront/providers/Microsoft.Compute/disks/disk-prod-web-cdn-origin-46-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2025-11-05T10:55:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-internal-tools/providers/Microsoft.Compute/virtualMachines/vm-prod-it-jenkins-47",
+   "name": "vm-prod-it-jenkins-47",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-internal-tools",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Production",
+    "Team": "internal-tools",
+    "Owner": "it-tools@example.com",
+    "CostCenter": "CC-1060"
+   },
+   "properties": {
+    "vmId": "c86b7208-174f-fcd4-3eef-4b49f67f82a2",
+    "hardwareProfile": {
+     "vmSize": "Standard_E4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-prod-it-jenkins-47-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-internal-tools/providers/Microsoft.Compute/disks/disk-prod-it-jenkins-47-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2025-01-16T10:11:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-internal-tools/providers/Microsoft.Compute/virtualMachines/vm-stag-it-jenkins-48",
+   "name": "vm-stag-it-jenkins-48",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "westeurope",
+   "resourceGroup": "rg-stag-internal-tools",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Staging",
+    "Team": "internal-tools",
+    "Owner": "it-tools@example.com",
+    "CostCenter": "CC-1060"
+   },
+   "properties": {
+    "vmId": "e5c7daff-e54e-257c-6387-7f5c939559a5",
+    "hardwareProfile": {
+     "vmSize": "Standard_B2ms"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-stag-it-jenkins-48-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-internal-tools/providers/Microsoft.Compute/disks/disk-stag-it-jenkins-48-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2025-08-18T10:32:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-internal-tools/providers/Microsoft.Compute/virtualMachines/vm-dev-it-jenkins-49",
+   "name": "vm-dev-it-jenkins-49",
+   "type": "microsoft.compute/virtualmachines",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "kind": "",
+   "location": "westeurope",
+   "resourceGroup": "rg-dev-internal-tools",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "",
+   "sku": null,
+   "plan": null,
+   "identity": null,
+   "zones": null,
+   "extendedLocation": null,
+   "tags": {
+    "Environment": "Dev",
+    "Team": "internal-tools",
+    "Owner": "it-tools@example.com",
+    "CostCenter": "CC-1060"
+   },
+   "properties": {
+    "vmId": "02bc339f-c724-e049-ef75-9835dd37ee81",
+    "hardwareProfile": {
+     "vmSize": "Standard_D4s_v5"
+    },
+    "storageProfile": {
+     "osDisk": {
+      "name": "disk-dev-it-jenkins-49-data",
+      "osType": "Linux",
+      "managedDisk": {
+       "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-internal-tools/providers/Microsoft.Compute/disks/disk-dev-it-jenkins-49-data"
+      }
+     },
+     "dataDisks": []
+    },
+    "timeCreated": "2025-09-21T10:07:00Z",
+    "provisioningState": "Succeeded",
+    "extended": {
+     "instanceView": {
+      "powerState": {
+       "code": "PowerState/running",
+       "displayStatus": "VM running"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-tools/providers/Microsoft.Compute/virtualMachines/vm-dev-half-provisioned",
+   "name": "vm-dev-half-provisioned",
+   "type": "microsoft.compute/virtualmachines",
+   "location": "eastus",
+   "resourceGroup": "rg-dev-tools",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "tags": {
+    "Environment": "Dev"
+   },
+   "properties": {
+    "provisioningState": "Failed",
+    "timeCreated": "2026-10-20T10:00:00Z"
+   }
+  }
+ ],
+ "facets": [],
+ "resultTruncated": "false"
+}

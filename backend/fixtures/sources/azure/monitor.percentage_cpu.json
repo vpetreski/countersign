@@ -1,0 +1,4310 @@
+{
+ "responses": [
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-etl/providers/Microsoft.Compute/virtualMachines/vm-dev-etl-01/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 1.55,
+         "maximum": 8.47
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 0.42,
+         "maximum": 10.98
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 2.24,
+         "maximum": 10.22
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 1.99,
+         "maximum": 10.58
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 1.53,
+         "maximum": 5.52
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 1.92,
+         "maximum": 10.08
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 1.06,
+         "maximum": 10.7
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 2.32,
+         "maximum": 6.08
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 0.77,
+         "maximum": 5.21
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 1.43,
+         "maximum": 9.76
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 1.85,
+         "maximum": 11.15
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 2.44,
+         "maximum": 5.14
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 1.44,
+         "maximum": 6.73
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 0.8,
+         "maximum": 3.22
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 1.54,
+         "maximum": 5.43
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 0.49,
+         "maximum": 3.61
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 2.33,
+         "maximum": 4.45
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 1.8,
+         "maximum": 9.84
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 1.86,
+         "maximum": 6.96
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 1.42,
+         "maximum": 9.25
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 0.77,
+         "maximum": 9.43
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 1.47,
+         "maximum": 5.69
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 2.27,
+         "maximum": 3.84
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 1.12,
+         "maximum": 7.81
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 2.07,
+         "maximum": 8.47
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 2.04,
+         "maximum": 11.17
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 2.33,
+         "maximum": 10.7
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 1.14,
+         "maximum": 6.57
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 1.56,
+         "maximum": 10.24
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 1.49,
+         "maximum": 3.68
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 2.14,
+         "maximum": 7.49
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "westeurope",
+   "value": [
+    {
+     "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml/providers/Microsoft.Compute/virtualMachines/vm-dev-jupyter-02/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 1.69,
+         "maximum": 3.31
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 1.48,
+         "maximum": 8.79
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 1.63,
+         "maximum": 6.23
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 2.02,
+         "maximum": 3.22
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 1.19,
+         "maximum": 10.51
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 2.37,
+         "maximum": 5.9
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 0.73,
+         "maximum": 4.74
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 0.73,
+         "maximum": 9.54
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 1.09,
+         "maximum": 9.21
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 1.53,
+         "maximum": 4.83
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 0.89,
+         "maximum": 5.75
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 0.51,
+         "maximum": 4.42
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 0.92,
+         "maximum": 10.54
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 2.32,
+         "maximum": 4.5
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 0.89,
+         "maximum": 8.38
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 2.09,
+         "maximum": 5.47
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 1.82,
+         "maximum": 10.56
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 1.39,
+         "maximum": 7.0
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 1.85,
+         "maximum": 8.91
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 0.86,
+         "maximum": 3.61
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 0.87,
+         "maximum": 7.96
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 1.94,
+         "maximum": 8.89
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 0.82,
+         "maximum": 3.38
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 2.13,
+         "maximum": 10.53
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 1.21,
+         "maximum": 10.98
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 1.93,
+         "maximum": 8.63
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 2.14,
+         "maximum": 7.78
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 2.21,
+         "maximum": 4.57
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 1.37,
+         "maximum": 5.11
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 0.83,
+         "maximum": 10.43
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 2.25,
+         "maximum": 9.96
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web/providers/Microsoft.Compute/virtualMachines/vm-prod-api-07/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 1.27,
+         "maximum": 5.0
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 2.4,
+         "maximum": 10.22
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 1.83,
+         "maximum": 6.95
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 2.21,
+         "maximum": 7.74
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 1.64,
+         "maximum": 10.9
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 0.7,
+         "maximum": 11.23
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 2.03,
+         "maximum": 5.39
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 2.39,
+         "maximum": 11.17
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 0.82,
+         "maximum": 5.68
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 1.43,
+         "maximum": 5.2
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 1.57,
+         "maximum": 5.48
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 2.44,
+         "maximum": 5.11
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 1.96,
+         "maximum": 10.55
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 0.93,
+         "maximum": 8.51
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 1.75,
+         "maximum": 4.92
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 1.7,
+         "maximum": 11.49
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 0.59,
+         "maximum": 5.83
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 2.0,
+         "maximum": 5.93
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 0.56,
+         "maximum": 11.16
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 1.49,
+         "maximum": 4.59
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 1.87,
+         "maximum": 5.38
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 1.16,
+         "maximum": 10.69
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 1.5,
+         "maximum": 9.28
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 2.11,
+         "maximum": 9.99
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 1.67,
+         "maximum": 8.49
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 1.75,
+         "maximum": 6.06
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 0.73,
+         "maximum": 6.68
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 0.89,
+         "maximum": 5.69
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 1.49,
+         "maximum": 3.62
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 1.84,
+         "maximum": 4.58
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 0.65,
+         "maximum": 6.73
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stg-search/providers/Microsoft.Compute/virtualMachines/vm-stg-search-03/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 6.55,
+         "maximum": 23.44
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 4.48,
+         "maximum": 18.05
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 5.05,
+         "maximum": 19.9
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 6.79,
+         "maximum": 14.77
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 7.31,
+         "maximum": 24.89
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 6.87,
+         "maximum": 20.82
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 4.92,
+         "maximum": 18.98
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 6.97,
+         "maximum": 23.55
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 6.78,
+         "maximum": 21.67
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 6.42,
+         "maximum": 17.99
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 6.41,
+         "maximum": 22.49
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 8.17,
+         "maximum": 22.26
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 8.23,
+         "maximum": 19.09
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 4.17,
+         "maximum": 15.69
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 4.63,
+         "maximum": 19.42
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 6.23,
+         "maximum": 15.85
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 7.2,
+         "maximum": 15.09
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 7.71,
+         "maximum": 17.64
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 7.67,
+         "maximum": 15.65
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 8.15,
+         "maximum": 14.62
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 5.81,
+         "maximum": 17.91
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 4.55,
+         "maximum": 16.8
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 4.88,
+         "maximum": 20.66
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 4.77,
+         "maximum": 22.62
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 5.01,
+         "maximum": 18.21
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 5.49,
+         "maximum": 20.47
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 5.63,
+         "maximum": 25.01
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 5.16,
+         "maximum": 16.84
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 5.46,
+         "maximum": 15.34
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 6.43,
+         "maximum": 14.73
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 7.66,
+         "maximum": 22.83
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-tools/providers/Microsoft.Compute/virtualMachines/vm-dev-build-agent-09/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z"
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z"
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-payments/providers/Microsoft.Compute/virtualMachines/vm-prod-pay-gateway-31/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 43.85,
+         "maximum": 75.89
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 52.63,
+         "maximum": 85.03
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 40.98,
+         "maximum": 68.15
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 29.06,
+         "maximum": 92.28
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 26.95,
+         "maximum": 71.79
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 39.59,
+         "maximum": 75.07
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 34.09,
+         "maximum": 82.45
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 30.18,
+         "maximum": 80.4
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 32.6,
+         "maximum": 78.55
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 25.23,
+         "maximum": 71.16
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 32.05,
+         "maximum": 77.29
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 51.22,
+         "maximum": 79.14
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 50.68,
+         "maximum": 69.26
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 31.03,
+         "maximum": 65.41
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 60.99,
+         "maximum": 71.86
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 58.97,
+         "maximum": 89.51
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 26.11,
+         "maximum": 88.15
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 33.01,
+         "maximum": 76.04
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 37.69,
+         "maximum": 93.51
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 43.17,
+         "maximum": 65.12
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 29.74,
+         "maximum": 68.66
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 54.73,
+         "maximum": 76.29
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 38.87,
+         "maximum": 84.99
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 38.1,
+         "maximum": 69.94
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 29.74,
+         "maximum": 70.77
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 48.61,
+         "maximum": 75.41
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 51.29,
+         "maximum": 92.67
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 39.4,
+         "maximum": 76.26
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 26.79,
+         "maximum": 65.63
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 57.1,
+         "maximum": 84.75
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 24.04,
+         "maximum": 80.89
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-payments/providers/Microsoft.Compute/virtualMachines/vm-stag-pay-gateway-32/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 43.61,
+         "maximum": 84.69
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 52.83,
+         "maximum": 79.84
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 37.79,
+         "maximum": 73.09
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 52.16,
+         "maximum": 73.35
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 34.32,
+         "maximum": 80.88
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 39.82,
+         "maximum": 80.21
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 40.35,
+         "maximum": 78.57
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 41.79,
+         "maximum": 78.49
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 45.13,
+         "maximum": 76.13
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 33.63,
+         "maximum": 81.71
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 31.52,
+         "maximum": 83.38
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 41.41,
+         "maximum": 84.53
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 60.33,
+         "maximum": 83.64
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 40.77,
+         "maximum": 93.62
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 25.69,
+         "maximum": 87.73
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 24.06,
+         "maximum": 80.87
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 57.0,
+         "maximum": 89.11
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 32.21,
+         "maximum": 83.62
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 55.36,
+         "maximum": 72.68
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 55.21,
+         "maximum": 92.63
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 29.93,
+         "maximum": 85.7
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 50.01,
+         "maximum": 92.15
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 38.94,
+         "maximum": 70.58
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 40.97,
+         "maximum": 78.53
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 61.44,
+         "maximum": 88.91
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 57.78,
+         "maximum": 86.99
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 46.44,
+         "maximum": 64.62
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 30.34,
+         "maximum": 67.87
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 45.54,
+         "maximum": 79.15
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 35.72,
+         "maximum": 72.2
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 46.17,
+         "maximum": 75.8
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "westeurope",
+   "value": [
+    {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-payments/providers/Microsoft.Compute/virtualMachines/vm-prod-pay-fraud-33/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 25.45,
+         "maximum": 75.1
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 60.11,
+         "maximum": 71.46
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 26.52,
+         "maximum": 74.57
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 54.72,
+         "maximum": 81.76
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 41.78,
+         "maximum": 74.25
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 31.97,
+         "maximum": 78.3
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 25.59,
+         "maximum": 92.15
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 39.86,
+         "maximum": 72.2
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 24.51,
+         "maximum": 81.27
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 60.93,
+         "maximum": 71.13
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 49.02,
+         "maximum": 70.34
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 48.38,
+         "maximum": 86.3
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 60.21,
+         "maximum": 75.04
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 27.11,
+         "maximum": 85.91
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 27.15,
+         "maximum": 85.51
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 36.82,
+         "maximum": 86.35
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 35.76,
+         "maximum": 83.48
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 24.21,
+         "maximum": 82.32
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 56.34,
+         "maximum": 79.61
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 38.17,
+         "maximum": 75.48
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 45.03,
+         "maximum": 74.0
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 36.77,
+         "maximum": 74.75
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 29.09,
+         "maximum": 91.02
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 37.97,
+         "maximum": 65.5
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 56.24,
+         "maximum": 89.51
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 55.25,
+         "maximum": 92.97
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 40.68,
+         "maximum": 66.57
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 54.08,
+         "maximum": 85.17
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 40.64,
+         "maximum": 75.99
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 38.8,
+         "maximum": 64.94
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 38.36,
+         "maximum": 84.58
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-search/providers/Microsoft.Compute/virtualMachines/vm-prod-srch-crawler-34/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 25.18,
+         "maximum": 89.93
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 29.45,
+         "maximum": 75.46
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 54.05,
+         "maximum": 83.5
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 54.41,
+         "maximum": 89.93
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 24.25,
+         "maximum": 88.06
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 45.78,
+         "maximum": 71.73
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 35.79,
+         "maximum": 66.53
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 28.29,
+         "maximum": 92.1
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 36.95,
+         "maximum": 65.75
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 38.32,
+         "maximum": 73.56
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 54.91,
+         "maximum": 75.98
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 55.06,
+         "maximum": 78.15
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 33.89,
+         "maximum": 80.71
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 33.02,
+         "maximum": 77.52
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 56.72,
+         "maximum": 92.54
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 56.69,
+         "maximum": 64.88
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 44.96,
+         "maximum": 87.38
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 40.52,
+         "maximum": 82.45
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 54.7,
+         "maximum": 82.37
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 46.97,
+         "maximum": 92.4
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 39.97,
+         "maximum": 83.86
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 43.72,
+         "maximum": 74.67
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 43.93,
+         "maximum": 80.18
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 33.74,
+         "maximum": 75.11
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 48.76,
+         "maximum": 87.04
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 30.1,
+         "maximum": 92.12
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 59.53,
+         "maximum": 69.29
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 43.75,
+         "maximum": 68.16
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 54.26,
+         "maximum": 79.93
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 24.21,
+         "maximum": 69.74
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 50.86,
+         "maximum": 66.82
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-search/providers/Microsoft.Compute/virtualMachines/vm-stag-srch-crawler-35/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 58.69,
+         "maximum": 70.03
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 58.28,
+         "maximum": 74.97
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 41.27,
+         "maximum": 80.94
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 25.92,
+         "maximum": 83.65
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 61.17,
+         "maximum": 74.04
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 54.74,
+         "maximum": 64.02
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 46.67,
+         "maximum": 76.67
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 49.3,
+         "maximum": 83.97
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 53.77,
+         "maximum": 72.28
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 24.1,
+         "maximum": 71.58
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 52.98,
+         "maximum": 75.47
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 55.95,
+         "maximum": 72.13
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 42.2,
+         "maximum": 71.53
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 24.49,
+         "maximum": 84.03
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 53.52,
+         "maximum": 65.24
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 60.76,
+         "maximum": 69.55
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 35.79,
+         "maximum": 91.16
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 53.17,
+         "maximum": 77.65
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 34.91,
+         "maximum": 95.56
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 55.2,
+         "maximum": 65.59
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 39.68,
+         "maximum": 70.81
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 61.11,
+         "maximum": 95.61
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 35.32,
+         "maximum": 93.93
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 42.37,
+         "maximum": 80.84
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 27.51,
+         "maximum": 94.85
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 24.26,
+         "maximum": 88.21
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 34.91,
+         "maximum": 74.31
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 25.77,
+         "maximum": 94.68
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 35.93,
+         "maximum": 92.59
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 38.42,
+         "maximum": 74.48
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 28.86,
+         "maximum": 85.02
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "westeurope",
+   "value": [
+    {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-data-platform/providers/Microsoft.Compute/virtualMachines/vm-prod-dp-synapse-bridge-36/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 25.35,
+         "maximum": 89.43
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 34.58,
+         "maximum": 65.29
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 27.37,
+         "maximum": 82.87
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 27.49,
+         "maximum": 91.09
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 35.58,
+         "maximum": 82.81
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 25.69,
+         "maximum": 66.55
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 43.93,
+         "maximum": 65.84
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 45.11,
+         "maximum": 72.55
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 26.91,
+         "maximum": 86.08
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 26.68,
+         "maximum": 86.95
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 55.57,
+         "maximum": 65.2
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 40.5,
+         "maximum": 91.71
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 40.42,
+         "maximum": 80.71
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 58.71,
+         "maximum": 94.33
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 35.42,
+         "maximum": 90.1
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 40.35,
+         "maximum": 71.65
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 49.18,
+         "maximum": 79.14
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 24.14,
+         "maximum": 73.23
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 45.4,
+         "maximum": 66.65
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 55.17,
+         "maximum": 95.16
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 34.07,
+         "maximum": 90.24
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 35.78,
+         "maximum": 89.83
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 58.73,
+         "maximum": 70.59
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 32.3,
+         "maximum": 85.86
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 26.77,
+         "maximum": 83.43
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 45.1,
+         "maximum": 85.81
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 32.24,
+         "maximum": 79.82
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 52.8,
+         "maximum": 67.65
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 56.03,
+         "maximum": 79.75
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 42.82,
+         "maximum": 74.3
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 37.94,
+         "maximum": 93.0
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-data-platform/providers/Microsoft.Compute/virtualMachines/vm-dev-dp-synapse-bridge-37/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 58.36,
+         "maximum": 75.1
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 31.45,
+         "maximum": 85.43
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 31.77,
+         "maximum": 90.21
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 45.47,
+         "maximum": 83.25
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 39.49,
+         "maximum": 72.9
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 45.66,
+         "maximum": 70.32
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 54.5,
+         "maximum": 84.82
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 48.21,
+         "maximum": 93.22
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 55.61,
+         "maximum": 87.83
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 44.99,
+         "maximum": 80.11
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 29.82,
+         "maximum": 66.56
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 51.87,
+         "maximum": 91.0
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 61.63,
+         "maximum": 73.33
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 32.74,
+         "maximum": 80.63
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 49.34,
+         "maximum": 88.53
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 54.21,
+         "maximum": 64.79
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 55.84,
+         "maximum": 86.02
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 59.44,
+         "maximum": 64.77
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 43.2,
+         "maximum": 76.36
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 27.09,
+         "maximum": 92.79
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 60.7,
+         "maximum": 83.88
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 27.16,
+         "maximum": 65.36
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 60.12,
+         "maximum": 83.03
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 53.7,
+         "maximum": 82.97
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 33.67,
+         "maximum": 91.16
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 43.52,
+         "maximum": 68.31
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 42.13,
+         "maximum": 77.57
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 44.4,
+         "maximum": 77.07
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 46.45,
+         "maximum": 81.1
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 38.62,
+         "maximum": 74.29
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 54.47,
+         "maximum": 84.49
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-data-platform/providers/Microsoft.Compute/virtualMachines/vm-prod-dp-ingest-38/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 52.75,
+         "maximum": 85.57
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 32.69,
+         "maximum": 85.14
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 30.81,
+         "maximum": 72.68
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 24.92,
+         "maximum": 85.52
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 44.01,
+         "maximum": 64.21
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 60.75,
+         "maximum": 69.21
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 44.84,
+         "maximum": 72.25
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 29.61,
+         "maximum": 82.41
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 48.87,
+         "maximum": 64.52
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 58.43,
+         "maximum": 78.99
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 26.0,
+         "maximum": 93.8
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 24.93,
+         "maximum": 79.29
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 28.91,
+         "maximum": 71.15
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 53.24,
+         "maximum": 73.56
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 42.88,
+         "maximum": 86.94
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 45.88,
+         "maximum": 77.32
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 26.83,
+         "maximum": 65.45
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 47.66,
+         "maximum": 76.38
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 30.29,
+         "maximum": 92.38
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 32.17,
+         "maximum": 92.06
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 50.91,
+         "maximum": 67.58
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 52.44,
+         "maximum": 71.75
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 24.8,
+         "maximum": 64.77
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 44.47,
+         "maximum": 84.36
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 48.37,
+         "maximum": 94.12
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 57.99,
+         "maximum": 67.53
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 48.13,
+         "maximum": 82.34
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 32.54,
+         "maximum": 65.52
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 27.39,
+         "maximum": 68.32
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 55.51,
+         "maximum": 71.27
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 25.15,
+         "maximum": 78.0
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-data-platform/providers/Microsoft.Compute/virtualMachines/vm-stag-dp-ingest-39/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 52.15,
+         "maximum": 89.58
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 25.54,
+         "maximum": 79.79
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 57.67,
+         "maximum": 64.76
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 30.44,
+         "maximum": 72.68
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 59.41,
+         "maximum": 80.06
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 42.41,
+         "maximum": 68.88
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 38.19,
+         "maximum": 82.85
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 41.15,
+         "maximum": 82.58
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 27.03,
+         "maximum": 95.58
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 31.06,
+         "maximum": 75.04
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 44.86,
+         "maximum": 79.57
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 54.97,
+         "maximum": 84.34
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 58.15,
+         "maximum": 89.6
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 43.86,
+         "maximum": 82.07
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 38.8,
+         "maximum": 92.47
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 51.47,
+         "maximum": 84.29
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 55.41,
+         "maximum": 95.11
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 55.41,
+         "maximum": 81.05
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 55.83,
+         "maximum": 78.49
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 42.25,
+         "maximum": 68.04
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 51.17,
+         "maximum": 64.36
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 58.06,
+         "maximum": 69.26
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 50.12,
+         "maximum": 95.3
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 31.82,
+         "maximum": 83.51
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 55.42,
+         "maximum": 84.28
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 25.43,
+         "maximum": 89.26
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 33.92,
+         "maximum": 73.08
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 29.46,
+         "maximum": 91.86
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 49.62,
+         "maximum": 64.67
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 32.47,
+         "maximum": 77.46
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 48.86,
+         "maximum": 70.33
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-data-platform/providers/Microsoft.Compute/virtualMachines/vm-dev-dp-ingest-40/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 29.74,
+         "maximum": 66.54
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 53.6,
+         "maximum": 88.5
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 36.0,
+         "maximum": 69.17
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 56.11,
+         "maximum": 81.62
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 28.78,
+         "maximum": 90.06
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 25.89,
+         "maximum": 86.03
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 32.77,
+         "maximum": 79.01
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 41.0,
+         "maximum": 81.81
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 59.59,
+         "maximum": 90.93
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 32.9,
+         "maximum": 90.19
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 26.48,
+         "maximum": 85.68
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 51.31,
+         "maximum": 68.0
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 42.82,
+         "maximum": 91.92
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 24.59,
+         "maximum": 67.23
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 33.99,
+         "maximum": 79.67
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 61.08,
+         "maximum": 94.19
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 40.48,
+         "maximum": 92.98
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 52.32,
+         "maximum": 70.25
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 46.48,
+         "maximum": 80.06
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 51.49,
+         "maximum": 65.69
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 60.11,
+         "maximum": 90.47
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 55.54,
+         "maximum": 77.79
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 43.78,
+         "maximum": 73.86
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 40.86,
+         "maximum": 86.7
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 40.1,
+         "maximum": 91.54
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 49.91,
+         "maximum": 69.17
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 46.02,
+         "maximum": 73.4
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 44.21,
+         "maximum": 76.91
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 31.14,
+         "maximum": 77.31
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 55.93,
+         "maximum": 71.75
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 37.64,
+         "maximum": 67.97
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-ml-research/providers/Microsoft.Compute/virtualMachines/vm-prod-ml-notebook-41/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 10.38,
+         "maximum": 73.07
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 9.31,
+         "maximum": 98.54
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 7.48,
+         "maximum": 98.88
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 8.88,
+         "maximum": 70.21
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 15.99,
+         "maximum": 72.51
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 11.71,
+         "maximum": 89.09
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 8.27,
+         "maximum": 86.95
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 13.13,
+         "maximum": 88.72
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 13.14,
+         "maximum": 73.74
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 11.19,
+         "maximum": 80.35
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 8.69,
+         "maximum": 97.16
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 12.7,
+         "maximum": 73.82
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 14.13,
+         "maximum": 92.91
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 15.47,
+         "maximum": 85.36
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 14.87,
+         "maximum": 87.93
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 10.72,
+         "maximum": 95.04
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 9.11,
+         "maximum": 85.87
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 7.54,
+         "maximum": 94.59
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 15.64,
+         "maximum": 78.51
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 12.67,
+         "maximum": 90.91
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 15.99,
+         "maximum": 85.04
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 11.19,
+         "maximum": 90.8
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 14.95,
+         "maximum": 92.69
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 14.1,
+         "maximum": 96.41
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 8.74,
+         "maximum": 79.74
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 9.85,
+         "maximum": 82.38
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 8.54,
+         "maximum": 91.68
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 8.58,
+         "maximum": 76.16
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 12.97,
+         "maximum": 93.27
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 7.77,
+         "maximum": 83.11
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 7.76,
+         "maximum": 89.1
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "westeurope",
+   "value": [
+    {
+     "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml-research/providers/Microsoft.Compute/virtualMachines/vm-dev-ml-notebook-42/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 26.34,
+         "maximum": 71.87
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 52.19,
+         "maximum": 74.01
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 49.48,
+         "maximum": 88.25
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 54.14,
+         "maximum": 90.19
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 33.27,
+         "maximum": 74.87
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 33.11,
+         "maximum": 80.23
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 40.29,
+         "maximum": 70.25
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 46.59,
+         "maximum": 83.73
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 38.88,
+         "maximum": 93.5
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 55.2,
+         "maximum": 64.95
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 31.98,
+         "maximum": 76.35
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 48.03,
+         "maximum": 89.6
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 56.63,
+         "maximum": 79.97
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 34.69,
+         "maximum": 95.06
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 57.74,
+         "maximum": 92.09
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 39.21,
+         "maximum": 93.17
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 32.28,
+         "maximum": 78.01
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 61.3,
+         "maximum": 76.33
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 60.29,
+         "maximum": 70.9
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 31.36,
+         "maximum": 75.14
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 36.6,
+         "maximum": 80.4
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 60.28,
+         "maximum": 91.16
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 40.95,
+         "maximum": 82.03
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 29.22,
+         "maximum": 77.21
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 38.57,
+         "maximum": 67.31
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 29.93,
+         "maximum": 79.95
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 24.47,
+         "maximum": 91.35
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 26.16,
+         "maximum": 91.25
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 50.38,
+         "maximum": 67.2
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 30.93,
+         "maximum": 93.64
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 32.56,
+         "maximum": 87.54
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-ml-research/providers/Microsoft.Compute/virtualMachines/vm-prod-ml-batch-43/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 11.38,
+         "maximum": 91.01
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 8.4,
+         "maximum": 79.43
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 8.89,
+         "maximum": 89.89
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 14.08,
+         "maximum": 71.51
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 8.8,
+         "maximum": 88.91
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 15.3,
+         "maximum": 70.18
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 13.01,
+         "maximum": 77.84
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 15.42,
+         "maximum": 86.83
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 11.47,
+         "maximum": 72.4
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 14.81,
+         "maximum": 92.33
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 11.33,
+         "maximum": 77.85
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 13.64,
+         "maximum": 71.4
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 14.5,
+         "maximum": 93.08
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 13.57,
+         "maximum": 74.66
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 8.83,
+         "maximum": 83.43
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 12.73,
+         "maximum": 75.82
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 10.36,
+         "maximum": 93.07
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 13.07,
+         "maximum": 85.87
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 13.47,
+         "maximum": 76.61
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 7.82,
+         "maximum": 83.34
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 14.76,
+         "maximum": 83.95
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 15.6,
+         "maximum": 84.03
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 15.09,
+         "maximum": 90.74
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 8.34,
+         "maximum": 96.36
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 10.75,
+         "maximum": 98.88
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 9.27,
+         "maximum": 74.4
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 9.37,
+         "maximum": 89.19
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 14.11,
+         "maximum": 77.3
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 8.2,
+         "maximum": 92.97
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 7.08,
+         "maximum": 81.24
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 10.99,
+         "maximum": 89.01
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "westeurope",
+   "value": [
+    {
+     "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml-research/providers/Microsoft.Compute/virtualMachines/vm-dev-ml-batch-44/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 8.45,
+         "maximum": 98.39
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 13.78,
+         "maximum": 90.41
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 8.7,
+         "maximum": 91.81
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 7.6,
+         "maximum": 89.18
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 13.53,
+         "maximum": 75.18
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 13.41,
+         "maximum": 80.37
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 7.67,
+         "maximum": 76.26
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 14.69,
+         "maximum": 72.16
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 11.61,
+         "maximum": 72.21
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 14.64,
+         "maximum": 79.17
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 9.56,
+         "maximum": 96.73
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 13.93,
+         "maximum": 70.83
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 15.24,
+         "maximum": 93.75
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 9.19,
+         "maximum": 72.63
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 10.61,
+         "maximum": 83.74
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 9.04,
+         "maximum": 91.74
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 8.44,
+         "maximum": 94.59
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 11.52,
+         "maximum": 95.75
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 9.84,
+         "maximum": 91.61
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 9.0,
+         "maximum": 83.59
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 12.65,
+         "maximum": 89.02
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 12.09,
+         "maximum": 90.21
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 8.13,
+         "maximum": 87.92
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 13.43,
+         "maximum": 96.18
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 8.97,
+         "maximum": 95.92
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 11.05,
+         "maximum": 87.38
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 10.66,
+         "maximum": 79.13
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 9.07,
+         "maximum": 71.7
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 10.92,
+         "maximum": 77.95
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 8.09,
+         "maximum": 70.77
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 11.14,
+         "maximum": 82.74
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web-storefront/providers/Microsoft.Compute/virtualMachines/vm-prod-web-cms-45/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 39.66,
+         "maximum": 90.66
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 58.41,
+         "maximum": 81.32
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 28.4,
+         "maximum": 79.15
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 50.84,
+         "maximum": 71.43
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 49.48,
+         "maximum": 75.93
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 27.46,
+         "maximum": 73.39
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 36.16,
+         "maximum": 66.7
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 38.47,
+         "maximum": 81.12
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 54.89,
+         "maximum": 88.91
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 48.37,
+         "maximum": 89.19
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 38.28,
+         "maximum": 81.29
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 39.55,
+         "maximum": 76.49
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 27.22,
+         "maximum": 92.0
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 28.98,
+         "maximum": 93.97
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 28.76,
+         "maximum": 94.49
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 35.35,
+         "maximum": 75.39
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 44.16,
+         "maximum": 72.6
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 50.12,
+         "maximum": 80.06
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 39.77,
+         "maximum": 77.86
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 38.07,
+         "maximum": 70.3
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 56.92,
+         "maximum": 65.5
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 36.61,
+         "maximum": 83.42
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 35.32,
+         "maximum": 94.91
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 26.31,
+         "maximum": 81.32
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 53.54,
+         "maximum": 94.23
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 42.91,
+         "maximum": 78.76
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 27.27,
+         "maximum": 80.03
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 58.76,
+         "maximum": 79.82
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 50.52,
+         "maximum": 64.82
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 53.47,
+         "maximum": 70.82
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 54.87,
+         "maximum": 64.48
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web-storefront/providers/Microsoft.Compute/virtualMachines/vm-prod-web-cdn-origin-46/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 10.54,
+         "maximum": 76.58
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 13.0,
+         "maximum": 89.14
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 14.14,
+         "maximum": 78.67
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 14.84,
+         "maximum": 87.35
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 11.35,
+         "maximum": 93.92
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 11.8,
+         "maximum": 84.91
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 15.09,
+         "maximum": 94.28
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 8.55,
+         "maximum": 94.9
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 12.24,
+         "maximum": 80.82
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 14.33,
+         "maximum": 81.73
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 8.4,
+         "maximum": 92.81
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 9.41,
+         "maximum": 81.63
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 12.18,
+         "maximum": 81.31
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 8.03,
+         "maximum": 88.98
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 11.43,
+         "maximum": 83.04
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 11.84,
+         "maximum": 78.48
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 7.87,
+         "maximum": 91.01
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 13.34,
+         "maximum": 85.12
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 12.73,
+         "maximum": 96.44
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 12.44,
+         "maximum": 89.87
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 13.62,
+         "maximum": 77.6
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 14.06,
+         "maximum": 73.62
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 8.14,
+         "maximum": 82.17
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 11.31,
+         "maximum": 82.74
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 8.37,
+         "maximum": 98.68
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 12.57,
+         "maximum": 79.48
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 15.54,
+         "maximum": 83.29
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 10.65,
+         "maximum": 73.4
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 14.63,
+         "maximum": 87.66
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 7.84,
+         "maximum": 90.06
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 13.87,
+         "maximum": 93.59
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "eastus",
+   "value": [
+    {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-internal-tools/providers/Microsoft.Compute/virtualMachines/vm-prod-it-jenkins-47/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 32.69,
+         "maximum": 67.77
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 29.59,
+         "maximum": 88.85
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 42.77,
+         "maximum": 81.3
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 61.57,
+         "maximum": 93.56
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 27.04,
+         "maximum": 65.08
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 54.17,
+         "maximum": 75.23
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 34.62,
+         "maximum": 75.38
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 26.56,
+         "maximum": 91.22
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 47.93,
+         "maximum": 73.62
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 53.19,
+         "maximum": 95.43
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 51.1,
+         "maximum": 86.02
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 54.96,
+         "maximum": 76.31
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 37.16,
+         "maximum": 93.35
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 52.8,
+         "maximum": 75.9
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 47.95,
+         "maximum": 91.35
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 25.33,
+         "maximum": 65.53
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 35.02,
+         "maximum": 78.67
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 52.06,
+         "maximum": 81.71
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 56.02,
+         "maximum": 70.14
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 50.75,
+         "maximum": 86.24
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 28.07,
+         "maximum": 73.44
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 59.08,
+         "maximum": 94.3
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 55.77,
+         "maximum": 79.06
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 34.43,
+         "maximum": 65.23
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 39.98,
+         "maximum": 91.26
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 24.11,
+         "maximum": 67.8
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 46.98,
+         "maximum": 75.28
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 58.03,
+         "maximum": 70.39
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 54.04,
+         "maximum": 71.36
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 27.92,
+         "maximum": 68.96
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 30.57,
+         "maximum": 88.11
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "westeurope",
+   "value": [
+    {
+     "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-internal-tools/providers/Microsoft.Compute/virtualMachines/vm-stag-it-jenkins-48/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 40.93,
+         "maximum": 93.41
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 36.44,
+         "maximum": 73.34
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 28.46,
+         "maximum": 71.45
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 43.05,
+         "maximum": 73.8
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 35.33,
+         "maximum": 75.25
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 30.99,
+         "maximum": 69.43
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 44.47,
+         "maximum": 86.48
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 30.57,
+         "maximum": 78.13
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 39.15,
+         "maximum": 68.82
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 45.23,
+         "maximum": 71.98
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 54.14,
+         "maximum": 68.44
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 48.84,
+         "maximum": 69.62
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 43.34,
+         "maximum": 92.09
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 57.29,
+         "maximum": 68.21
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 53.66,
+         "maximum": 95.28
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 31.66,
+         "maximum": 80.41
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 25.2,
+         "maximum": 82.51
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 32.97,
+         "maximum": 84.79
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 61.76,
+         "maximum": 80.5
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 32.88,
+         "maximum": 80.81
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 41.76,
+         "maximum": 84.88
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 51.95,
+         "maximum": 83.54
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 34.59,
+         "maximum": 65.55
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 55.68,
+         "maximum": 85.27
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 28.85,
+         "maximum": 90.92
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 30.25,
+         "maximum": 85.01
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 29.7,
+         "maximum": 93.31
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 28.26,
+         "maximum": 72.47
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 58.18,
+         "maximum": 79.29
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 41.78,
+         "maximum": 94.49
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 24.91,
+         "maximum": 85.2
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  },
+  {
+   "cost": 0,
+   "timespan": "2026-10-01T00:00:00Z/2026-11-01T00:00:00Z",
+   "interval": "P1D",
+   "namespace": "Microsoft.Compute/virtualMachines",
+   "resourceregion": "westeurope",
+   "value": [
+    {
+     "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-internal-tools/providers/Microsoft.Compute/virtualMachines/vm-dev-it-jenkins-49/providers/Microsoft.Insights/metrics/Percentage CPU",
+     "type": "Microsoft.Insights/metrics",
+     "name": {
+      "value": "Percentage CPU",
+      "localizedValue": "Percentage CPU"
+     },
+     "displayDescription": "The percentage of allocated compute units that are currently in use by the Virtual Machine(s)",
+     "unit": "Percent",
+     "timeseries": [
+      {
+       "metadatavalues": [],
+       "data": [
+        {
+         "timeStamp": "2026-10-01T00:00:00Z",
+         "average": 32.14,
+         "maximum": 73.77
+        },
+        {
+         "timeStamp": "2026-10-02T00:00:00Z",
+         "average": 32.87,
+         "maximum": 65.14
+        },
+        {
+         "timeStamp": "2026-10-03T00:00:00Z",
+         "average": 56.43,
+         "maximum": 70.65
+        },
+        {
+         "timeStamp": "2026-10-04T00:00:00Z",
+         "average": 29.06,
+         "maximum": 93.74
+        },
+        {
+         "timeStamp": "2026-10-05T00:00:00Z",
+         "average": 49.02,
+         "maximum": 92.19
+        },
+        {
+         "timeStamp": "2026-10-06T00:00:00Z",
+         "average": 51.07,
+         "maximum": 80.83
+        },
+        {
+         "timeStamp": "2026-10-07T00:00:00Z",
+         "average": 33.31,
+         "maximum": 93.87
+        },
+        {
+         "timeStamp": "2026-10-08T00:00:00Z",
+         "average": 41.11,
+         "maximum": 87.05
+        },
+        {
+         "timeStamp": "2026-10-09T00:00:00Z",
+         "average": 59.46,
+         "maximum": 89.47
+        },
+        {
+         "timeStamp": "2026-10-10T00:00:00Z",
+         "average": 45.9,
+         "maximum": 91.14
+        },
+        {
+         "timeStamp": "2026-10-11T00:00:00Z",
+         "average": 34.55,
+         "maximum": 92.87
+        },
+        {
+         "timeStamp": "2026-10-12T00:00:00Z",
+         "average": 61.15,
+         "maximum": 67.4
+        },
+        {
+         "timeStamp": "2026-10-13T00:00:00Z",
+         "average": 25.14,
+         "maximum": 89.92
+        },
+        {
+         "timeStamp": "2026-10-14T00:00:00Z",
+         "average": 51.89,
+         "maximum": 80.77
+        },
+        {
+         "timeStamp": "2026-10-15T00:00:00Z",
+         "average": 29.64,
+         "maximum": 84.29
+        },
+        {
+         "timeStamp": "2026-10-16T00:00:00Z",
+         "average": 24.63,
+         "maximum": 79.5
+        },
+        {
+         "timeStamp": "2026-10-17T00:00:00Z",
+         "average": 32.01,
+         "maximum": 70.21
+        },
+        {
+         "timeStamp": "2026-10-18T00:00:00Z",
+         "average": 44.38,
+         "maximum": 87.37
+        },
+        {
+         "timeStamp": "2026-10-19T00:00:00Z",
+         "average": 60.46,
+         "maximum": 67.26
+        },
+        {
+         "timeStamp": "2026-10-20T00:00:00Z",
+         "average": 38.27,
+         "maximum": 83.52
+        },
+        {
+         "timeStamp": "2026-10-21T00:00:00Z",
+         "average": 27.76,
+         "maximum": 66.84
+        },
+        {
+         "timeStamp": "2026-10-22T00:00:00Z",
+         "average": 33.39,
+         "maximum": 75.27
+        },
+        {
+         "timeStamp": "2026-10-23T00:00:00Z",
+         "average": 38.27,
+         "maximum": 79.23
+        },
+        {
+         "timeStamp": "2026-10-24T00:00:00Z",
+         "average": 34.68,
+         "maximum": 83.14
+        },
+        {
+         "timeStamp": "2026-10-25T00:00:00Z",
+         "average": 47.06,
+         "maximum": 68.27
+        },
+        {
+         "timeStamp": "2026-10-26T00:00:00Z",
+         "average": 44.77,
+         "maximum": 76.19
+        },
+        {
+         "timeStamp": "2026-10-27T00:00:00Z",
+         "average": 36.26,
+         "maximum": 64.51
+        },
+        {
+         "timeStamp": "2026-10-28T00:00:00Z",
+         "average": 47.5,
+         "maximum": 85.71
+        },
+        {
+         "timeStamp": "2026-10-29T00:00:00Z",
+         "average": 37.79,
+         "maximum": 94.8
+        },
+        {
+         "timeStamp": "2026-10-30T00:00:00Z",
+         "average": 26.28,
+         "maximum": 82.88
+        },
+        {
+         "timeStamp": "2026-10-31T00:00:00Z",
+         "average": 24.04,
+         "maximum": 74.25
+        }
+       ]
+      }
+     ],
+     "errorCode": "Success"
+    }
+   ]
+  }
+ ]
+}

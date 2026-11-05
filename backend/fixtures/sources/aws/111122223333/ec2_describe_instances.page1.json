@@ -1,0 +1,423 @@
+{
+ "Reservations": [
+  {
+   "ReservationId": "r-07d6f4e98bc05dcb0c",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0c4f9e2a7b1d30004",
+     "InstanceType": "m6i.xlarge",
+     "LaunchTime": "2026-01-05T10:25:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1b",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.0.205.58",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-0de0daaec74a38ccfd",
+        "Status": "attached",
+        "AttachTime": "2026-01-05T10:25:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "payments-ledger-replica"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "payments"
+      },
+      {
+       "Key": "owner",
+       "Value": "payments-oncall@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1010"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-0430e823791a61e902",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0a759a057d9a7ed11e",
+     "InstanceType": "c6i.xlarge",
+     "LaunchTime": "2026-04-12T10:21:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1b",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.20.198.225",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-05fe3c4ff0344f6fe5",
+        "Status": "attached",
+        "AttachTime": "2026-04-12T10:21:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "payments-api-prod-1"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "payments"
+      },
+      {
+       "Key": "owner",
+       "Value": "payments-oncall@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1010"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-0083c0e8b4ac29eefa",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-024fb833c7279f0561",
+     "InstanceType": "m6i.xlarge",
+     "LaunchTime": "2026-07-31T10:31:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1b",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.3.220.223",
+     "BlockDeviceMappings": [],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "payments-worker-prod-3"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "payments"
+      },
+      {
+       "Key": "owner",
+       "Value": "payments-oncall@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1010"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-0bf3b8e3c694a73424",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0115a51caba92a1749",
+     "InstanceType": "m6i.xlarge",
+     "LaunchTime": "2026-08-18T10:33:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1d",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.12.8.195",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-0a5ac9dd1bc24e49be",
+        "Status": "attached",
+        "AttachTime": "2026-08-18T10:33:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "payments-reconciler-prod-5"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "payments"
+      },
+      {
+       "Key": "owner",
+       "Value": "payments-oncall@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1010"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-0e47cfa9c13f4838e5",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-08fddfc60aee54de76",
+     "InstanceType": "m6i.large",
+     "LaunchTime": "2026-01-04T10:10:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1c",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.9.147.21",
+     "BlockDeviceMappings": [],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "search-api-prod-7"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "search"
+      },
+      {
+       "Key": "owner",
+       "Value": "search-team@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1020"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-045056e3588ef4c6a0",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0e874a432d629491e3",
+     "InstanceType": "c6i.xlarge",
+     "LaunchTime": "2026-08-02T10:04:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1b",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.16.125.150",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-05c85c3e66a5d021e3",
+        "Status": "attached",
+        "AttachTime": "2026-08-02T10:04:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "search-indexer-prod-8"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "search"
+      },
+      {
+       "Key": "owner",
+       "Value": "search-team@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1020"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-03a875dd9a269790ff",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0f993e5a5d20b9441d",
+     "InstanceType": "t3.medium",
+     "LaunchTime": "2026-02-01T10:40:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1a",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.18.85.11",
+     "BlockDeviceMappings": [],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "search-query-prod-11"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "search"
+      },
+      {
+       "Key": "owner",
+       "Value": "search-team@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1020"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-0e46d9af39a48d558b",
+   "OwnerId": "111122223333",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-09476095685e3c5c34",
+     "InstanceType": "m6i.xlarge",
+     "LaunchTime": "2025-11-28T10:09:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1a",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.20.36.91",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-036783a0c2effca48d",
+        "Status": "attached",
+        "AttachTime": "2025-11-28T10:09:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "etl-runner-prod-13"
+      },
+      {
+       "Key": "env",
+       "Value": "prod"
+      },
+      {
+       "Key": "team",
+       "Value": "data-platform"
+      },
+      {
+       "Key": "owner",
+       "Value": "data-platform@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1030"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "NextToken": "eyJ2IjoxLCJwYWdlIjoyfQ=="
+}

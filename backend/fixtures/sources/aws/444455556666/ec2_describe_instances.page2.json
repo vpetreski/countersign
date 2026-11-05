@@ -1,0 +1,662 @@
+{
+ "Reservations": [
+  {
+   "ReservationId": "r-0c036b6ff214d73597",
+   "OwnerId": "444455556666",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0cf2e0652cc98dddae",
+     "InstanceType": "m6i.large",
+     "LaunchTime": "2025-11-07T10:00:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1c",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.19.225.22",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-0bbcd87b5c83a4f6ea",
+        "Status": "attached",
+        "AttachTime": "2025-11-07T10:00:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "search-indexer-staging-9"
+      },
+      {
+       "Key": "env",
+       "Value": "staging"
+      },
+      {
+       "Key": "team",
+       "Value": "search"
+      },
+      {
+       "Key": "owner",
+       "Value": "search-team@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1020"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-05fa84aeb5df9ab108",
+   "OwnerId": "444455556666",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0c48c42b270428053b",
+     "InstanceType": "m6i.xlarge",
+     "LaunchTime": "2026-03-28T10:32:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1c",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.14.122.160",
+     "BlockDeviceMappings": [],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "search-indexer-dev-10"
+      },
+      {
+       "Key": "env",
+       "Value": "dev"
+      },
+      {
+       "Key": "team",
+       "Value": "search"
+      },
+      {
+       "Key": "owner",
+       "Value": "search-team@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1020"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-07288e54c37d196674",
+   "OwnerId": "444455556666",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0870a4007583e4dae1",
+     "InstanceType": "t3.medium",
+     "LaunchTime": "2025-10-19T10:40:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1d",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.11.200.140",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-069d659961bf78a2b9",
+        "Status": "attached",
+        "AttachTime": "2025-10-19T10:40:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "search-query-staging-12"
+      },
+      {
+       "Key": "env",
+       "Value": "staging"
+      },
+      {
+       "Key": "team",
+       "Value": "search"
+      },
+      {
+       "Key": "owner",
+       "Value": "search-team@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1020"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-01157b34385a963775",
+   "OwnerId": "444455556666",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-044d1c0e8816f746f2",
+     "InstanceType": "t3.medium",
+     "LaunchTime": "2026-03-14T10:58:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1b",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.10.225.16",
+     "BlockDeviceMappings": [],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "etl-runner-dev-14"
+      },
+      {
+       "Key": "env",
+       "Value": "dev"
+      },
+      {
+       "Key": "team",
+       "Value": "data-platform"
+      },
+      {
+       "Key": "owner",
+       "Value": "data-platform@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1030"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-093dc482c2400640ec",
+   "OwnerId": "444455556666",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-01d9d541b49011b707",
+     "InstanceType": "t3.medium",
+     "LaunchTime": "2026-07-06T10:05:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1a",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.4.210.147",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-073c68736541a9dbb4",
+        "Status": "attached",
+        "AttachTime": "2026-07-06T10:05:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "airflow-worker-dev-16"
+      },
+      {
+       "Key": "env",
+       "Value": "dev"
+      },
+      {
+       "Key": "team",
+       "Value": "data-platform"
+      },
+      {
+       "Key": "owner",
+       "Value": "data-platform@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1030"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-0080cc4e67b1ab1e75",
+   "OwnerId": "444455556666",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0c1a1fbfaedf09774e",
+     "InstanceType": "c6i.xlarge",
+     "LaunchTime": "2025-03-20T10:10:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1d",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.5.116.173",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-08d47c97ebb3dec80f",
+        "Status": "attached",
+        "AttachTime": "2025-03-20T10:10:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "ml-trainer-staging-19"
+      },
+      {
+       "Key": "env",
+       "Value": "staging"
+      },
+      {
+       "Key": "team",
+       "Value": "ml-research"
+      },
+      {
+       "Key": "owner",
+       "Value": "ml-research@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1040"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-0f1b558084f3f42bcb",
+   "OwnerId": "444455556666",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0ae1aecc29c255e567",
+     "InstanceType": "m6i.large",
+     "LaunchTime": "2025-10-13T10:24:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1a",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.15.19.14",
+     "BlockDeviceMappings": [],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "ml-trainer-dev-20"
+      },
+      {
+       "Key": "env",
+       "Value": "dev"
+      },
+      {
+       "Key": "team",
+       "Value": "ml-research"
+      },
+      {
+       "Key": "owner",
+       "Value": "ml-research@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1040"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-02ad3f84e5d7150777",
+   "OwnerId": "444455556666",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0261999b5f861e8c9a",
+     "InstanceType": "m6i.large",
+     "LaunchTime": "2025-12-01T10:47:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1b",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.24.210.55",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-0bc822f404cee9807d",
+        "Status": "attached",
+        "AttachTime": "2025-12-01T10:47:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "ml-serving-staging-22"
+      },
+      {
+       "Key": "env",
+       "Value": "staging"
+      },
+      {
+       "Key": "team",
+       "Value": "ml-research"
+      },
+      {
+       "Key": "owner",
+       "Value": "ml-research@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1040"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-015108e78ef7aba4db",
+   "OwnerId": "444455556666",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0a229e8b8ddb5621e4",
+     "InstanceType": "t3.medium",
+     "LaunchTime": "2026-05-02T10:48:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1c",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.9.127.88",
+     "BlockDeviceMappings": [],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "tools-ci-runner-staging-26"
+      },
+      {
+       "Key": "env",
+       "Value": "staging"
+      },
+      {
+       "Key": "team",
+       "Value": "internal-tools"
+      },
+      {
+       "Key": "owner",
+       "Value": "it-tools@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1060"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-07c44a63de1b7417cd",
+   "OwnerId": "444455556666",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-093ca93ef0b678b88e",
+     "InstanceType": "m6i.large",
+     "LaunchTime": "2026-04-13T10:13:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1d",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.6.226.157",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-0bf526a38ff0382727",
+        "Status": "attached",
+        "AttachTime": "2026-04-13T10:13:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "tools-ci-runner-dev-27"
+      },
+      {
+       "Key": "env",
+       "Value": "dev"
+      },
+      {
+       "Key": "team",
+       "Value": "internal-tools"
+      },
+      {
+       "Key": "owner",
+       "Value": "it-tools@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1060"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-0653e1e667b3768fdf",
+   "OwnerId": "444455556666",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0318b400af5e484f91",
+     "InstanceType": "m5.xlarge",
+     "LaunchTime": "2025-09-05T10:02:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1c",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.24.122.130",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-0311121147b66e5361",
+        "Status": "attached",
+        "AttachTime": "2025-09-05T10:02:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "tools-wiki-staging-29"
+      },
+      {
+       "Key": "env",
+       "Value": "staging"
+      },
+      {
+       "Key": "team",
+       "Value": "internal-tools"
+      },
+      {
+       "Key": "owner",
+       "Value": "it-tools@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1060"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-0310c84665db588e2a",
+   "OwnerId": "444455556666",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0bd3732b03674a00f7",
+     "InstanceType": "m6i.xlarge",
+     "LaunchTime": "2025-08-16T10:37:00+00:00",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Placement": {
+      "AvailabilityZone": "us-east-1a",
+      "Tenancy": "default"
+     },
+     "PlatformDetails": "Linux/UNIX",
+     "Architecture": "x86_64",
+     "PrivateIpAddress": "10.22.142.218",
+     "BlockDeviceMappings": [
+      {
+       "DeviceName": "/dev/xvda",
+       "Ebs": {
+        "VolumeId": "vol-0874ec4b42cdd4775c",
+        "Status": "attached",
+        "AttachTime": "2025-08-16T10:37:00+00:00",
+        "DeleteOnTermination": true
+       }
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "tools-wiki-dev-30"
+      },
+      {
+       "Key": "env",
+       "Value": "dev"
+      },
+      {
+       "Key": "team",
+       "Value": "internal-tools"
+      },
+      {
+       "Key": "owner",
+       "Value": "it-tools@example.com"
+      },
+      {
+       "Key": "cost-center",
+       "Value": "CC-1060"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "ReservationId": "r-07b2482d182e87dccb",
+   "OwnerId": "444455556666",
+   "Groups": [],
+   "Instances": [
+    {
+     "InstanceId": "i-0bad0c0ffee000001",
+     "InstanceType": "t3.medium",
+     "LaunchTime": "not-a-date",
+     "State": {
+      "Code": 16,
+      "Name": "running"
+     },
+     "Tags": [
+      {
+       "Key": "Name",
+       "Value": "broken-record"
+      },
+      {
+       "Key": "env",
+       "Value": "dev"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

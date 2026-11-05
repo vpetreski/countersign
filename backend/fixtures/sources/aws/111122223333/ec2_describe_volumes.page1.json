@@ -1,0 +1,303 @@
+{
+ "Volumes": [
+  {
+   "VolumeId": "vol-0c4f9e2a7b1d30003",
+   "Size": 1000,
+   "VolumeType": "st1",
+   "State": "available",
+   "CreateTime": "2026-06-04T10:53:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Attachments": [],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "payments-archive-cold"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "payments"
+    },
+    {
+     "Key": "owner",
+     "Value": "payments-oncall@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1010"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-05fe3c4ff0344f6fe5",
+   "Size": 100,
+   "VolumeType": "gp2",
+   "State": "in-use",
+   "CreateTime": "2026-04-12T10:21:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 300,
+   "Attachments": [
+    {
+     "InstanceId": "i-0a759a057d9a7ed11e",
+     "State": "attached",
+     "AttachTime": "2026-04-12T10:21:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-05fe3c4ff0344f6fe5"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "payments-api-prod-1-data"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "payments"
+    },
+    {
+     "Key": "owner",
+     "Value": "payments-oncall@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1010"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-0a5ac9dd1bc24e49be",
+   "Size": 100,
+   "VolumeType": "gp2",
+   "State": "in-use",
+   "CreateTime": "2026-08-18T10:33:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 300,
+   "Attachments": [
+    {
+     "InstanceId": "i-0115a51caba92a1749",
+     "State": "attached",
+     "AttachTime": "2026-08-18T10:33:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-0a5ac9dd1bc24e49be"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "payments-reconciler-prod-5-data"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "payments"
+    },
+    {
+     "Key": "owner",
+     "Value": "payments-oncall@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1010"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-05c85c3e66a5d021e3",
+   "Size": 100,
+   "VolumeType": "gp2",
+   "State": "in-use",
+   "CreateTime": "2026-08-02T10:04:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 300,
+   "Attachments": [
+    {
+     "InstanceId": "i-0e874a432d629491e3",
+     "State": "attached",
+     "AttachTime": "2026-08-02T10:04:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-05c85c3e66a5d021e3"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "search-indexer-prod-8-data"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "search"
+    },
+    {
+     "Key": "owner",
+     "Value": "search-team@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1020"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-036783a0c2effca48d",
+   "Size": 500,
+   "VolumeType": "gp2",
+   "State": "in-use",
+   "CreateTime": "2025-11-28T10:09:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 1500,
+   "Attachments": [
+    {
+     "InstanceId": "i-09476095685e3c5c34",
+     "State": "attached",
+     "AttachTime": "2025-11-28T10:09:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-036783a0c2effca48d"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "etl-runner-prod-13-data"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "data-platform"
+    },
+    {
+     "Key": "owner",
+     "Value": "data-platform@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1030"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-0d1ebd704764926d18",
+   "Size": 500,
+   "VolumeType": "gp2",
+   "State": "in-use",
+   "CreateTime": "2026-06-22T10:48:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 1500,
+   "Attachments": [
+    {
+     "InstanceId": "i-0172f4d47a8a9d5ace",
+     "State": "attached",
+     "AttachTime": "2026-06-22T10:48:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-0d1ebd704764926d18"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "airflow-worker-prod-15-data"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "data-platform"
+    },
+    {
+     "Key": "owner",
+     "Value": "data-platform@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1030"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-0169c77c98d2b6e959",
+   "Size": 100,
+   "VolumeType": "gp3",
+   "State": "in-use",
+   "CreateTime": "2026-02-01T10:54:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 3000,
+   "Attachments": [
+    {
+     "InstanceId": "i-08f112d893099a133f",
+     "State": "attached",
+     "AttachTime": "2026-02-01T10:54:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-0169c77c98d2b6e959"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "ml-trainer-prod-18-data"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "ml-research"
+    },
+    {
+     "Key": "owner",
+     "Value": "ml-research@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1040"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  }
+ ],
+ "NextToken": "eyJ2IjoxLCJwYWdlIjoyfQ=="
+}

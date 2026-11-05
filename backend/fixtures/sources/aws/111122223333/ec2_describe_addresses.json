@@ -1,0 +1,198 @@
+{
+ "Addresses": [
+  {
+   "AllocationId": "eipalloc-0c4f9e2a7b1d30002",
+   "PublicIp": "54.84.61.200",
+   "Domain": "vpc",
+   "PublicIpv4Pool": "amazon",
+   "NetworkBorderGroup": "us-east-1",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "payments-dr-reserved"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "payments"
+    },
+    {
+     "Key": "owner",
+     "Value": "payments-oncall@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1010"
+    }
+   ]
+  },
+  {
+   "AllocationId": "eipalloc-09cda13589a09bbfd5",
+   "PublicIp": "18.202.197.175",
+   "Domain": "vpc",
+   "PublicIpv4Pool": "amazon",
+   "NetworkBorderGroup": "us-east-1",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "payments-api-prod-1-eip"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "payments"
+    },
+    {
+     "Key": "owner",
+     "Value": "payments-oncall@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1010"
+    }
+   ],
+   "AssociationId": "eipassoc-07e4b019d9a785f1e0",
+   "InstanceId": "i-0a759a057d9a7ed11e",
+   "NetworkInterfaceId": "eni-077dc1523564655b95",
+   "PrivateIpAddress": "10.1.155.165"
+  },
+  {
+   "AllocationId": "eipalloc-0ca9555ddaee50c181",
+   "PublicIp": "18.202.141.153",
+   "Domain": "vpc",
+   "PublicIpv4Pool": "amazon",
+   "NetworkBorderGroup": "us-east-1",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "airflow-worker-prod-15-eip"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "data-platform"
+    },
+    {
+     "Key": "owner",
+     "Value": "data-platform@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1030"
+    }
+   ],
+   "AssociationId": "eipassoc-0b1c23c3a90ba7231f",
+   "InstanceId": "i-0172f4d47a8a9d5ace",
+   "NetworkInterfaceId": "eni-04a7dfd5f9ac854006",
+   "PrivateIpAddress": "10.1.165.141"
+  },
+  {
+   "AllocationId": "eipalloc-006f545c30f09cc69a",
+   "PublicIp": "18.227.152.88",
+   "Domain": "vpc",
+   "PublicIpv4Pool": "amazon",
+   "NetworkBorderGroup": "us-east-1",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "spark-driver-prod-17-eip"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "data-platform"
+    },
+    {
+     "Key": "owner",
+     "Value": "data-platform@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1030"
+    }
+   ],
+   "AssociationId": "eipassoc-0ae6e38fe393b1169e",
+   "InstanceId": "i-0aec5473349c871ebb",
+   "NetworkInterfaceId": "eni-0485189b9b028dde91",
+   "PrivateIpAddress": "10.1.194.50"
+  },
+  {
+   "AllocationId": "eipalloc-0ff46562985731ac63",
+   "PublicIp": "18.216.237.69",
+   "Domain": "vpc",
+   "PublicIpv4Pool": "amazon",
+   "NetworkBorderGroup": "us-east-1",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "storefront-web-prod-23-eip"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "web-storefront"
+    },
+    {
+     "Key": "owner",
+     "Value": "storefront@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1050"
+    }
+   ],
+   "AssociationId": "eipassoc-062996a9eab3a9c0b5",
+   "InstanceId": "i-05b8b7c64c9c9955cd",
+   "NetworkInterfaceId": "eni-00f194dadde0ea2564",
+   "PrivateIpAddress": "10.1.227.164"
+  },
+  {
+   "AllocationId": "eipalloc-0d70b4b8f7416af1c1",
+   "PublicIp": "18.205.4.121",
+   "Domain": "vpc",
+   "PublicIpv4Pool": "amazon",
+   "NetworkBorderGroup": "us-east-1",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "storefront-ssr-prod-24-eip"
+    },
+    {
+     "Key": "env",
+     "Value": "prod"
+    },
+    {
+     "Key": "team",
+     "Value": "web-storefront"
+    },
+    {
+     "Key": "owner",
+     "Value": "storefront@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1050"
+    }
+   ],
+   "AssociationId": "eipassoc-0bdc8e3fdea6ae8b58",
+   "InstanceId": "i-09b069856ef612e174",
+   "NetworkInterfaceId": "eni-01ca55444fa4d7ab08",
+   "PrivateIpAddress": "10.1.137.118"
+  }
+ ]
+}

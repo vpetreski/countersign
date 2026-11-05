@@ -1,0 +1,107 @@
+{
+ "generator": "scripts/generate_fixtures.py",
+ "seed": 20261101,
+ "as_of": "2026-11-01T00:00:00Z",
+ "files": [
+  {
+   "path": "sources/aws/111122223333/cloudwatch_get_metric_data.request.json",
+   "sha256": "b8a378cfbccf762de68ef2c7f5c8aa269c15aca8ca485dc9fcf22dcc6eb3eb6e",
+   "bytes": 10462
+  },
+  {
+   "path": "sources/aws/111122223333/cloudwatch_get_metric_data.response.json",
+   "sha256": "7f6c946dfcc89c93ecafcd15b3e6a881c9994eb316d06f6d79eb24b1b4b7f38d",
+   "bytes": 48690
+  },
+  {
+   "path": "sources/aws/111122223333/ec2_describe_addresses.json",
+   "sha256": "00455171bcb825b15b5a24ec922fe529b39baf780aa08a12492f94773b6665aa",
+   "bytes": 4083
+  },
+  {
+   "path": "sources/aws/111122223333/ec2_describe_instances.page1.json",
+   "sha256": "2d50ee52bea51a9139cafefa6e2bf09502fbb264f1eab8caa8e672b737a15a5f",
+   "bytes": 8856
+  },
+  {
+   "path": "sources/aws/111122223333/ec2_describe_instances.page2.json",
+   "sha256": "89b5b46bc54fee647e936b084052a9ad46c803e6d3bced37e1c29074c893120f",
+   "bytes": 9314
+  },
+  {
+   "path": "sources/aws/111122223333/ec2_describe_volumes.page1.json",
+   "sha256": "f245d43f49b2d301b4dfdb13b33d675c4417dab08a56c849b263a7e610ae602b",
+   "bytes": 6050
+  },
+  {
+   "path": "sources/aws/111122223333/ec2_describe_volumes.page2.json",
+   "sha256": "a53bdcabc263420b88ac5b0e6733a42987ccda42e20485431ca81d129c7d184a",
+   "bytes": 5117
+  },
+  {
+   "path": "sources/aws/444455556666/cloudwatch_get_metric_data.request.json",
+   "sha256": "ec5bee5e6073824d414d326301d8474729618a348e2f72c43e0b72dfa5576c06",
+   "bytes": 16902
+  },
+  {
+   "path": "sources/aws/444455556666/cloudwatch_get_metric_data.response.json",
+   "sha256": "1ac9d39deb58077e771378eb59adfaca8cec2ffc7f10ddedec2b3048b4f3d8e3",
+   "bytes": 72100
+  },
+  {
+   "path": "sources/aws/444455556666/ec2_describe_addresses.json",
+   "sha256": "912f072abaa88366de332cf8e4be96f6798d0e9cabd09b206fd5cebb0b8f2631",
+   "bytes": 1049
+  },
+  {
+   "path": "sources/aws/444455556666/ec2_describe_instances.page1.json",
+   "sha256": "9c8ee6ec7044eabd7ca0fa36c5896727b87e7d373181d40fce49c18f02567b59",
+   "bytes": 16968
+  },
+  {
+   "path": "sources/aws/444455556666/ec2_describe_instances.page2.json",
+   "sha256": "e68d3793250d2eb045dba0f379491c4f78836bbffd885fa4eb72e2f97d4d74bb",
+   "bytes": 13812
+  },
+  {
+   "path": "sources/aws/444455556666/ec2_describe_volumes.page1.json",
+   "sha256": "340d2c1c8f5e4cc1eca572fb2804cdebd3d8f09f03310c40b9ca23a302af2158",
+   "bytes": 10777
+  },
+  {
+   "path": "sources/aws/444455556666/ec2_describe_volumes.page2.json",
+   "sha256": "701b312fcf0b4a5c99f0b107bfd258ac894d35509ba69f4c4cb41d6142c686b4",
+   "bytes": 9690
+  },
+  {
+   "path": "sources/azure/monitor.percentage_cpu.json",
+   "sha256": "a34ef73af96257feb486182a604529158727e17cc7dd00bbf21cfb8438cfbaa1",
+   "bytes": 107729
+  },
+  {
+   "path": "sources/azure/resource_graph.disks.json",
+   "sha256": "14ba1beada83732b59846651731a553161a2e08800ae29b840d50512bd1622e2",
+   "bytes": 29455
+  },
+  {
+   "path": "sources/azure/resource_graph.public_ip_addresses.json",
+   "sha256": "536a2ca0c1305695f59ee5ed78b8c85de000081fd2cdcab737d110488d638db2",
+   "bytes": 8356
+  },
+  {
+   "path": "sources/azure/resource_graph.virtual_machines.json",
+   "sha256": "bd4b5eb8fe092ccaf620a7326ffd5205b96314d58a3d7f1851c50d5cda5e32fc",
+   "bytes": 35182
+  },
+  {
+   "path": "sources/billing/focus_aws_2026-10.csv",
+   "sha256": "4b8fdf01797a9591643d2214bf8fa9e7a7a50132356fbf904ad3a4fe5d2c5f4c",
+   "bytes": 1546800
+  },
+  {
+   "path": "sources/billing/focus_azure_2026-10.csv",
+   "sha256": "b80f6e63e30e002843d3b22bd07701df4289dbcfb0c9d176ea2f754426af5e78",
+   "bytes": 1230160
+  }
+ ]
+}

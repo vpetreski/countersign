@@ -1,0 +1,943 @@
+{
+ "MetricDataQueries": [
+  {
+   "Id": "cpu_ave_0",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30001"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_0",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30001"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_1",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30002"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_1",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30002"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_2",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30003"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_2",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30003"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_3",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30005"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_3",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30005"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_4",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30006"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_4",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30006"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_5",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30007"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_5",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30007"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_6",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30008"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_6",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30008"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_7",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30009"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_7",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d30009"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_8",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d3000a"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_8",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d3000a"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_9",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d3000b"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_9",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d3000b"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_10",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d3000c"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_10",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c4f9e2a7b1d3000c"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_11",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-04e3152f5298a3f550"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_11",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-04e3152f5298a3f550"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_12",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0d081a9155b3ef0152"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_12",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0d081a9155b3ef0152"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_13",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0d9b51714ab38dd7a3"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_13",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0d9b51714ab38dd7a3"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_14",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0cf2e0652cc98dddae"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_14",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0cf2e0652cc98dddae"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_15",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c48c42b270428053b"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_15",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c48c42b270428053b"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_16",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0870a4007583e4dae1"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_16",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0870a4007583e4dae1"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_17",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-044d1c0e8816f746f2"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_17",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-044d1c0e8816f746f2"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_18",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-01d9d541b49011b707"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_18",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-01d9d541b49011b707"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_19",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c1a1fbfaedf09774e"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_19",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0c1a1fbfaedf09774e"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_20",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0ae1aecc29c255e567"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_20",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0ae1aecc29c255e567"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_21",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0261999b5f861e8c9a"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_21",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0261999b5f861e8c9a"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_22",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0a229e8b8ddb5621e4"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_22",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0a229e8b8ddb5621e4"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_23",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-093ca93ef0b678b88e"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_23",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-093ca93ef0b678b88e"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_24",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0318b400af5e484f91"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_24",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0318b400af5e484f91"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_ave_25",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0bd3732b03674a00f7"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Average"
+   },
+   "ReturnData": true
+  },
+  {
+   "Id": "cpu_max_25",
+   "MetricStat": {
+    "Metric": {
+     "Namespace": "AWS/EC2",
+     "MetricName": "CPUUtilization",
+     "Dimensions": [
+      {
+       "Name": "InstanceId",
+       "Value": "i-0bd3732b03674a00f7"
+      }
+     ]
+    },
+    "Period": 86400,
+    "Stat": "Maximum"
+   },
+   "ReturnData": true
+  }
+ ],
+ "StartTime": "2026-10-01T00:00:00+00:00",
+ "EndTime": "2026-11-01T00:00:00+00:00",
+ "ScanBy": "TimestampDescending"
+}

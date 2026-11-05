@@ -1,0 +1,545 @@
+{
+ "Volumes": [
+  {
+   "VolumeId": "vol-0c4f9e2a7b1d30001",
+   "Size": 500,
+   "VolumeType": "gp2",
+   "State": "available",
+   "CreateTime": "2026-08-03T10:08:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 1500,
+   "Attachments": [],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "payments-sandbox-old-data"
+    },
+    {
+     "Key": "env",
+     "Value": "dev"
+    },
+    {
+     "Key": "team",
+     "Value": "payments"
+    },
+    {
+     "Key": "owner",
+     "Value": "payments-oncall@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1010"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-0c4f9e2a7b1d30002",
+   "Size": 200,
+   "VolumeType": "gp3",
+   "State": "available",
+   "CreateTime": "2026-08-18T10:28:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 3000,
+   "Attachments": [],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "search-stg-snapshot-restore"
+    },
+    {
+     "Key": "env",
+     "Value": "staging"
+    },
+    {
+     "Key": "team",
+     "Value": "search"
+    },
+    {
+     "Key": "owner",
+     "Value": "search-team@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1020"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-0c4f9e2a7b1d30004",
+   "Size": 100,
+   "VolumeType": "gp3",
+   "State": "available",
+   "CreateTime": "2026-07-04T10:53:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 3000,
+   "Attachments": [],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "data-audit-export-2025"
+    },
+    {
+     "Key": "env",
+     "Value": "dev"
+    },
+    {
+     "Key": "team",
+     "Value": "data-platform"
+    },
+    {
+     "Key": "owner",
+     "Value": "data-platform@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1030"
+    },
+    {
+     "Key": "compliance",
+     "Value": "legal-hold"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-0c4f9e2a7b1d30005",
+   "Size": 300,
+   "VolumeType": "gp3",
+   "State": "available",
+   "CreateTime": "2026-09-30T10:05:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 3000,
+   "Attachments": [],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "ml-scratch-new"
+    },
+    {
+     "Key": "env",
+     "Value": "dev"
+    },
+    {
+     "Key": "team",
+     "Value": "ml-research"
+    },
+    {
+     "Key": "owner",
+     "Value": "ml-research@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1040"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-0ef8deef44210c61c1",
+   "Size": 50,
+   "VolumeType": "gp2",
+   "State": "in-use",
+   "CreateTime": "2025-11-04T10:10:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 150,
+   "Attachments": [
+    {
+     "InstanceId": "i-04e3152f5298a3f550",
+     "State": "attached",
+     "AttachTime": "2025-11-04T10:10:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-0ef8deef44210c61c1"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "payments-api-dev-2-data"
+    },
+    {
+     "Key": "env",
+     "Value": "dev"
+    },
+    {
+     "Key": "team",
+     "Value": "payments"
+    },
+    {
+     "Key": "owner",
+     "Value": "payments-oncall@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1010"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-0ec88dcedd406aafda",
+   "Size": 200,
+   "VolumeType": "gp3",
+   "State": "in-use",
+   "CreateTime": "2026-04-23T10:30:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 3000,
+   "Attachments": [
+    {
+     "InstanceId": "i-0d081a9155b3ef0152",
+     "State": "attached",
+     "AttachTime": "2026-04-23T10:30:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-0ec88dcedd406aafda"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "payments-worker-dev-4-data"
+    },
+    {
+     "Key": "env",
+     "Value": "dev"
+    },
+    {
+     "Key": "team",
+     "Value": "payments"
+    },
+    {
+     "Key": "owner",
+     "Value": "payments-oncall@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1010"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-04c1fb17938f500b2a",
+   "Size": 100,
+   "VolumeType": "gp2",
+   "State": "in-use",
+   "CreateTime": "2025-10-31T10:55:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 300,
+   "Attachments": [
+    {
+     "InstanceId": "i-0d9b51714ab38dd7a3",
+     "State": "attached",
+     "AttachTime": "2025-10-31T10:55:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-04c1fb17938f500b2a"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "payments-reconciler-staging-6-data"
+    },
+    {
+     "Key": "env",
+     "Value": "staging"
+    },
+    {
+     "Key": "team",
+     "Value": "payments"
+    },
+    {
+     "Key": "owner",
+     "Value": "payments-oncall@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1010"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-0bbcd87b5c83a4f6ea",
+   "Size": 100,
+   "VolumeType": "gp3",
+   "State": "in-use",
+   "CreateTime": "2025-11-07T10:00:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 3000,
+   "Attachments": [
+    {
+     "InstanceId": "i-0cf2e0652cc98dddae",
+     "State": "attached",
+     "AttachTime": "2025-11-07T10:00:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-0bbcd87b5c83a4f6ea"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "search-indexer-staging-9-data"
+    },
+    {
+     "Key": "env",
+     "Value": "staging"
+    },
+    {
+     "Key": "team",
+     "Value": "search"
+    },
+    {
+     "Key": "owner",
+     "Value": "search-team@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1020"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-069d659961bf78a2b9",
+   "Size": 500,
+   "VolumeType": "gp2",
+   "State": "in-use",
+   "CreateTime": "2025-10-19T10:40:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 1500,
+   "Attachments": [
+    {
+     "InstanceId": "i-0870a4007583e4dae1",
+     "State": "attached",
+     "AttachTime": "2025-10-19T10:40:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-069d659961bf78a2b9"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "search-query-staging-12-data"
+    },
+    {
+     "Key": "env",
+     "Value": "staging"
+    },
+    {
+     "Key": "team",
+     "Value": "search"
+    },
+    {
+     "Key": "owner",
+     "Value": "search-team@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1020"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-073c68736541a9dbb4",
+   "Size": 50,
+   "VolumeType": "gp3",
+   "State": "in-use",
+   "CreateTime": "2026-07-06T10:05:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 3000,
+   "Attachments": [
+    {
+     "InstanceId": "i-01d9d541b49011b707",
+     "State": "attached",
+     "AttachTime": "2026-07-06T10:05:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-073c68736541a9dbb4"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "airflow-worker-dev-16-data"
+    },
+    {
+     "Key": "env",
+     "Value": "dev"
+    },
+    {
+     "Key": "team",
+     "Value": "data-platform"
+    },
+    {
+     "Key": "owner",
+     "Value": "data-platform@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1030"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-08d47c97ebb3dec80f",
+   "Size": 50,
+   "VolumeType": "gp2",
+   "State": "in-use",
+   "CreateTime": "2025-03-20T10:10:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 150,
+   "Attachments": [
+    {
+     "InstanceId": "i-0c1a1fbfaedf09774e",
+     "State": "attached",
+     "AttachTime": "2025-03-20T10:10:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-08d47c97ebb3dec80f"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "ml-trainer-staging-19-data"
+    },
+    {
+     "Key": "env",
+     "Value": "staging"
+    },
+    {
+     "Key": "team",
+     "Value": "ml-research"
+    },
+    {
+     "Key": "owner",
+     "Value": "ml-research@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1040"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-0bc822f404cee9807d",
+   "Size": 200,
+   "VolumeType": "gp3",
+   "State": "in-use",
+   "CreateTime": "2025-12-01T10:47:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 3000,
+   "Attachments": [
+    {
+     "InstanceId": "i-0261999b5f861e8c9a",
+     "State": "attached",
+     "AttachTime": "2025-12-01T10:47:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-0bc822f404cee9807d"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "ml-serving-staging-22-data"
+    },
+    {
+     "Key": "env",
+     "Value": "staging"
+    },
+    {
+     "Key": "team",
+     "Value": "ml-research"
+    },
+    {
+     "Key": "owner",
+     "Value": "ml-research@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1040"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  },
+  {
+   "VolumeId": "vol-0bf526a38ff0382727",
+   "Size": 200,
+   "VolumeType": "gp3",
+   "State": "in-use",
+   "CreateTime": "2026-04-13T10:13:00+00:00",
+   "AvailabilityZone": "us-east-1a",
+   "Encrypted": true,
+   "Iops": 3000,
+   "Attachments": [
+    {
+     "InstanceId": "i-093ca93ef0b678b88e",
+     "State": "attached",
+     "AttachTime": "2026-04-13T10:13:00+00:00",
+     "Device": "/dev/xvda",
+     "DeleteOnTermination": false,
+     "VolumeId": "vol-0bf526a38ff0382727"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "tools-ci-runner-dev-27-data"
+    },
+    {
+     "Key": "env",
+     "Value": "dev"
+    },
+    {
+     "Key": "team",
+     "Value": "internal-tools"
+    },
+    {
+     "Key": "owner",
+     "Value": "it-tools@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1060"
+    }
+   ],
+   "SnapshotId": "",
+   "MultiAttachEnabled": false
+  }
+ ],
+ "NextToken": "eyJ2IjoxLCJwYWdlIjoyfQ=="
+}

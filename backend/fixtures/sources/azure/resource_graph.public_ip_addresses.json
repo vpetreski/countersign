@@ -1,0 +1,234 @@
+{
+ "totalRecords": 8,
+ "count": 8,
+ "data": [
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-tools/providers/Microsoft.Network/publicIPAddresses/pip-dev-bastion-old",
+   "name": "pip-dev-bastion-old",
+   "type": "microsoft.network/publicipaddresses",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-dev-tools",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "sku": {
+    "name": "Standard",
+    "tier": "Regional"
+   },
+   "tags": {
+    "Environment": "Dev",
+    "Team": "internal-tools",
+    "Owner": "it-tools@example.com",
+    "CostCenter": "CC-1060"
+   },
+   "properties": {
+    "ipAddress": "20.120.44.9",
+    "publicIPAllocationMethod": "Static",
+    "publicIPAddressVersion": "IPv4",
+    "provisioningState": "Succeeded",
+    "idleTimeoutInMinutes": 4
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-payments/providers/Microsoft.Network/publicIPAddresses/pip-prod-failover",
+   "name": "pip-prod-failover",
+   "type": "microsoft.network/publicipaddresses",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-payments",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "sku": {
+    "name": "Standard",
+    "tier": "Regional"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "payments",
+    "Owner": "payments-oncall@example.com",
+    "CostCenter": "CC-1010"
+   },
+   "properties": {
+    "ipAddress": "52.170.3.88",
+    "publicIPAllocationMethod": "Static",
+    "publicIPAddressVersion": "IPv4",
+    "provisioningState": "Succeeded",
+    "idleTimeoutInMinutes": 4
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-payments/providers/Microsoft.Network/publicIPAddresses/pip-prod-pay-fraud-33",
+   "name": "pip-prod-pay-fraud-33",
+   "type": "microsoft.network/publicipaddresses",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "westeurope",
+   "resourceGroup": "rg-prod-payments",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "sku": {
+    "name": "Standard",
+    "tier": "Regional"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "payments",
+    "Owner": "payments-oncall@example.com",
+    "CostCenter": "CC-1010"
+   },
+   "properties": {
+    "ipAddress": "20.47.180.41",
+    "publicIPAllocationMethod": "Static",
+    "publicIPAddressVersion": "IPv4",
+    "provisioningState": "Succeeded",
+    "idleTimeoutInMinutes": 4,
+    "ipConfiguration": {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-payments/providers/Microsoft.Network/networkInterfaces/nic-vm-prod-pay-fraud-33/ipConfigurations/ipconfig1"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-search/providers/Microsoft.Network/publicIPAddresses/pip-prod-srch-crawler-34",
+   "name": "pip-prod-srch-crawler-34",
+   "type": "microsoft.network/publicipaddresses",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-search",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "sku": {
+    "name": "Standard",
+    "tier": "Regional"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "search",
+    "Owner": "search-team@example.com",
+    "CostCenter": "CC-1020"
+   },
+   "properties": {
+    "ipAddress": "20.78.64.61",
+    "publicIPAllocationMethod": "Static",
+    "publicIPAddressVersion": "IPv4",
+    "provisioningState": "Succeeded",
+    "idleTimeoutInMinutes": 4,
+    "ipConfiguration": {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-search/providers/Microsoft.Network/networkInterfaces/nic-vm-prod-srch-crawler-34/ipConfigurations/ipconfig1"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-data-platform/providers/Microsoft.Network/publicIPAddresses/pip-prod-dp-ingest-38",
+   "name": "pip-prod-dp-ingest-38",
+   "type": "microsoft.network/publicipaddresses",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-data-platform",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "sku": {
+    "name": "Standard",
+    "tier": "Regional"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "data-platform",
+    "Owner": "data-platform@example.com",
+    "CostCenter": "CC-1030"
+   },
+   "properties": {
+    "ipAddress": "20.49.237.253",
+    "publicIPAllocationMethod": "Static",
+    "publicIPAddressVersion": "IPv4",
+    "provisioningState": "Succeeded",
+    "idleTimeoutInMinutes": 4,
+    "ipConfiguration": {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-data-platform/providers/Microsoft.Network/networkInterfaces/nic-vm-prod-dp-ingest-38/ipConfigurations/ipconfig1"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-ml-research/providers/Microsoft.Network/publicIPAddresses/pip-prod-ml-notebook-41",
+   "name": "pip-prod-ml-notebook-41",
+   "type": "microsoft.network/publicipaddresses",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-ml-research",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "sku": {
+    "name": "Standard",
+    "tier": "Regional"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "ml-research",
+    "Owner": "ml-research@example.com",
+    "CostCenter": "CC-1040"
+   },
+   "properties": {
+    "ipAddress": "20.46.98.110",
+    "publicIPAllocationMethod": "Static",
+    "publicIPAddressVersion": "IPv4",
+    "provisioningState": "Succeeded",
+    "idleTimeoutInMinutes": 4,
+    "ipConfiguration": {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-ml-research/providers/Microsoft.Network/networkInterfaces/nic-vm-prod-ml-notebook-41/ipConfigurations/ipconfig1"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web-storefront/providers/Microsoft.Network/publicIPAddresses/pip-prod-web-cms-45",
+   "name": "pip-prod-web-cms-45",
+   "type": "microsoft.network/publicipaddresses",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-web-storefront",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "sku": {
+    "name": "Standard",
+    "tier": "Regional"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "web-storefront",
+    "Owner": "storefront@example.com",
+    "CostCenter": "CC-1050"
+   },
+   "properties": {
+    "ipAddress": "20.103.22.69",
+    "publicIPAllocationMethod": "Static",
+    "publicIPAddressVersion": "IPv4",
+    "provisioningState": "Succeeded",
+    "idleTimeoutInMinutes": 4,
+    "ipConfiguration": {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web-storefront/providers/Microsoft.Network/networkInterfaces/nic-vm-prod-web-cms-45/ipConfigurations/ipconfig1"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-internal-tools/providers/Microsoft.Network/publicIPAddresses/pip-prod-it-jenkins-47",
+   "name": "pip-prod-it-jenkins-47",
+   "type": "microsoft.network/publicipaddresses",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-internal-tools",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "sku": {
+    "name": "Standard",
+    "tier": "Regional"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "internal-tools",
+    "Owner": "it-tools@example.com",
+    "CostCenter": "CC-1060"
+   },
+   "properties": {
+    "ipAddress": "20.70.75.187",
+    "publicIPAllocationMethod": "Static",
+    "publicIPAddressVersion": "IPv4",
+    "provisioningState": "Succeeded",
+    "idleTimeoutInMinutes": 4,
+    "ipConfiguration": {
+     "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-internal-tools/providers/Microsoft.Network/networkInterfaces/nic-vm-prod-it-jenkins-47/ipConfigurations/ipconfig1"
+    }
+   }
+  }
+ ],
+ "facets": [],
+ "resultTruncated": "false"
+}

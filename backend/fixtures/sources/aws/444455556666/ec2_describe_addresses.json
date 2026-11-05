@@ -1,0 +1,62 @@
+{
+ "Addresses": [
+  {
+   "AllocationId": "eipalloc-0c4f9e2a7b1d30001",
+   "PublicIp": "3.91.20.17",
+   "Domain": "vpc",
+   "PublicIpv4Pool": "amazon",
+   "NetworkBorderGroup": "us-east-1",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "storefront-old-nat"
+    },
+    {
+     "Key": "env",
+     "Value": "dev"
+    },
+    {
+     "Key": "team",
+     "Value": "web-storefront"
+    },
+    {
+     "Key": "owner",
+     "Value": "storefront@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1050"
+    }
+   ]
+  },
+  {
+   "AllocationId": "eipalloc-0c4f9e2a7b1d30003",
+   "PublicIp": "44.205.9.81",
+   "Domain": "vpc",
+   "PublicIpv4Pool": "amazon",
+   "NetworkBorderGroup": "us-east-1",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "tools-vpn-test"
+    },
+    {
+     "Key": "env",
+     "Value": "sandbox"
+    },
+    {
+     "Key": "team",
+     "Value": "internal-tools"
+    },
+    {
+     "Key": "owner",
+     "Value": "it-tools@example.com"
+    },
+    {
+     "Key": "cost-center",
+     "Value": "CC-1060"
+    }
+   ]
+  }
+ ]
+}

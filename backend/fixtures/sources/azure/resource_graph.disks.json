@@ -1,0 +1,853 @@
+{
+ "totalRecords": 28,
+ "count": 28,
+ "data": [
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-etl/providers/Microsoft.Compute/disks/disk-dev-scratch-01",
+   "name": "disk-dev-scratch-01",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-dev-etl",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": null,
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Dev",
+    "Team": "data-platform",
+    "Owner": "data-platform@example.com",
+    "CostCenter": "CC-1030"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Unattached",
+    "timeCreated": "2026-08-13T10:31:00Z",
+    "tier": "P10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    },
+    "LastOwnershipUpdateTime": "2026-09-22T10:24:00Z"
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-tools/providers/Microsoft.Compute/disks/disk-dev-old-build-02",
+   "name": "disk-dev-old-build-02",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "westeurope",
+   "resourceGroup": "rg-dev-tools",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": null,
+   "sku": {
+    "name": "StandardSSD_LRS",
+    "tier": "Standard"
+   },
+   "tags": {
+    "Environment": "Dev",
+    "Team": "internal-tools",
+    "Owner": "it-tools@example.com",
+    "CostCenter": "CC-1060"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Unattached",
+    "timeCreated": "2026-07-19T10:06:00Z",
+    "tier": "E10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    },
+    "LastOwnershipUpdateTime": "2026-08-28T10:31:00Z"
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-payments/providers/Microsoft.Compute/disks/disk-prod-db-restore-11",
+   "name": "disk-prod-db-restore-11",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-payments",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": null,
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "payments",
+    "Owner": "payments-oncall@example.com",
+    "CostCenter": "CC-1010"
+   },
+   "properties": {
+    "diskSizeGB": 512,
+    "diskState": "Unattached",
+    "timeCreated": "2026-08-23T10:00:00Z",
+    "tier": "P20",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    },
+    "LastOwnershipUpdateTime": "2026-10-02T10:59:00Z"
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml/providers/Microsoft.Compute/disks/disk-dev-ml-dataset-keep",
+   "name": "disk-dev-ml-dataset-keep",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "westeurope",
+   "resourceGroup": "rg-dev-ml",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": null,
+   "sku": {
+    "name": "StandardSSD_LRS",
+    "tier": "Standard"
+   },
+   "tags": {
+    "Environment": "Dev",
+    "Team": "ml-research",
+    "Owner": "ml-research@example.com",
+    "CostCenter": "CC-1040",
+    "Lifecycle": "Keep"
+   },
+   "properties": {
+    "diskSizeGB": 512,
+    "diskState": "Unattached",
+    "timeCreated": "2026-08-03T10:11:00Z",
+    "tier": "E20",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    },
+    "LastOwnershipUpdateTime": "2026-09-12T10:43:00Z"
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-payments/providers/Microsoft.Compute/disks/disk-prod-pay-gateway-31-data",
+   "name": "disk-prod-pay-gateway-31-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-payments",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-payments/providers/Microsoft.Compute/virtualMachines/vm-prod-pay-gateway-31",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "payments",
+    "Owner": "payments-oncall@example.com",
+    "CostCenter": "CC-1010"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2026-02-14T10:56:00Z",
+    "tier": "P10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-payments/providers/Microsoft.Compute/disks/disk-stag-pay-gateway-32-data",
+   "name": "disk-stag-pay-gateway-32-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-stag-payments",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-payments/providers/Microsoft.Compute/virtualMachines/vm-stag-pay-gateway-32",
+   "sku": {
+    "name": "StandardSSD_LRS",
+    "tier": "Standard"
+   },
+   "tags": {
+    "Environment": "Staging",
+    "Team": "payments",
+    "Owner": "payments-oncall@example.com",
+    "CostCenter": "CC-1010"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2026-03-05T10:21:00Z",
+    "tier": "E10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-payments/providers/Microsoft.Compute/disks/disk-prod-pay-fraud-33-data",
+   "name": "disk-prod-pay-fraud-33-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "westeurope",
+   "resourceGroup": "rg-prod-payments",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-payments/providers/Microsoft.Compute/virtualMachines/vm-prod-pay-fraud-33",
+   "sku": {
+    "name": "StandardSSD_LRS",
+    "tier": "Standard"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "payments",
+    "Owner": "payments-oncall@example.com",
+    "CostCenter": "CC-1010"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2026-03-02T10:32:00Z",
+    "tier": "E10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-search/providers/Microsoft.Compute/disks/disk-prod-srch-crawler-34-data",
+   "name": "disk-prod-srch-crawler-34-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-search",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-search/providers/Microsoft.Compute/virtualMachines/vm-prod-srch-crawler-34",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "search",
+    "Owner": "search-team@example.com",
+    "CostCenter": "CC-1020"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2026-07-13T10:00:00Z",
+    "tier": "P10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-search/providers/Microsoft.Compute/disks/disk-stag-srch-crawler-35-data",
+   "name": "disk-stag-srch-crawler-35-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-stag-search",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-search/providers/Microsoft.Compute/virtualMachines/vm-stag-srch-crawler-35",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Staging",
+    "Team": "search",
+    "Owner": "search-team@example.com",
+    "CostCenter": "CC-1020"
+   },
+   "properties": {
+    "diskSizeGB": 512,
+    "diskState": "Attached",
+    "timeCreated": "2026-03-08T10:19:00Z",
+    "tier": "P20",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-data-platform/providers/Microsoft.Compute/disks/disk-prod-dp-synapse-bridge-36-data",
+   "name": "disk-prod-dp-synapse-bridge-36-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "westeurope",
+   "resourceGroup": "rg-prod-data-platform",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-data-platform/providers/Microsoft.Compute/virtualMachines/vm-prod-dp-synapse-bridge-36",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "data-platform",
+    "Owner": "data-platform@example.com",
+    "CostCenter": "CC-1030"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2025-11-02T10:41:00Z",
+    "tier": "P10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-data-platform/providers/Microsoft.Compute/disks/disk-dev-dp-synapse-bridge-37-data",
+   "name": "disk-dev-dp-synapse-bridge-37-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-dev-data-platform",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-data-platform/providers/Microsoft.Compute/virtualMachines/vm-dev-dp-synapse-bridge-37",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Dev",
+    "Team": "data-platform",
+    "Owner": "data-platform@example.com",
+    "CostCenter": "CC-1030"
+   },
+   "properties": {
+    "diskSizeGB": 512,
+    "diskState": "Attached",
+    "timeCreated": "2025-12-13T10:32:00Z",
+    "tier": "P20",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-data-platform/providers/Microsoft.Compute/disks/disk-prod-dp-ingest-38-data",
+   "name": "disk-prod-dp-ingest-38-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-data-platform",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-data-platform/providers/Microsoft.Compute/virtualMachines/vm-prod-dp-ingest-38",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "data-platform",
+    "Owner": "data-platform@example.com",
+    "CostCenter": "CC-1030"
+   },
+   "properties": {
+    "diskSizeGB": 512,
+    "diskState": "Attached",
+    "timeCreated": "2026-05-08T10:07:00Z",
+    "tier": "P20",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-data-platform/providers/Microsoft.Compute/disks/disk-stag-dp-ingest-39-data",
+   "name": "disk-stag-dp-ingest-39-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-stag-data-platform",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-data-platform/providers/Microsoft.Compute/virtualMachines/vm-stag-dp-ingest-39",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Staging",
+    "Team": "data-platform",
+    "Owner": "data-platform@example.com",
+    "CostCenter": "CC-1030"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2025-12-10T10:52:00Z",
+    "tier": "P10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-data-platform/providers/Microsoft.Compute/disks/disk-dev-dp-ingest-40-data",
+   "name": "disk-dev-dp-ingest-40-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-dev-data-platform",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-data-platform/providers/Microsoft.Compute/virtualMachines/vm-dev-dp-ingest-40",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Dev",
+    "Team": "data-platform",
+    "Owner": "data-platform@example.com",
+    "CostCenter": "CC-1030"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2025-02-09T10:13:00Z",
+    "tier": "P10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-ml-research/providers/Microsoft.Compute/disks/disk-prod-ml-notebook-41-data",
+   "name": "disk-prod-ml-notebook-41-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-ml-research",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-ml-research/providers/Microsoft.Compute/virtualMachines/vm-prod-ml-notebook-41",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "ml-research",
+    "Owner": "ml-research@example.com",
+    "CostCenter": "CC-1040"
+   },
+   "properties": {
+    "diskSizeGB": 512,
+    "diskState": "Attached",
+    "timeCreated": "2026-08-27T10:07:00Z",
+    "tier": "P20",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml-research/providers/Microsoft.Compute/disks/disk-dev-ml-notebook-42-data",
+   "name": "disk-dev-ml-notebook-42-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "westeurope",
+   "resourceGroup": "rg-dev-ml-research",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml-research/providers/Microsoft.Compute/virtualMachines/vm-dev-ml-notebook-42",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Dev",
+    "Team": "ml-research",
+    "Owner": "ml-research@example.com",
+    "CostCenter": "CC-1040"
+   },
+   "properties": {
+    "diskSizeGB": 512,
+    "diskState": "Attached",
+    "timeCreated": "2025-12-02T10:10:00Z",
+    "tier": "P20",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-ml-research/providers/Microsoft.Compute/disks/disk-prod-ml-batch-43-data",
+   "name": "disk-prod-ml-batch-43-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-ml-research",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-ml-research/providers/Microsoft.Compute/virtualMachines/vm-prod-ml-batch-43",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "ml-research",
+    "Owner": "ml-research@example.com",
+    "CostCenter": "CC-1040"
+   },
+   "properties": {
+    "diskSizeGB": 512,
+    "diskState": "Attached",
+    "timeCreated": "2025-04-24T10:44:00Z",
+    "tier": "P20",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml-research/providers/Microsoft.Compute/disks/disk-dev-ml-batch-44-data",
+   "name": "disk-dev-ml-batch-44-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "westeurope",
+   "resourceGroup": "rg-dev-ml-research",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml-research/providers/Microsoft.Compute/virtualMachines/vm-dev-ml-batch-44",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Dev",
+    "Team": "ml-research",
+    "Owner": "ml-research@example.com",
+    "CostCenter": "CC-1040"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2026-05-25T10:04:00Z",
+    "tier": "P10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web-storefront/providers/Microsoft.Compute/disks/disk-prod-web-cms-45-data",
+   "name": "disk-prod-web-cms-45-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-web-storefront",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web-storefront/providers/Microsoft.Compute/virtualMachines/vm-prod-web-cms-45",
+   "sku": {
+    "name": "StandardSSD_LRS",
+    "tier": "Standard"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "web-storefront",
+    "Owner": "storefront@example.com",
+    "CostCenter": "CC-1050"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2025-10-02T10:37:00Z",
+    "tier": "E10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web-storefront/providers/Microsoft.Compute/disks/disk-prod-web-cdn-origin-46-data",
+   "name": "disk-prod-web-cdn-origin-46-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-web-storefront",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web-storefront/providers/Microsoft.Compute/virtualMachines/vm-prod-web-cdn-origin-46",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "web-storefront",
+    "Owner": "storefront@example.com",
+    "CostCenter": "CC-1050"
+   },
+   "properties": {
+    "diskSizeGB": 512,
+    "diskState": "Attached",
+    "timeCreated": "2025-11-05T10:55:00Z",
+    "tier": "P20",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-internal-tools/providers/Microsoft.Compute/disks/disk-prod-it-jenkins-47-data",
+   "name": "disk-prod-it-jenkins-47-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-internal-tools",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-internal-tools/providers/Microsoft.Compute/virtualMachines/vm-prod-it-jenkins-47",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "internal-tools",
+    "Owner": "it-tools@example.com",
+    "CostCenter": "CC-1060"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2025-01-16T10:11:00Z",
+    "tier": "P10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-internal-tools/providers/Microsoft.Compute/disks/disk-stag-it-jenkins-48-data",
+   "name": "disk-stag-it-jenkins-48-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "westeurope",
+   "resourceGroup": "rg-stag-internal-tools",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stag-internal-tools/providers/Microsoft.Compute/virtualMachines/vm-stag-it-jenkins-48",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Staging",
+    "Team": "internal-tools",
+    "Owner": "it-tools@example.com",
+    "CostCenter": "CC-1060"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2025-08-18T10:32:00Z",
+    "tier": "P10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-internal-tools/providers/Microsoft.Compute/disks/disk-dev-it-jenkins-49-data",
+   "name": "disk-dev-it-jenkins-49-data",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "westeurope",
+   "resourceGroup": "rg-dev-internal-tools",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-internal-tools/providers/Microsoft.Compute/virtualMachines/vm-dev-it-jenkins-49",
+   "sku": {
+    "name": "StandardSSD_LRS",
+    "tier": "Standard"
+   },
+   "tags": {
+    "Environment": "Dev",
+    "Team": "internal-tools",
+    "Owner": "it-tools@example.com",
+    "CostCenter": "CC-1060"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2025-09-21T10:07:00Z",
+    "tier": "E10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-etl/providers/Microsoft.Compute/disks/disk-dev-etl-01-os",
+   "name": "disk-dev-etl-01-os",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-dev-etl",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-etl/providers/Microsoft.Compute/virtualMachines/vm-dev-etl-01",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Dev",
+    "Team": "data-platform",
+    "Owner": "data-platform@example.com",
+    "CostCenter": "CC-1030"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2026-06-04T10:58:00Z",
+    "tier": "P10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml/providers/Microsoft.Compute/disks/disk-dev-jupyter-02-os",
+   "name": "disk-dev-jupyter-02-os",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "westeurope",
+   "resourceGroup": "rg-dev-ml",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-ml/providers/Microsoft.Compute/virtualMachines/vm-dev-jupyter-02",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Development",
+    "Team": "ml-research",
+    "Owner": "ml-research@example.com",
+    "CostCenter": "CC-1040"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2026-08-18T10:39:00Z",
+    "tier": "P10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web/providers/Microsoft.Compute/disks/disk-prod-api-07-os",
+   "name": "disk-prod-api-07-os",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-prod-web",
+   "subscriptionId": "6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01",
+   "managedBy": "/subscriptions/6f1c2b9e-0a4d-4c55-9a11-3e3f5d2c7a01/resourceGroups/rg-prod-web/providers/Microsoft.Compute/virtualMachines/vm-prod-api-07",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Production",
+    "Team": "web-storefront",
+    "Owner": "storefront@example.com",
+    "CostCenter": "CC-1050"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2025-09-27T10:00:00Z",
+    "tier": "P10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stg-search/providers/Microsoft.Compute/disks/disk-stg-search-03-os",
+   "name": "disk-stg-search-03-os",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-stg-search",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-stg-search/providers/Microsoft.Compute/virtualMachines/vm-stg-search-03",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "environment": "Staging",
+    "Team": "search",
+    "Owner": "search-team@example.com",
+    "CostCenter": "CC-1020"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Attached",
+    "timeCreated": "2026-05-05T10:22:00Z",
+    "tier": "P10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  },
+  {
+   "id": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-tools/providers/Microsoft.Compute/disks/disk-dev-build-agent-09-os",
+   "name": "disk-dev-build-agent-09-os",
+   "type": "microsoft.compute/disks",
+   "tenantId": "2c9e5f7a-1b3d-4e6f-8a9b-0c1d2e3f4a5b",
+   "location": "eastus",
+   "resourceGroup": "rg-dev-tools",
+   "subscriptionId": "9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02",
+   "managedBy": "/subscriptions/9d7e4a12-5b6c-47d8-8e9f-0a1b2c3d4e02/resourceGroups/rg-dev-tools/providers/Microsoft.Compute/virtualMachines/vm-dev-build-agent-09",
+   "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+   },
+   "tags": {
+    "Environment": "Dev",
+    "Team": "internal-tools",
+    "Owner": "it-tools@example.com",
+    "CostCenter": "CC-1060"
+   },
+   "properties": {
+    "diskSizeGB": 128,
+    "diskState": "Reserved",
+    "timeCreated": "2026-03-26T10:01:00Z",
+    "tier": "P10",
+    "provisioningState": "Succeeded",
+    "encryption": {
+     "type": "EncryptionAtRestWithPlatformKey"
+    }
+   }
+  }
+ ],
+ "facets": [],
+ "resultTruncated": "false"
+}

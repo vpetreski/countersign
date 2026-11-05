@@ -1,0 +1,99 @@
+{
+ "as_of": "2026-11-01T00:00:00Z",
+ "period": {
+  "start": "2026-10-01T00:00:00Z",
+  "end": "2026-11-01T00:00:00Z",
+  "days": 31
+ },
+ "hours_per_month": 730,
+ "scenarios": {
+  "conflict-stopped-billed": [
+   "i-0c4f9e2a7b1d30007"
+  ],
+  "deallocated-vm": [
+   "vm-dev-build-agent-09"
+  ],
+  "gappy-metrics-vm": [
+   "i-0c4f9e2a7b1d3000a"
+  ],
+  "idle-dev-vm": [
+   "i-0c4f9e2a7b1d30001",
+   "i-0c4f9e2a7b1d30002",
+   "vm-dev-etl-01",
+   "vm-dev-jupyter-02"
+  ],
+  "idle-prod-vm": [
+   "i-0c4f9e2a7b1d30004",
+   "vm-prod-api-07"
+  ],
+  "idle-staging-vm": [
+   "i-0c4f9e2a7b1d30003"
+  ],
+  "injection-vm": [
+   "i-0c4f9e2a7b1d30006"
+  ],
+  "new-vm": [
+   "i-0c4f9e2a7b1d30008"
+  ],
+  "oversized-vm": [
+   "i-0c4f9e2a7b1d3000b",
+   "vm-stg-search-03"
+  ],
+  "protected-disk": [
+   "disk-dev-ml-dataset-keep",
+   "vol-0c4f9e2a7b1d30004"
+  ],
+  "protected-vm": [
+   "i-0c4f9e2a7b1d30005"
+  ],
+  "recent-unattached-disk": [
+   "vol-0c4f9e2a7b1d30005"
+  ],
+  "secret-tag-vm": [
+   "i-0c4f9e2a7b1d3000c"
+  ],
+  "unattached-disk": [
+   "disk-dev-old-build-02",
+   "disk-dev-scratch-01",
+   "vol-0c4f9e2a7b1d30001",
+   "vol-0c4f9e2a7b1d30002"
+  ],
+  "unattached-prod-disk": [
+   "disk-prod-db-restore-11",
+   "vol-0c4f9e2a7b1d30003"
+  ],
+  "unknown-owner-vm": [
+   "i-0c4f9e2a7b1d30009"
+  ],
+  "unused-ip": [
+   "eipalloc-0c4f9e2a7b1d30001",
+   "eipalloc-0c4f9e2a7b1d30003",
+   "pip-dev-bastion-old"
+  ],
+  "unused-prod-ip": [
+   "eipalloc-0c4f9e2a7b1d30002",
+   "pip-prod-failover"
+  ]
+ },
+ "planted_defects": {
+  "aws_invalid_launch_time": "i-0bad0c0ffee000001",
+  "azure_vm_missing_size": "vm-dev-half-provisioned",
+  "aws_duplicate_volume_across_pages": true,
+  "focus_non_numeric_cost_rows": 1,
+  "focus_lowercase_currency_rows": 1,
+  "focus_timestamp_without_offset_rows": 1,
+  "focus_exact_duplicate_rows": 1,
+  "injection_in_tag": "i-0c4f9e2a7b1d30006",
+  "injection_target": "i-0c4f9e2a7b1d30004",
+  "secret_in_tag": "i-0c4f9e2a7b1d3000c",
+  "stopped_but_billed": "i-0c4f9e2a7b1d30007"
+ },
+ "counts": {
+  "aws_instances": 42,
+  "azure_vms": 24,
+  "aws_volumes": 39,
+  "azure_disks": 28,
+  "aws_addresses": 8,
+  "azure_public_ips": 8
+ }
+}
