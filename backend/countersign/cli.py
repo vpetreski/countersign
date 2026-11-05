@@ -26,23 +26,26 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.write("\n")
         return 0
     db = Database(settings.database_url)
-    if args.command in ("migrate", "seed"):
-        from countersign.store.migrate import upgrade  # noqa: PLC0415
+    try:
+        if args.command in ("migrate", "seed"):
+            from countersign.store.migrate import upgrade  # noqa: PLC0415
 
-        print(f"schema: {upgrade(db)}")
-    if args.command in ("ingest", "seed"):
-        from countersign.data.ingest import ingest  # noqa: PLC0415
+            print(f"schema: {upgrade(db)}")
+        if args.command in ("ingest", "seed"):
+            from countersign.data.ingest import ingest  # noqa: PLC0415
 
-        report = ingest(db, settings)
-        print(
-            f"ingest: changed={report.changed} resources={report.resources} cost_lines={report.cost_lines} "
-            f"quarantined={report.quarantined} warnings={report.warnings}"
-        )
-        failed = [c.check_id for c in report.checks if c.status == "fail"]
-        if failed:
-            print("failing checks: " + ", ".join(failed), file=sys.stderr)
-            return 1
-    return 0
+            report = ingest(db, settings)
+            print(
+                f"ingest: changed={report.changed} resources={report.resources} cost_lines={report.cost_lines} "
+                f"quarantined={report.quarantined} warnings={report.warnings}"
+            )
+            failed = [c.check_id for c in report.checks if c.status == "fail"]
+            if failed:
+                print("failing checks: " + ", ".join(failed), file=sys.stderr)
+                return 1
+        return 0
+    finally:
+        db.engine.dispose()  # close the pool's connections now, not whenever the collector gets to them
 
 
 if __name__ == "__main__":

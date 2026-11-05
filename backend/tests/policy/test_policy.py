@@ -26,6 +26,7 @@ def world() -> tuple[dict[str, Resource], dict[str, Finding]]:
         estate = ESTATE.view(s, None)
     findings = {f.ref: f for f in estate.findings(price_fn(PriceCatalog(FIXTURES), live=False))}
     ESTATE.clear()
+    db.engine.dispose()
     return estate.by_ref, findings
 
 
