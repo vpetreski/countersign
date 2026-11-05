@@ -3,9 +3,9 @@
 > Offline results come from the reference policy, a deterministic test double that is not a language model: they validate the harness, the graders and the statistics, not LLM quality. The Claude adapter is contract-tested against the SDK's types and strict-schema rules, not run against the API, because this public project never spends tokens; set ANTHROPIC_API_KEY and run `countersign-eval run --model claude` to grade Claude on the same cases.
 
 - Model: `countersign-offline-reference` (simulated, offline)
-- Cases: 30, trials per case: 3, generated 2026-11-05T07:37:13+00:00
-- Fingerprint: `f018eec239666a38` (dataset `2bfea9f9`, prompt `28fda5f2`, tools `1a8e241d`, policy `83c4b64e`, graders `9daec27a`)
-- Runs: 570 through the real runtime in 59.52 s (p95 154.3 ms per run)
+- Cases: 30, trials per case: 3, generated 2026-11-05T07:42:59+00:00
+- Fingerprint: `871dc1fcac408bf9` (dataset `2bfea9f9`, prompt `28fda5f2`, tools `1a8e241d`, policy `83c4b64e`, graders `9daec27a`)
+- Runs: 570 through the real runtime in 54.55 s (p95 190.7 ms per run)
 
 ## Criteria
 

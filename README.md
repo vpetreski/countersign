@@ -116,17 +116,17 @@ including what is faked and what is not tested: [docs/testing.md](docs/testing.m
 
 | Layer | Count | What it proves |
 |---|---|---|
-| Unit (`-m unit`) | 119 | Pure rules: statistics against known values (and the McNemar power, enumerated exactly), when a percentage counts as a CPU claim, policy (with a Hypothesis property: no combination of actions lets a production, protected, flagged, unknown-environment or ungrounded resource through, each injected into resources whose findings stay eligible), tokens, retries, the grammar |
-| Integration (`-m integration`) | 131 | The runtime end to end on the real fixture estate: the critical workflow, every fault, crash-and-replay, leases, budgets, expiry, cancellation, the order of effects, compensation, tenant isolation, the analyzer against every planted scenario, migrations, the documents against the code |
-| API (four `api_*` markers) | 35 | Success, validation, authorization and failure paths over HTTP, problem+json shapes, idempotency keys bound to their caller, rate limits, security headers |
-| Data validation (`-m data_validation`) | 13 | Every planted defect is caught: quarantine with reasons, deduplication, normalization; freshness of the data and of the sync |
+| Unit (`-m unit`) | 125 | Pure rules: statistics against known values (and the McNemar power, enumerated exactly), when a percentage counts as a CPU claim, policy (with a Hypothesis property: no combination of actions lets a production, protected, flagged, unknown-environment or ungrounded resource through, each injected into resources whose findings stay eligible), tokens, retries, the grammar, the production secrets guard |
+| Integration (`-m integration`) | 132 | The runtime end to end on the real fixture estate: the critical workflow, every fault, crash-and-replay, leases, budgets, expiry, cancellation, the order of effects, compensation, tenant isolation, the analyzer against every planted scenario, migrations, the documents against the code |
+| API (four `api_*` markers) | 36 | Success, validation, authorization and failure paths over HTTP, problem+json shapes, idempotency keys bound to their caller, rate limits, security headers (on a 500 too) |
+| Data validation (`-m data_validation`) | 14 | Every planted defect is caught: quarantine with reasons (secrets masked), deduplication, normalization; freshness of the data and of the sync |
 | Claude contract (`-m claude_contract`) | 63 | The adapter against a mock of the Messages API with sockets refused: request shape, strict schemas, every stop reason, error mapping, key hygiene |
 | PostgreSQL (`-m postgres`) | 2 | The workflow and a real two-thread race on one run (CI's PostgreSQL 17 service) |
 | Frontend (Vitest) | 57 | Citations, the timeline reducer and its policy rows, money formatting, permissions, the trace layout, the auto-advance controller, one idempotency key per intent |
 | End to end (Playwright) | 6 | The critical workflow in a browser, the production refusal, a pricing outage, RBAC, the evals page, the audit chain; also run against the live deployment |
 | Evaluation | 30 cases | See below |
 
-363 backend tests, 93% line and branch coverage of the `countersign` package, no warnings. Summary and screenshots:
+372 backend tests, 93% line and branch coverage of the `countersign` package, no warnings. Summary and screenshots:
 [reports/tests/summary.md](reports/tests/summary.md).
 
 ## Evaluation
@@ -168,12 +168,13 @@ Method, grammar and limits: [docs/evaluation.md](docs/evaluation.md). Report: [r
 | | evals | the full evaluation with its gate (no false positive, every mutant caught, no regression), then an exact comparison with the published report |
 | Nightly | deep evals | 10 trials, 20 calibration trials, 1000 coverage replicates |
 | | API fuzzing | authenticated, stateful Schemathesis that follows OpenAPI links into real runs: no input may produce a 5xx |
-| | Live contracts | every Azure snapshot price still comes back live, trusted and within 25%; the deployed app is ready, keyless and current |
+| | Live contracts | every Azure snapshot price still comes back live, trusted and within 25%; the deployed app is ready, keyless, in production mode and current |
 | | Claude | contract tests always; the live evaluation only if the repository has a key |
 
 Deployment: one Vercel project with two services (`web`, `api`) from [vercel.json](vercel.json), Neon Postgres,
 a daily cron that re-ingests and purges expired workspaces, deployed with the Vercel CLI from `main`.
-Production refuses to start with development secrets.
+Production, which includes any Vercel production deployment whatever `COUNTERSIGN_ENV` says, refuses to start with
+development secrets.
 
 ## Failure modes
 
@@ -209,7 +210,7 @@ COUNTERSIGN_CLAUDE_EFFORT=high
 
 | Area | Built | Automated | Evaluated | Mocked or stood in | Deferred |
 |---|---|---|---|---|---|
-| Ingestion and data quality | yes | 12 data tests, cron | defects planted and caught | sources are fixtures in native shapes | live provider APIs |
+| Ingestion and data quality | yes | 14 data tests, cron | defects planted and caught | sources are fixtures in native shapes | live provider APIs |
 | Pricing | yes, live Azure + AWS snapshot | tests, nightly | price outage cases | AWS live prices (snapshot from the official file) | commitments, spot |
 | Agent runtime | yes | integration tests, Postgres race | 30 cases x 3 | ticks driven by client or test | a queue-driven worker |
 | Model | Claude adapter + reference policy | 63 contract tests | graders, mutants | the reference policy in the demo | live-model evaluation (wired, needs a key) |

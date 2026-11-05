@@ -90,9 +90,10 @@ jobs:
       - run: uv sync --frozen
       - name: Every snapshot price still comes back live, trusted and within 25%
         run: uv run python scripts/check_live_prices.py
-      - name: The deployed app is ready, keyless, and runs the latest deployable commit
+      - name: The deployed app is ready, keyless, in production mode, and runs the latest deployable commit
         run: |
           base=https://countersign-agent.vercel.app
           curl -fsS "$base/api/health/ready" | python3 -c "import json,sys; d=json.load(sys.stdin); assert d['status'] == 'ok', d; print('ready')"
           want=$(git -C "$GITHUB_WORKSPACE" log -1 --format=%H -- backend frontend vercel.json)
-          curl -fsS "$base/api/config" | WANT="$want" python3 -c "import json,os,sys; d=json.load(sys.stdin); assert d['model']['provider'] == 'offline', d['model']; assert d['build']['sha'] == os.environ['WANT'], (d['build'], os.environ['WANT']); print('keyless, build', d['build']['sha'][:7])"
+          # build.environment is "production" only where the secrets guard ran (settings.py::assert_production_safe).
+          curl -fsS "$base/api/config" | WANT="$want" python3 -c "import json,os,sys; d=json.load(sys.stdin); assert d['model']['provider'] == 'offline', d['model']; assert d['build']['environment'] == 'production', d['build']; assert d['build']['sha'] == os.environ['WANT'], (d['build'], os.environ['WANT']); print('keyless, production, build', d['build']['sha'][:7])"
