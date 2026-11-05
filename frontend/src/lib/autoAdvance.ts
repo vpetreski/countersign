@@ -25,6 +25,8 @@ export interface AutoAdvanceOptions {
   /** A 409 means another tick holds the run's lease: wait and try again. */
   conflictDelayMs?: number;
   maxConflicts?: number;
+  /** Network errors and 5xx are retried with a growing delay before the loop gives up. */
+  transientRetries?: number;
   sleep?: Sleep;
 }
 
@@ -38,12 +40,15 @@ export class AutoAdvancer {
   private readonly opts: Required<Omit<AutoAdvanceOptions, "onIdle">> & Pick<AutoAdvanceOptions, "onIdle">;
   private generation = 0;
   private running = false;
+  /** The request a stopped loop may still have in flight; a restarted loop waits for it. */
+  private inflight: Promise<unknown> | null = null;
 
   constructor(opts: AutoAdvanceOptions) {
     this.opts = {
       intervalMs: 500,
       conflictDelayMs: 700,
       maxConflicts: 20,
+      transientRetries: 3,
       sleep: defaultSleep,
       ...opts,
     };
@@ -68,13 +73,21 @@ export class AutoAdvancer {
   }
 
   private async loop(gen: number): Promise<void> {
-    const { advance, onRun, onError, intervalMs, conflictDelayMs, maxConflicts, sleep } = this.opts;
+    const { advance, onRun, onError, intervalMs, conflictDelayMs, maxConflicts, transientRetries, sleep } =
+      this.opts;
     let conflicts = 0;
+    let transient = 0;
     try {
       while (gen === this.generation) {
+        if (this.inflight) {
+          await this.inflight.catch(() => undefined);
+          if (gen !== this.generation) return;
+        }
         let run: RunView;
+        const pending = advance();
+        this.inflight = pending;
         try {
-          run = await advance();
+          run = await pending;
         } catch (err) {
           if (gen !== this.generation) return;
           if (isProblem(err, 409) && conflicts < maxConflicts) {
@@ -82,11 +95,19 @@ export class AutoAdvancer {
             await sleep(conflictDelayMs);
             continue;
           }
+          if (isProblem(err) && (err.status === 0 || err.status >= 500) && transient < transientRetries) {
+            transient++;
+            await sleep(conflictDelayMs * 2 ** transient);
+            continue;
+          }
           onError(err);
           return;
+        } finally {
+          if (this.inflight === pending) this.inflight = null;
         }
         if (gen !== this.generation) return;
         conflicts = 0;
+        transient = 0;
         onRun(run);
         if (!shouldAdvance(run)) return;
         await sleep(intervalMs);

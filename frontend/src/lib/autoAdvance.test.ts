@@ -133,4 +133,53 @@ describe("AutoAdvancer", () => {
     expect(onRun).not.toHaveBeenCalled();
     expect(ctl.active).toBe(false);
   });
+
+  it("retries transient server errors before giving up", async () => {
+    const down = new ProblemError(503, { title: "Service Unavailable" });
+    const replies: Array<RunView | Error> = [down, down, run("awaiting_approval")];
+    const onError = vi.fn();
+    const onRun = vi.fn();
+    const ctl = new AutoAdvancer({
+      advance: async () => {
+        const next = replies.shift();
+        if (next instanceof Error) throw next;
+        return next as RunView;
+      },
+      onRun,
+      onError,
+      sleep: instant,
+    });
+    ctl.start(run("planning"));
+    await vi.waitFor(() => expect(onRun).toHaveBeenCalledTimes(1));
+    expect(onError).not.toHaveBeenCalled();
+  });
+
+  it("never overlaps requests when restarted while one is in flight", async () => {
+    let release: (r: RunView) => void = () => {};
+    let inFlight = 0;
+    let maxInFlight = 0;
+    const calls: number[] = [];
+    const advance = vi.fn(() => {
+      inFlight++;
+      maxInFlight = Math.max(maxInFlight, inFlight);
+      calls.push(calls.length + 1);
+      return new Promise<RunView>((r) => {
+        release = (v) => {
+          inFlight--;
+          r(v);
+        };
+      });
+    });
+    const ctl = new AutoAdvancer({ advance, onRun: vi.fn(), onError: vi.fn(), sleep: instant });
+    ctl.start(run("planning"));
+    ctl.stop();
+    ctl.start(run("planning"));
+    await flush();
+    expect(advance).toHaveBeenCalledTimes(1);
+    release(run("planning", true, 2));
+    await vi.waitFor(() => expect(advance).toHaveBeenCalledTimes(2));
+    release(run("awaiting_approval", true, 3));
+    await vi.waitFor(() => expect(ctl.active).toBe(false));
+    expect(maxInFlight).toBe(1);
+  });
 });

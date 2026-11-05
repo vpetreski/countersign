@@ -144,10 +144,18 @@ export interface PlanAction {
   outcome: ActionOutcome | null;
 }
 
+/** A finding the agent reviewed and left out of the change request, with its reason. */
+export interface NotProposed {
+  ref: string;
+  reason: string;
+  evidence_ids: string[];
+}
+
 export interface Plan {
   hash: string;
   summary: string;
   caveats: string[];
+  not_proposed?: NotProposed[];
   total_monthly_savings: number;
   risk: Risk;
   approvals_required: number;
@@ -197,6 +205,7 @@ export interface RunView {
   report: string | null;
   question: Question | null;
   budgets: Budgets;
+  not_proposed?: NotProposed[];
   waiting_for: "operator" | "approver" | null;
   approvals: Decision[];
   can: RunCan;
@@ -385,6 +394,9 @@ export interface AuditVerify {
 
 export interface EvalCriterion {
   mean?: number;
+  ci_method?: string;
+  n_cases?: number;
+  cases_all_pass_rate?: number;
   ci95?: number[];
   cases_all_pass?: number;
   cases_all_pass_wilson?: number[];
@@ -392,8 +404,15 @@ export interface EvalCriterion {
 
 export interface EvalMutant {
   description?: string;
+  expected_grader?: string;
   caught_by?: string[];
+  caught_by_expected?: boolean;
   scores?: Record<string, number>;
+  discordant_cases?: Record<string, number>;
+  p_value?: Record<string, number>;
+  significant?: Record<string, boolean>;
+  /** One reason string per criterion that caught the mutant. */
+  example?: Record<string, string>;
 }
 
 export interface EvalCase {
@@ -402,25 +421,51 @@ export interface EvalCase {
   tags?: string[];
   outcomes?: Record<string, number[]>;
   passed_all?: boolean;
+  failures?: Record<string, unknown>;
+  statuses?: string[];
+}
+
+export interface EvalCalibration {
+  simulator?: string;
+  noise?: number;
+  trials?: number;
+  cases?: number;
+  truth?: { task_completion_mean?: number; pass_hat_k?: Record<string, number> };
+  estimate?: { task_completion_mean?: number; ci95?: number[]; pass_hat_k?: Record<string, number> };
+  covered?: boolean;
+  realized?: { slips?: number; chances?: number; rate?: number; z?: number; note?: string };
+  other_criteria_unaffected?: boolean;
+  coverage?: {
+    replicates?: number;
+    nominal?: number;
+    mean_interval_coverage?: number;
+    all_pass_wilson_coverage?: number;
+    monte_carlo_se?: number;
+    mean_interval_width?: number;
+  };
 }
 
 export interface EvalReport {
   honesty?: string;
   generated_at?: string;
-  model?: string;
+  model?: string | { name?: string; provider?: string; simulated?: boolean };
   trials?: number;
   n_cases?: number;
   fingerprint?: { combined?: string; [key: string]: unknown };
   criteria?: Record<string, EvalCriterion>;
   pass_hat_k?: Record<string, number>;
-  mde?: { discordant_flips?: number; alpha?: number; n_cases?: number };
+  mde?: { discordant_flips?: number; alpha?: number; n_cases?: number; test?: string; note?: string };
   baseline?: { regressions?: unknown[]; improvements?: unknown[] };
   mutation?: {
     score?: number;
+    killed?: number;
+    total?: number;
     reference_false_positives?: number;
     graders?: string[];
     mutants?: Record<string, EvalMutant>;
   };
   cases?: EvalCase[];
-  calibration?: Record<string, unknown>;
+  calibration?: EvalCalibration;
+  overall?: { cases_all_pass?: number; cases_all_pass_wilson?: number[] };
+  runs?: { total?: number; wall_seconds?: number; p95_trial_ms?: number };
 }
