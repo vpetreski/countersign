@@ -1,0 +1,155 @@
+{
+ "captured_at": "2026-11-05T02:38:16Z",
+ "files": [
+  {
+   "offer": "AmazonEC2",
+   "preamble": [
+    "\"FormatVersion\",\"v1.0\"",
+    "\"Disclaimer\",\"This pricing list is for informational purposes only. All prices are subject to the additional terms included in the pricing pages on http://aws.amazon.com. All Free Tier prices are also subject to the terms included at https://aws.amazon.com/free/\"",
+    "\"Publication Date\",\"2026-11-04T21:03:05Z\"",
+    "\"Version\",\"20261104210305\"",
+    "\"OfferCode\",\"AmazonEC2\""
+   ],
+   "publication_date": "2026-11-04T21:03:05Z",
+   "sha256": "b91ff3829b2c562c8c41bd513bf867a9973e453c3f40e850562e197b5e8c2142",
+   "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/20261104210305/us-east-1/index.csv"
+  },
+  {
+   "offer": "AmazonVPC",
+   "preamble": [
+    "\"FormatVersion\",\"v1.0\"",
+    "\"Disclaimer\",\"This pricing list is for informational purposes only. All prices are subject to the additional terms included in the pricing pages on http://aws.amazon.com. All Free Tier prices are also subject to the terms included at https://aws.amazon.com/free/\"",
+    "\"Publication Date\",\"2026-11-03T00:09:47Z\"",
+    "\"Version\",\"20261103000947\"",
+    "\"OfferCode\",\"AmazonVPC\""
+   ],
+   "publication_date": "2026-11-03T00:09:47Z",
+   "sha256": "54931e2deef1776e12f76b990e17ff457fd9201f047c3964a158336fb102bc93",
+   "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonVPC/20261103000947/us-east-1/index.csv"
+  }
+ ],
+ "items": [
+  {
+   "description": "$0.17 per On Demand Linux c6i.xlarge Instance Hour",
+   "effective_date": "2026-11-01",
+   "key": "c6i.xlarge",
+   "kind": "instance",
+   "price_usd": 0.17,
+   "rate_code": "JPN4K2NQVRWGTQGS.JRTCKXETXF.6YS6EN2CT7",
+   "sku": "JPN4K2NQVRWGTQGS",
+   "source_url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/20261104210305/us-east-1/index.csv",
+   "unit": "Hrs",
+   "usage_type": "BoxUsage:c6i.xlarge"
+  },
+  {
+   "description": "$0.192 per On Demand Linux m5.xlarge Instance Hour",
+   "effective_date": "2026-11-01",
+   "key": "m5.xlarge",
+   "kind": "instance",
+   "price_usd": 0.192,
+   "rate_code": "5G4TA8Z4MUKE6MJB.JRTCKXETXF.6YS6EN2CT7",
+   "sku": "5G4TA8Z4MUKE6MJB",
+   "source_url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/20261104210305/us-east-1/index.csv",
+   "unit": "Hrs",
+   "usage_type": "BoxUsage:m5.xlarge"
+  },
+  {
+   "description": "$0.096 per On Demand Linux m6i.large Instance Hour",
+   "effective_date": "2026-11-01",
+   "key": "m6i.large",
+   "kind": "instance",
+   "price_usd": 0.096,
+   "rate_code": "B8JJ44GS8MG4RPR4.JRTCKXETXF.6YS6EN2CT7",
+   "sku": "B8JJ44GS8MG4RPR4",
+   "source_url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/20261104210305/us-east-1/index.csv",
+   "unit": "Hrs",
+   "usage_type": "BoxUsage:m6i.large"
+  },
+  {
+   "description": "$0.192 per On Demand Linux m6i.xlarge Instance Hour",
+   "effective_date": "2026-11-01",
+   "key": "m6i.xlarge",
+   "kind": "instance",
+   "price_usd": 0.192,
+   "rate_code": "2UVH39HPDNC399X4.JRTCKXETXF.6YS6EN2CT7",
+   "sku": "2UVH39HPDNC399X4",
+   "source_url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/20261104210305/us-east-1/index.csv",
+   "unit": "Hrs",
+   "usage_type": "BoxUsage:m6i.xlarge"
+  },
+  {
+   "description": "$0.0416 per On Demand Linux t3.medium Instance Hour",
+   "effective_date": "2026-11-01",
+   "key": "t3.medium",
+   "kind": "instance",
+   "price_usd": 0.0416,
+   "rate_code": "NN4EGUUQRWVYP98C.JRTCKXETXF.6YS6EN2CT7",
+   "sku": "NN4EGUUQRWVYP98C",
+   "source_url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/20261104210305/us-east-1/index.csv",
+   "unit": "Hrs",
+   "usage_type": "BoxUsage:t3.medium"
+  },
+  {
+   "description": "$0.005 per Idle public IPv4 address per hour",
+   "effective_date": "2026-11-01",
+   "key": "idle",
+   "kind": "public_ip",
+   "price_usd": 0.005,
+   "rate_code": "T6YDQKTMVWKNJFJ8.JRTCKXETXF.6YS6EN2CT7",
+   "sku": "T6YDQKTMVWKNJFJ8",
+   "source_url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonVPC/20261103000947/us-east-1/index.csv",
+   "unit": "Hrs",
+   "usage_type": "USE1-PublicIPv4:IdleAddress"
+  },
+  {
+   "description": "$0.005 per In-use public IPv4 address per hour",
+   "effective_date": "2026-11-01",
+   "key": "in-use",
+   "kind": "public_ip",
+   "price_usd": 0.005,
+   "rate_code": "4GQUNXTFWVSGPUZK.JRTCKXETXF.6YS6EN2CT7",
+   "sku": "4GQUNXTFWVSGPUZK",
+   "source_url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonVPC/20261103000947/us-east-1/index.csv",
+   "unit": "Hrs",
+   "usage_type": "USE1-PublicIPv4:InUseAddress"
+  },
+  {
+   "description": "$0.10 per GB-month of General Purpose SSD (gp2) provisioned storage - US East (Northern Virginia)",
+   "effective_date": "2026-11-01",
+   "key": "gp2",
+   "kind": "volume",
+   "price_usd": 0.1,
+   "rate_code": "HY3BZPP2B6K8MSJF.JRTCKXETXF.6YS6EN2CT7",
+   "sku": "HY3BZPP2B6K8MSJF",
+   "source_url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/20261104210305/us-east-1/index.csv",
+   "unit": "GB-Mo",
+   "usage_type": "EBS:VolumeUsage.gp2"
+  },
+  {
+   "description": "$0.08 per GB-month of General Purpose (gp3) provisioned storage - US East (N. Virginia)",
+   "effective_date": "2026-11-01",
+   "key": "gp3",
+   "kind": "volume",
+   "price_usd": 0.08,
+   "rate_code": "JG3KUJMBRGHV3N8G.JRTCKXETXF.6YS6EN2CT7",
+   "sku": "JG3KUJMBRGHV3N8G",
+   "source_url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/20261104210305/us-east-1/index.csv",
+   "unit": "GB-Mo",
+   "usage_type": "EBS:VolumeUsage.gp3"
+  },
+  {
+   "description": "$0.045 per GB-month of Throughput Optimized HDD (st1) provisioned storage - US East (Northern Virginia)",
+   "effective_date": "2026-11-01",
+   "key": "st1",
+   "kind": "volume",
+   "price_usd": 0.045,
+   "rate_code": "YQT3C842QHBG6XCU.JRTCKXETXF.6YS6EN2CT7",
+   "sku": "YQT3C842QHBG6XCU",
+   "source_url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/20261104210305/us-east-1/index.csv",
+   "unit": "GB-Mo",
+   "usage_type": "EBS:VolumeUsage.st1"
+  }
+ ],
+ "region": "us-east-1",
+ "source": "AWS Price List Bulk API"
+}
