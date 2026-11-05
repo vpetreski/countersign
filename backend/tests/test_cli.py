@@ -4,9 +4,13 @@ import json
 from pathlib import Path
 
 import pytest
+from sqlalchemy import inspect, text
 
 from countersign import cli
 from countersign.settings import get_settings
+from countersign.store.db import Database
+from countersign.store.migrate import upgrade
+from countersign.store.schema import DROPPED_TABLES, SCHEMA_VERSION
 
 pytestmark = pytest.mark.integration
 
@@ -36,3 +40,15 @@ def test_the_published_openapi_document_is_current(capsys: pytest.CaptureFixture
     served = json.loads(capsys.readouterr().out)
     published = json.loads((Path(__file__).resolve().parents[2] / "docs" / "openapi.json").read_text())
     assert served == published
+
+
+def test_upgrade_drops_retired_tables_creates_the_rest_and_records_the_version() -> None:
+    db = Database("sqlite://")
+    with db.engine.begin() as conn:  # a database from schema 0001, with the two tables nothing used
+        conn.execute(text("CREATE TABLE approvals (id INTEGER PRIMARY KEY)"))
+        conn.execute(text("CREATE TABLE price_cache (key TEXT PRIMARY KEY)"))
+    assert upgrade(db) == SCHEMA_VERSION == db.schema_version() == "0002"
+    tables = set(inspect(db.engine).get_table_names())
+    assert not tables & set(DROPPED_TABLES) and {"runs", "audit_log", "executions"} <= tables
+    assert upgrade(db) == SCHEMA_VERSION  # idempotent: safe on every deploy
+    db.engine.dispose()

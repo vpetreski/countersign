@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useReducer, useRef } from "react";
-import { request } from "./lib/api";
+import { newIdempotencyKey, request } from "./lib/api";
 import { emptyTimeline, timelineReducer } from "./lib/timeline";
 import type {
   AppConfig,
@@ -142,4 +142,23 @@ export function useRunEvents(runId: string | null, version: number | undefined):
   }, [runId, version, pull]);
 
   return state.runId === runId ? state.events : [];
+}
+
+/**
+ * One Idempotency-Key per user intent. `take(request)` returns the same key for the same request until `reset`,
+ * so retrying a request whose response was lost (a network error, a double submit) replays the stored answer
+ * instead of starting a second run or recording a second decision. A different request, including the same
+ * body sent as another persona, gets a new key. Reset after success: the next intent is a new one.
+ */
+export function useIntentKey(): { take: (request: unknown) => string; reset: () => void } {
+  const current = useRef<{ key: string; request: string } | null>(null);
+  const take = useCallback((request: unknown) => {
+    const body = JSON.stringify(request);
+    if (current.current?.request !== body) current.current = { key: newIdempotencyKey(), request: body };
+    return current.current.key;
+  }, []);
+  const reset = useCallback(() => {
+    current.current = null;
+  }, []);
+  return { take, reset };
 }

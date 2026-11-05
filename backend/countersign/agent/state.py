@@ -79,6 +79,11 @@ TRANSITIONS: dict[RunStatus, frozenset[RunStatus]] = {
 for _terminal in TERMINAL:
     TRANSITIONS[_terminal] = frozenset()
 
+# Where a run can still be cancelled, read off the table: before planning, while it plans or waits for a
+# person, and between execution steps. Verification starts once every approved effect has happened, so a run
+# that is verifying has nothing left to cancel.
+CANCELLABLE = frozenset(s for s, targets in TRANSITIONS.items() if RunStatus.CANCELLED in targets)
+
 
 class InvalidTransitionError(RuntimeError):
     pass

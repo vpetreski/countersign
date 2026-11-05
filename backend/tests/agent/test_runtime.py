@@ -18,10 +18,19 @@ from countersign.agent.runtime import (
     RunForbiddenError,
     SimulatedCrashError,
 )
-from countersign.agent.state import InvalidTransitionError, RunStatus, check_transition
+from countersign.agent.state import (
+    CANCELLABLE,
+    TERMINAL,
+    TRANSITIONS,
+    InvalidTransitionError,
+    RunStatus,
+    check_transition,
+)
 from countersign.audit import chain
+from countersign.domain.analysis import Operation
 from countersign.execution import tokens
 from countersign.models.base import ModelRequest
+from countersign.policy.engine import UNDO_ORDER
 from countersign.store.schema import AuditRow, ExecutionRow, ResourceOverrideRow, RunEventRow
 from tests.agent.scripted import FailingModel, ScriptedModel, findings_in, tool
 from tests.conftest import FINAL, GROUND_TRUTH, WAITING, Harness, make_harness
@@ -69,6 +78,26 @@ def test_full_workflow_executes_only_after_two_countersigns(harness: Harness) ->
     assert count(harness, ResourceOverrideRow) == len(plan["actions"])
     with harness.db.session() as s:
         assert chain.verify(s, harness.ws).valid
+
+
+@pytest.mark.parametrize(
+    "request_text",
+    [
+        "Find idle development VMs and unattached disks and propose savings.",
+        "Clean up everything you safely can",
+    ],
+)
+def test_effects_run_in_order_of_how_hard_they_are_to_undo(harness: Harness, request_text: str) -> None:
+    """Stops and resizes first, then disk deletions (recoverable from their snapshots), then IP releases."""
+    run_id = harness.start(request_text)
+    harness.drive(run_id, WAITING | FINAL)
+    plan = harness.plan(run_id)
+    stages = [UNDO_ORDER[Operation(a["operation"])] for a in plan["actions"]]
+    assert stages == sorted(stages) and len(set(stages)) >= 2
+    harness.approve_all(run_id)
+    assert harness.drive(run_id, FINAL).status == "completed"
+    executed = list(dict.fromkeys(e["action_id"] for e in events(harness, run_id, "execution_step")))
+    assert executed == [a["id"] for a in plan["actions"]]
 
 
 def test_plan_scope_follows_the_request(harness: Harness) -> None:
@@ -294,6 +323,45 @@ def test_runs_waiting_for_a_human_expire(harness: Harness) -> None:
     harness.clock.advance(hours=25)
     harness.runtime.advance(harness.who["operator"], run_id)
     assert harness.run(run_id).status == "expired"
+
+
+def test_a_countersign_after_the_wait_limit_is_refused_and_the_run_expires(harness: Harness) -> None:
+    """FM-29: nothing advances the run for 25 hours; a late countersign must not mint a capability."""
+    run_id = harness.start()
+    harness.drive(run_id, WAITING | FINAL)
+    harness.approve_all(run_id, "approver")
+    harness.clock.advance(hours=25)
+    with pytest.raises(RunConflictError, match="expired"):
+        harness.approve_all(run_id, "approver2")
+    row = harness.run(run_id)
+    assert row.status == "expired" and row.state["capability"] is None
+    assert count(harness, ExecutionRow) == 0
+    assert "run.expired" in audit_actions(harness)
+
+
+def test_an_answer_after_the_wait_limit_is_refused_and_the_run_expires(harness: Harness) -> None:
+    """FM-29: a late answer is not fed to the model."""
+    run_id = harness.start("make it cheaper")
+    assert harness.drive(run_id, WAITING | FINAL).status == "awaiting_input"
+    harness.clock.advance(hours=25)
+    with pytest.raises(RunConflictError, match="expired"):
+        harness.runtime.answer(harness.who["operator"], run_id, "Unattached disks")
+    row = harness.run(run_id)
+    assert row.status == "expired" and not events(harness, run_id, "answer")
+
+
+def test_a_run_can_be_cancelled_until_verification_starts(harness: Harness) -> None:
+    """FM-30: cancel is allowed exactly where the transition table allows it; verifying has nothing left."""
+    run_id = harness.start()
+    harness.drive(run_id, WAITING | FINAL)
+    harness.approve_all(run_id)
+    row = harness.drive(run_id, {"verifying", *FINAL})
+    assert row.status == "verifying"
+    with pytest.raises(RunConflictError, match="nothing is left to cancel"):
+        harness.runtime.cancel(harness.who["operator"], run_id)
+    assert harness.drive(run_id, FINAL).status == "completed"
+    assert {s for s, targets in TRANSITIONS.items() if RunStatus.CANCELLED in targets} == CANCELLABLE
+    assert RunStatus.VERIFYING not in CANCELLABLE and not CANCELLABLE & TERMINAL
 
 
 def test_overloaded_model_is_retried_and_the_turn_succeeds(ingested: Any, clock: Any) -> None:

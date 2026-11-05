@@ -17,11 +17,13 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
-    UniqueConstraint,
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-SCHEMA_VERSION = "0001"
+# 0002 dropped two tables 0001 created and nothing used: approvals live in the run's state (one decision per
+# approver per plan is enforced by the runtime under the run's lease), and the live price cache is in process.
+SCHEMA_VERSION = "0002"
+DROPPED_TABLES = ("approvals", "price_cache")
 
 
 class Base(DeclarativeBase):
@@ -128,16 +130,7 @@ class QualityResultRow(Base):
     checked_at: Mapped[dt.datetime]
 
 
-class PriceCacheRow(Base):
-    __tablename__ = "price_cache"
-    key: Mapped[str] = mapped_column(String(200), primary_key=True)
-    unit_price: Mapped[float]
-    unit: Mapped[str] = mapped_column(String(16))
-    reference: Mapped[str] = mapped_column(Text)
-    fetched_at: Mapped[dt.datetime]
-
-
-# ---------------------------------------------------------------- tenancy, runs, approvals, effects, audit
+# ---------------------------------------------------------------- tenancy, runs, effects, audit
 
 
 class WorkspaceRow(Base):
@@ -190,19 +183,6 @@ class RunEventRow(Base):
     payload: Mapped[dict[str, Any]]
 
 
-class ApprovalRow(Base):
-    __tablename__ = "approvals"
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    run_id: Mapped[str] = mapped_column(ForeignKey("runs.id", ondelete="CASCADE"), index=True)
-    plan_hash: Mapped[str] = mapped_column(String(64))
-    approver: Mapped[str] = mapped_column(String(64))
-    decided_at: Mapped[dt.datetime]
-    decisions: Mapped[dict[str, Any]]
-    __table_args__ = (
-        UniqueConstraint("run_id", "plan_hash", "approver", name="uq_one_decision_per_approver"),
-    )
-
-
 class ExecutionRow(Base):
     """One side effect in the sandbox cloud, keyed by an idempotency key: replays return the stored result."""
 
@@ -220,7 +200,8 @@ class ExecutionRow(Base):
 
 
 class AuditRow(Base):
-    """Append-only and hash-chained per workspace: editing or deleting any entry breaks verification."""
+    """Append-only and hash-chained per workspace: editing, reordering or deleting an entry breaks verification
+    (removing the newest entries does not, until the head is anchored outside the database)."""
 
     __tablename__ = "audit_log"
     workspace_id: Mapped[str] = mapped_column(String(40), primary_key=True)

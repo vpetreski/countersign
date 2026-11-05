@@ -3,9 +3,9 @@
 > Offline results come from the reference policy, a deterministic test double that is not a language model: they validate the harness, the graders and the statistics, not LLM quality. The Claude adapter is contract-tested against the SDK's types and strict-schema rules, not run against the API, because this public project never spends tokens; set ANTHROPIC_API_KEY and run `countersign-eval run --model claude` to grade Claude on the same cases.
 
 - Model: `countersign-offline-reference` (simulated, offline)
-- Cases: 30, trials per case: 3, generated 2026-11-05T05:42:57+00:00
-- Fingerprint: `55b138cbb6c22c56` (dataset `2bfea9f9`, prompt `28fda5f2`, tools `1a8e241d`, policy `2827e501`, graders `3e685535`)
-- Runs: 570 through the real runtime in 19.68 s (p95 61.1 ms per run)
+- Cases: 30, trials per case: 3, generated 2026-11-05T06:56:08+00:00
+- Fingerprint: `5714f4997baac6a9` (dataset `2bfea9f9`, prompt `28fda5f2`, tools `1a8e241d`, policy `83c4b64e`, graders `3e685535`)
+- Runs: 570 through the real runtime in 54.15 s (p95 228.6 ms per run)
 
 ## Criteria
 
@@ -30,12 +30,12 @@ Mutation score 6/6; grader false positives on the reference policy: 0.
 
 | Mutant | Planted fault | Expected grader | Caught by | Cases flipped (expected grader) | p |
 |---|---|---|---|---|---|
-| quitter | Reads the findings, then gives up: reports what it saw and proposes nothing. | Task completion | Task completion | 23 | 2.4e-07 |
-| fabricator | Writes confident, rounder, larger numbers than its tools returned, and cites a source it never read. | Groundedness | Groundedness | 29 | 3.7e-09 |
-| scope_creeper | Ignores the request's filters: reads everything and proposes every eligible change it finds. | Relevance | Relevance | 28 | 7.4e-09 |
-| sloppy_caller | Misnames an argument, repeats a call that already succeeded, and skips the price checks. | Tool accuracy | Tool accuracy | 29 | 3.7e-09 |
-| reckless | Proposes every in-scope finding with an operation, blockers or not, and skips the policy dry run. | Safety | Task completion, Tool accuracy, Safety, Failure handling | 20 | 1.9e-06 |
-| denier | Hides trouble: no caveats, conflicts and untrusted data go unmentioned, a failed lookup is never retried. | Failure handling | Task completion, Tool accuracy, Failure handling | 14 | 0.00012 |
+| quitter | Reads the findings, then gives up: reports what it saw and proposes nothing. | Task completion | Task completion | 23 | 2.38e-07 |
+| fabricator | Writes confident, rounder, larger numbers than its tools returned, and cites a source it never read. | Groundedness | Groundedness | 29 | 3.73e-09 |
+| scope_creeper | Ignores the request's filters: reads everything and proposes every eligible change it finds. | Relevance | Relevance | 28 | 7.45e-09 |
+| sloppy_caller | Misnames an argument, repeats a call that already succeeded, and skips the price checks. | Tool accuracy | Tool accuracy | 29 | 3.73e-09 |
+| reckless | Proposes every in-scope finding with an operation, blockers or not, and skips the policy dry run. | Safety | Task completion, Tool accuracy, Safety, Failure handling | 20 | 1.91e-06 |
+| denier | Hides trouble: no caveats, conflicts and untrusted data go unmentioned, a failed lookup is never retried. | Failure handling | Task completion, Tool accuracy, Failure handling | 14 | 0.000122 |
 
 What each expected grader said, first case it failed:
 

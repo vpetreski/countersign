@@ -7,7 +7,7 @@ from collections import Counter, defaultdict
 from typing import Any
 
 from countersign.agent.runtime import Principal, Role
-from countersign.agent.state import TERMINAL, RunState, RunStatus
+from countersign.agent.state import CANCELLABLE, TERMINAL, RunState, RunStatus
 from countersign.data.estate import Estate
 from countersign.domain.analysis import Finding
 from countersign.store.schema import RunRow
@@ -56,7 +56,7 @@ def run_view(row: RunRow, principal: Principal, *, detail: bool = True) -> dict[
             and status is RunStatus.AWAITING_APPROVAL
             and principal.sub != row.created_by
             and principal.sub not in approvers,
-            "cancel": principal.role is Role.OPERATOR and status not in TERMINAL,
+            "cancel": principal.role is Role.OPERATOR and status in CANCELLABLE,
         },
         "plan": None,
     }

@@ -4,6 +4,7 @@ reconciliation and transformation rules. Each check returns a result the UI and 
 from __future__ import annotations
 
 import datetime as dt
+import math
 from collections import Counter
 from collections.abc import Sequence
 from dataclasses import dataclass
@@ -25,8 +26,29 @@ class CheckResult:
     detail: str = ""
 
 
+def lag_hours(as_of: dt.datetime, day: dt.date) -> float:
+    """Hours from the end of a daily point's day to the as-of time; a day that ends after it counts as 0."""
+    end = dt.datetime.combine(day + dt.timedelta(days=1), dt.time(), tzinfo=dt.UTC)
+    return max(0.0, (as_of - end).total_seconds() / 3600)
+
+
+def sync_check(synced_at: Sequence[dt.datetime], now: dt.datetime, hours: float) -> CheckResult:
+    """The pipeline's freshness, judged now: the oldest current source's last sync against the service level, so
+    a sync that stopped shows as a failing check instead of a pass recorded the last time it ran."""
+    if not synced_at:
+        return CheckResult("freshness.sync", "freshness", "fail", "never synced", f"<= {hours:.0f} h")
+    age_h = (now - min(synced_at)).total_seconds() / 3600
+    return CheckResult(
+        "freshness.sync",
+        "freshness",
+        "pass" if age_h <= hours else "fail",
+        f"{age_h:.1f} h since the last sync",
+        f"<= {hours:.0f} h",
+    )
+
+
 def run_checks(
-    batches: Sequence[SourceBatch], fetched_at: dt.datetime, now: dt.datetime, freshness_hours: float
+    batches: Sequence[SourceBatch], as_of: dt.datetime, *, metrics_hours: float, billing_hours: float
 ) -> list[CheckResult]:
     resources = [r for b in batches for r in b.resources]
     costs = [c for b in batches for c in b.costs]
@@ -102,17 +124,25 @@ def run_checks(
         )
     )
 
-    # freshness: the age of the data against its service level
-    age_h = (now - fetched_at).total_seconds() / 3600
-    results.append(
-        CheckResult(
-            "freshness.inventory",
-            "freshness",
-            "pass" if age_h <= freshness_hours else "fail",
-            f"{age_h:.1f} h old",
-            f"<= {freshness_hours:.0f} h",
+    # freshness of the data itself: how far the newest complete day of utilization and of billing trails the
+    # sources' as-of time. The pipeline's own freshness, the time since the last sync, is `sync_check`, judged
+    # when the checks are read, because a result stored at ingest cannot age.
+    newest_cpu = max((pt.day for b in batches for pts in b.cpu.values() for pt in pts), default=None)
+    newest_cost = max((c.day for c in costs), default=None)
+    for check_id, newest, hours in (
+        ("freshness.metrics", newest_cpu, metrics_hours),
+        ("freshness.billing", newest_cost, billing_hours),
+    ):
+        lag_h = math.inf if newest is None else lag_hours(as_of, newest)
+        results.append(
+            CheckResult(
+                check_id,
+                "freshness",
+                "pass" if lag_h <= hours else "fail",
+                "no data" if newest is None else f"newest day {newest}, {lag_h:.0f} h before the as-of time",
+                f"<= {hours:.0f} h",
+            )
         )
-    )
 
     # reconciliation: inventory against billing
     keys = {r.billing_key for r in resources}
@@ -127,7 +157,7 @@ def run_checks(
             ", ".join(unmatched)[:400],
         )
     )
-    last_day = max((c.day for c in costs), default=fetched_at.date())
+    last_day = max((c.day for c in costs), default=as_of.date())
     compute_last_day = {
         c.resource_key
         for c in costs

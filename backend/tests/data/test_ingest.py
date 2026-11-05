@@ -4,6 +4,7 @@ The defects are listed in fixtures/README.md."""
 
 from __future__ import annotations
 
+import dataclasses
 import datetime as dt
 import json
 from pathlib import Path
@@ -11,9 +12,9 @@ from pathlib import Path
 import pytest
 from sqlalchemy import func, select
 
-from countersign.data.estate import ESTATE, quality_results, quarantined
-from countersign.data.ingest import ingest, load_batches
-from countersign.data.quality import run_checks
+from countersign.data.estate import ESTATE, data_checks, quality_results, quarantined
+from countersign.data.ingest import data_as_of, ingest, load_batches
+from countersign.data.quality import lag_hours, run_checks
 from countersign.domain.resources import Environment, Kind, State
 from countersign.security.screening import REDACTED, contains_secret
 from countersign.settings import Settings
@@ -84,8 +85,14 @@ def test_attached_disks_inherit_their_vm_allocation(batches: list) -> None:
     assert all(d.environment is not Environment.UNKNOWN for d in inherited)
 
 
+def checks_of(batches: list, metrics_hours: float = 54, billing_hours: float = 54) -> dict:
+    as_of = data_as_of(make_settings())
+    found = run_checks(batches, as_of, metrics_hours=metrics_hours, billing_hours=billing_hours)
+    return {c.check_id: c for c in found}
+
+
 def test_reconciliation_finds_the_stopped_but_billed_vm(batches: list) -> None:
-    checks = {c.check_id: c for c in run_checks(batches, fetched_at=NOW, now=NOW, freshness_hours=30)}
+    checks = checks_of(batches)
     conflict = checks["reconciliation.stopped_vms_unbilled"]
     assert conflict.status == "warn"
     assert DEFECTS["stopped_but_billed"] in conflict.detail
@@ -95,10 +102,37 @@ def test_reconciliation_finds_the_stopped_but_billed_vm(batches: list) -> None:
 
 
 def test_freshness_fails_past_its_service_level(batches: list) -> None:
-    """FM-21: data older than its service level fails the freshness check (the run would be told it is stale)."""
-    stale = NOW + dt.timedelta(hours=31)
-    checks = {c.check_id: c for c in run_checks(batches, fetched_at=NOW, now=stale, freshness_hours=30)}
-    assert checks["freshness.inventory"].status == "fail"
+    """FM-21: utilization or billing that trails the sources' as-of time by more than its level fails."""
+    checks = checks_of(batches)
+    assert checks["freshness.metrics"].status == checks["freshness.billing"].status == "pass"
+    assert "newest day 2026-10-31, 0 h" in checks["freshness.metrics"].observed
+    as_of = data_as_of(make_settings())
+    assert lag_hours(as_of, dt.date(2026, 10, 29)) == 48 and lag_hours(as_of, dt.date(2026, 11, 3)) == 0
+    strict = checks_of(batches, metrics_hours=-1, billing_hours=-1)
+    assert strict["freshness.metrics"].status == strict["freshness.billing"].status == "fail"
+    no_metrics = [dataclasses.replace(b, cpu={}) for b in batches]
+    assert checks_of(no_metrics)["freshness.metrics"].observed == "no data"
+    assert checks_of(no_metrics)["freshness.metrics"].status == "fail"
+
+
+def test_a_sync_that_stopped_fails_freshness_when_the_checks_are_read(
+    db: Database, settings: Settings
+) -> None:
+    """FM-21: the sync check is computed when read, so a stored pass cannot hide a cron that stopped."""
+    ingest(db, settings, now=NOW)
+    with db.session() as s:
+        fresh = {c.check_id: c for c in data_checks(s, NOW + dt.timedelta(hours=29), 30)}
+        stale = {c.check_id: c for c in data_checks(s, NOW + dt.timedelta(hours=31), 30)}
+    assert fresh["freshness.sync"].status == "pass" and fresh["freshness.sync"].observed.startswith("29.0 h")
+    assert stale["freshness.sync"].status == "fail"
+    assert {k for k, c in stale.items() if c.status == "fail"} == {"freshness.sync"}
+    empty = Database("sqlite://")
+    empty.create_all()
+    with empty.session() as s:
+        assert [(c.check_id, c.status, c.observed) for c in data_checks(s, NOW, 30)] == [
+            ("freshness.sync", "fail", "never synced")
+        ]
+    empty.engine.dispose()
 
 
 def test_october_actuals_and_monthly_run_rate_differ_by_design(batches: list) -> None:

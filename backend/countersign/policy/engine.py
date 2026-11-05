@@ -39,6 +39,14 @@ REVERSIBLE = {
     Operation.DELETE_DISK: True,
     Operation.RELEASE_IP: False,
 }
+# The order effects run in: the harder an effect is to undo, the later it runs. A stop or a resize is undone in
+# place, a deleted disk only from the snapshot taken first, a released address not at all.
+UNDO_ORDER = {
+    Operation.STOP_VM: 0,
+    Operation.RESIZE_VM: 0,
+    Operation.DELETE_DISK: 1,
+    Operation.RELEASE_IP: 2,
+}
 DATA_BLOCKERS = ("insufficient_history", "insufficient_coverage", "grace_period", "conflicting_sources")
 
 

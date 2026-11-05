@@ -23,7 +23,7 @@ from countersign.agent.runtime import Principal, Role, RunError, Runtime
 from countersign.api import views
 from countersign.audit import chain
 from countersign.auth.personas import PERSONAS, AuthError, issue, principal
-from countersign.data.estate import ESTATE, price_fn, quality_results, quarantined
+from countersign.data.estate import ESTATE, data_checks, price_fn, quarantined
 from countersign.data.ingest import ingest
 from countersign.data.pricing import PriceCatalog, azure_fetcher
 from countersign.models.factory import make_model
@@ -250,11 +250,15 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
     def idempotent(
         s: Services,
         key: str | None,
-        workspace: str,
+        principal: Principal,
         route: str,
         body: dict[str, Any],
         run: Callable[[], tuple[int, dict[str, Any]]],
     ) -> JSONResponse:
+        """Replay the stored response for a repeated key. The key belongs to the caller: the stored request
+        covers who sent it as well as the body, so another persona reusing a key is refused, never handed the
+        first caller's response (which would also drop the second approver's countersign without a word)."""
+        workspace = principal.workspace_id
         if not key:
             status, payload = run()
             return JSONResponse(payload, status_code=status)
@@ -262,7 +266,8 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
             raise Problem(
                 422, "Unprocessable Content", "Idempotency-Key is longer than 200 characters", "validation"
             )
-        digest = hashlib.sha256(json.dumps(body, sort_keys=True, default=str).encode()).hexdigest()
+        request = {"principal": principal.sub, "body": body}
+        digest = hashlib.sha256(json.dumps(request, sort_keys=True, default=str).encode()).hexdigest()
         with s.db.session() as session:
             row = session.get(IdempotencyRow, (key, workspace, route))
             if row is not None:
@@ -426,7 +431,8 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
     def dashboard(s: Svc, p: Who) -> dict[str, Any]:
         with s.db.session() as session:
             estate = ESTATE.view(session, p.workspace_id)
-            quality = [{"status": q.status} for q in quality_results(session)]
+            checks = data_checks(session, s.clock(), s.settings.inventory_freshness_hours)
+            quality = [{"status": c.status} for c in checks]
             q_count = len(quarantined(session))
         findings = estate.findings(price_fn(s.catalog, live=s.settings.live_prices))
         return views.dashboard(estate, findings, quality, q_count)
@@ -500,7 +506,7 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
                     .order_by(SourceSnapshot.source)
                 )
             )
-            checks = quality_results(session)
+            checks = data_checks(session, s.clock(), s.settings.inventory_freshness_hours)
             quar = quarantined(session)
         return {
             "snapshots": [
@@ -565,9 +571,7 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
             run_id = s.runtime.create(p, body.request, [f.value for f in body.faults])
             return 201, views.run_view(load_run(s, p, run_id), p)
 
-        return idempotent(
-            s, idempotency_key, p.workspace_id, "POST /api/runs", body.model_dump(mode="json"), go
-        )
+        return idempotent(s, idempotency_key, p, "POST /api/runs", body.model_dump(mode="json"), go)
 
     @app.get("/api/runs")
     def list_runs(s: Svc, p: Who, limit: Annotated[int, Query(ge=1, le=50)] = 20) -> dict[str, Any]:
@@ -613,7 +617,7 @@ def create_app(settings: Settings | None = None, services: Services | None = Non
         return idempotent(
             s,
             idempotency_key,
-            p.workspace_id,
+            p,
             f"POST /api/runs/{run_id}/decision",
             body.model_dump(mode="json"),
             go,

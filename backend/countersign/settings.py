@@ -45,10 +45,11 @@ class Settings(BaseSettings):
     model_timeout_seconds: float = 90.0
     max_plan_revisions: int = 3
 
-    # Data freshness service levels, in hours.
+    # Data freshness service levels, in hours: the time since the last sync (a daily cron, plus six hours), and
+    # how far the newest complete day of utilization and of billing may trail the sources' as-of time.
     inventory_freshness_hours: float = 30.0
     metrics_freshness_hours: float = 54.0
-    prices_freshness_hours: float = 48.0
+    billing_freshness_hours: float = 54.0
 
     # Live prices: the public Azure Retail Prices API. Off in tests; the snapshot is the fallback.
     live_prices: bool = True
