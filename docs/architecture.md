@@ -143,5 +143,5 @@ Prices API, live with a committed snapshot as fallback. Monthly figures use the 
 
 One Vercel project with two services from `vercel.json`: `web` (the Vite build) and `api` (FastAPI, Python
 3.14). One origin, so no CORS. Neon Postgres (free plan) holds the state; a daily cron calls `/api/cron/sync`
-(re-ingest, purge expired workspaces) with a bearer secret. Production refuses to start with development
-secrets. The live demo runs keyless.
+(re-ingest, purge expired workspaces) with a bearer secret. Production (any Vercel production deployment counts)
+refuses to start with development secrets. The live demo runs keyless.
